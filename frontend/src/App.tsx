@@ -4,6 +4,7 @@ import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom'
 import Login from './Login/Login';
 import Table from './Tables/Table';
 import EmployeePendingTravelTable from './Tables/EmployeePendingTravelTable'
+import EmployeeAcceptedTravelTable from './Tables/EmployeeAcceptedTravelTable'
 
 class App extends Component {
   render() {
@@ -18,11 +19,12 @@ class App extends Component {
           <Link to="/">Login </Link>
           <Link to="/table">Table </Link>
           <Link to="/employeePendingTravelTable">EmployeePendingTravelTable </Link>
+          <Link to="/employeeAcceptedTravelTable">EmployeeAcceptedTravelTable </Link>
         </nav>
         <Switch>
           <Route exact path="/" component={Login} />
           <Route exact path="/table" component={Table} />
-          <Route exact path="/employeePendingTravelTable" component={EmployeePendingTravelTable} />
+          <Route exact path="/employeeAcceptedTravelTable" component={EmployeeAcceptedTravelTable} />
         </Switch>
       </div>
     </Router>
