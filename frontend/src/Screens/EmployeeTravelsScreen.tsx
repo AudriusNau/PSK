@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 //import './App.scss';
-import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom'
-import EmployeePendingTravelTable from './../Tables/EmployeePendingTravelTable'
-import EmployeeAcceptedTravelTable from './../Tables/EmployeeAcceptedTravelTable'
-import EmployeeAppBar from '../AppBars/EmployeeAppBar'
+import { HashRouter as Router, Route, Link, Switch } from 'react-router-dom';
+import EmployeePendingTravelTable from './../Tables/EmployeePendingTravelTable';
+import EmployeeAcceptedTravelTable from './../Tables/EmployeeAcceptedTravelTable';
+import EmployeeAppBar from '../AppBars/EmployeeAppBar';
+import Typography from '@material-ui/core/Typography';
 
 class EmployeeTravelsScreen extends Component {
   render() {

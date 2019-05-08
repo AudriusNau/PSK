@@ -6,6 +6,7 @@ import Table from './Tables/Table';
 import EmployeeTravelsScreen from './Screens/EmployeeTravelsScreen'
 import EmployeePendingTravelTable from './Tables/EmployeePendingTravelTable'
 import EmployeeAcceptedTravelTable from './Tables/EmployeeAcceptedTravelTable'
+import EmployeeProfileScreen from './Screens/EmployeeProfileScreen'
 
 class App extends Component {
   render() {
@@ -22,6 +23,7 @@ class App extends Component {
           <Link to="/employeePendingTravelTable">EmployeePendingTravelTable </Link>
           <Link to="/employeeAcceptedTravelTable">EmployeeAcceptedTravelTable </Link>
           <Link to="/employeeTravelsScreen">EmployeeTravelsScreen </Link>
+          <Link to="/employeeProfileScreen">EmployeeProfileScreen </Link>
         </nav>
         <Switch>
           <Route exact path="/" component={Login} />
@@ -29,6 +31,7 @@ class App extends Component {
           <Route exact path="/employeePendingTravelTable" component={EmployeePendingTravelTable} />
           <Route exact path="/employeeAcceptedTravelTable" component={EmployeeAcceptedTravelTable} />
           <Route exact path="/employeeTravelsScreen" component={EmployeeTravelsScreen} />
+          <Route exact path="/employeeProfileScreen" component={EmployeeProfileScreen} />
         </Switch>
       </div>
     </Router>
