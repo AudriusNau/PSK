@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { createStyles, withStyles, WithStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -13,7 +13,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-const styles = createStyles({
+const styles = {
   root: {
     flexGrow: 1,
   },
@@ -24,26 +24,19 @@ const styles = createStyles({
     marginLeft: -12,
     marginRight: 20,
   },
-});
+};
 
-export interface Props extends WithStyles<typeof styles> {}
-
-export interface State {
-  auth: boolean;
-  anchorEl: null | HTMLElement;
-}
-
-class MenuAppBar extends React.Component<Props, State> {
-  state: State = {
+class MenuAppBar extends React.Component {
+  state = {
     auth: true,
     anchorEl: null,
   };
 
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = event => {
     this.setState({ auth: event.target.checked });
   };
 
-  handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+  handleMenu = event => {
     this.setState({ anchorEl: event.currentTarget });
   };
 
@@ -68,11 +61,9 @@ class MenuAppBar extends React.Component<Props, State> {
         </FormGroup>
         <AppBar position="static">
           <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
+           
             <Typography variant="h6" color="inherit" className={classes.grow}>
-              Photos
+              Devbridge
             </Typography>
             {auth && (
               <div>
@@ -110,8 +101,8 @@ class MenuAppBar extends React.Component<Props, State> {
   }
 }
 
-(MenuAppBar as React.ComponentClass<Props>).propTypes = {
+MenuAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
-} as any;
+};
 
 export default withStyles(styles)(MenuAppBar);
