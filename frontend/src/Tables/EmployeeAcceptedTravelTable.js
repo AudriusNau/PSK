@@ -20,9 +20,9 @@ import FilterListIcon from '@material-ui/icons/FilterList';
 import { lighten } from '@material-ui/core/styles/colorManipulator';
 
 let counter = 0;
-function createData(date, departure_time, accommodation, rented_car, airplane_tickets) {
+function createData(date, departure_point, arrival_point,accommodation, rented_car, airplane_tickets) {
   counter += 1;
-  return { id: counter, date, departure_time, accommodation, rented_car, airplane_tickets };
+  return { id: counter, date, departure_point, arrival_point,accommodation, rented_car, airplane_tickets };
 }
 
 function desc(a, b, orderBy) {
@@ -53,7 +53,8 @@ function getSorting(order, orderBy) {
 
 const rows = [
   { id: 'date', numeric: false, disablePadding: true, label: 'Date'},
-  { id: 'departure_time', numeric: false, disablePadding: false, label: 'Departure time' },
+  { id: 'departure_point', numeric: false, disablePadding: false, label: 'Departure point' },
+  { id: 'arrival_point', numeric: false, disablePadding: false, label: 'Arrival point' },
   { id: 'accommodation', numeric: false, disablePadding: false, label: 'Accommodation' },
   { id: 'rented_car', numeric: false, disablePadding: false, label: 'Rented car' },
   { id: 'airplane_tickets', numeric: false, disablePadding: false, label: 'Airplane tickets' },
@@ -211,13 +212,13 @@ class EnhancedTable extends React.Component {
     orderBy: 'date',
     selected: [],
     data: [
-      createData('2019.05.01', '10:00', 'Devbridge apartments 1', '+', '-'),
-      createData('2019.05.02', '11:00', 'Devbridge apartments 2', '-', '+'),
-      createData('2019.05.03', '12:00', 'Devbridge apartments 3', '+', '-'),
-      createData('2019.05.04', '13:00', 'Devbridge apartments 4', '-', '+'),
-      createData('2019.05.05', '14:00', 'Devbridge apartments 5', '+', '-'),
-      createData('2019.05.06', '15:00', 'Devbridge apartments 6', '-', '+'),
-      createData('2019.05.07', '16:00', 'Devbridge apartments 1', '+', '-'),
+      createData('2019.05.01', 'Devbridge office 1', 'Devbridge office 2', 'Devbridge apartments 1', '+', '-'),
+      createData('2019.05.02', 'Devbridge office 2', 'Devbridge office 3', 'Devbridge apartments 2', '-', '+'),
+      createData('2019.05.03', 'Devbridge office 3', 'Devbridge office 4', 'Devbridge apartments 3', '+', '-'),
+      createData('2019.05.04', 'Devbridge office 4', 'Devbridge office 5', 'Devbridge apartments 4', '-', '+'),
+      createData('2019.05.05', 'Devbridge office 5', 'Devbridge office 6', 'Devbridge apartments 5', '+', '-'),
+      createData('2019.05.06', 'Devbridge office 6', 'Devbridge office 1', 'Devbridge apartments 6', '-', '+'),
+      createData('2019.05.07', 'Devbridge office 1', 'Devbridge office 2', 'Devbridge apartments 1', '+', '-'),
     ],
     page: 0,
     rowsPerPage: 5,
@@ -312,7 +313,8 @@ class EnhancedTable extends React.Component {
                       <TableCell component="th" scope="row" padding="none">
                         {n.date}
                       </TableCell>
-                      <TableCell align="center">{n.departure_time}</TableCell>
+                      <TableCell align="center">{n.departure_point}</TableCell>
+                      <TableCell align="center">{n.arrival_point}</TableCell>
                       <TableCell align="center">{n.accommodation}</TableCell>
                       <TableCell align="center">{n.rented_car}</TableCell>
                       <TableCell align="center">{n.airplane_tickets}</TableCell>
