@@ -11,14 +11,9 @@ import Paper from '@material-ui/core/Paper';
 import Modal from 'react-modal';
 import Apartment from './Apartment';
 import axios from 'axios';
+import styles from '../Login/Login.module.scss';
+import SelectInput from '@material-ui/core/Select/SelectInput';
 
-let counter = 0;
-function createData(name, location, room_count) {
-  counter += 1;
-  return { id: counter, name, location, room_count };
-}
-
-// const rows = axios
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name'},
   { id: 'location', numeric: false, disablePadding: false, label: 'Location' },
@@ -54,10 +49,6 @@ class ApartmentTable extends React.Component {
   state = {
     selected: [],
     data: [],
-    data2: [
-      createData('Devbridge apartments 1', 'Adress line 1', 6),
-      createData('Devbridge apartments 2', 'Adress line 2', 6),
-    ],
     page: 0,
     rowsPerPage: 5,
     showModal: false
@@ -69,7 +60,7 @@ class ApartmentTable extends React.Component {
     axios.get('https://jsonblob.com/api/jsonBlob/391e08b9-7a2c-11e9-9927-b3c5ae395141')
     .then(response => {
       console.log(response.data.apartments)
-      this.state.data = response.data.apartments
+      this.setState({data: response.data.apartments})
     })
 
     this.handleOpenModal = this.handleOpenModal.bind(this);
