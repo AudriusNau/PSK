@@ -9,6 +9,8 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Modal from 'react-modal';
+import Apartment from './Apartment';
+import axios from 'axios';
 
 let counter = 0;
 function createData(name, location, room_count) {
@@ -16,6 +18,7 @@ function createData(name, location, room_count) {
   return { id: counter, name, location, room_count };
 }
 
+// const rows = axios
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name'},
   { id: 'location', numeric: false, disablePadding: false, label: 'Location' },
@@ -50,7 +53,8 @@ class ApartmentTableHead extends React.Component {
 class ApartmentTable extends React.Component {
   state = {
     selected: [],
-    data: [
+    data: [],
+    data2: [
       createData('Devbridge apartments 1', 'Adress line 1', 6),
       createData('Devbridge apartments 2', 'Adress line 2', 6),
     ],
@@ -62,6 +66,12 @@ class ApartmentTable extends React.Component {
   constructor () {
     super();
     
+    axios.get('https://jsonblob.com/api/jsonBlob/391e08b9-7a2c-11e9-9927-b3c5ae395141')
+    .then(response => {
+      console.log(response.data.apartments)
+      this.state.data = response.data.apartments
+    })
+
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
@@ -96,8 +106,9 @@ class ApartmentTable extends React.Component {
           contentLabel="Details"
         >
           <button onClick={this.handleCloseModal}>Close Modal</button>
+          <Apartment></Apartment>
         </Modal>
-        <ApartmentTableHead></ApartmentTableHead>
+        {/* <ApartmentTableHead></ApartmentTableHead> */}
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <ApartmentTableHead
@@ -106,20 +117,20 @@ class ApartmentTable extends React.Component {
             <TableBody>
               {
                 data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(n => {
-                  const isSelected = this.isSelected(n.id);
+                .map(datum => {
+                  const isSelected = this.isSelected(datum.id);
                   return (
                     <TableRow
                       hover
                       onClick={this.handleOpenModal}
                       aria-checked={isSelected}
                       tabIndex={-1}
-                      key={n.id}
+                      key={datum.id}
                       selected={isSelected}
                     >
-                      <TableCell align="left">{n.name}</TableCell>
-                      <TableCell align="left">{n.location}</TableCell>
-                      <TableCell align="left">{n.room_count}</TableCell>
+                      <TableCell align="left">{datum.name}</TableCell>
+                      <TableCell align="left">{datum.location}</TableCell>
+                      <TableCell align="left">{datum.room_count}</TableCell>
                     </TableRow>
                   );
                 })}
