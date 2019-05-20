@@ -18,6 +18,10 @@ import java.io.Serializable;
 @Setter
 public class Travel implements Serializable {
 
+    public Travel(){
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
