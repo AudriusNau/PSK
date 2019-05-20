@@ -1,24 +1,37 @@
 package entities;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
-@Table(name = "EMPLOYEE_TRAVEL", schema = "PUBLIC", catalog = "DEVBRIDGE")
+@NamedQueries({
+        @NamedQuery(name = "EmployeeTravel.findAll", query = "select t from EmployeeTravel as t"),
+        @NamedQuery(name = "EmployeeTravel.findByTravelId", query = "select t from EmployeeTravel as t where t.travel = :travel"),
+        @NamedQuery(name = "EmployeeTravel.findByEmployee", query = "select t from EmployeeTravel as t where t.employee = :employee")
+})
+@Table(name = "EMPLOYEE_TRAVEL")
+@Getter
+@Setter
 public class EmployeeTravel {
-    private int id;
+
+    public EmployeeTravel(){
+
+    }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
-    public int getId() {
-        return id;
-    }
+    private int id;
 
-    public void setId(int id) {
-        this.id = id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    Employee employee;
+
+    @ManyToOne
+    @JoinColumn(name = "travel_id")
+    Travel travel;
 
     @Override
     public boolean equals(Object o) {

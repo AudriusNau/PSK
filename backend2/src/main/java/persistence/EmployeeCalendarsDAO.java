@@ -55,7 +55,7 @@ public class EmployeeCalendarsDAO {
 
 
     public List<EmployeeCalendar> findByEmployee(Integer employeeId) {
-        return em.createNamedQuery("EmployeeCalendar.findByEmployee", EmployeeCalendar.class).setParameter("employeeId", employeesDAO.findOne(employeeId)).getResultList();
+        return em.createNamedQuery("EmployeeCalendar.findByEmployee", EmployeeCalendar.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
     }
 
     public EmployeeCalendar update(EmployeeCalendar employeeCalendar){

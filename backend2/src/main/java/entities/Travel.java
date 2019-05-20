@@ -6,6 +6,7 @@ import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -32,6 +33,10 @@ public class Travel implements Serializable {
 
     @Column(name = "PRICE", nullable = true, precision = 0)
     private Double price;
+
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "travel")
+    List<EmployeeTravel> employeeTravels;
 
     @JohnzonIgnore
     @ManyToOne(fetch = FetchType.EAGER)

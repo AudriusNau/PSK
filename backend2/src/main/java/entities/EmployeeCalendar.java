@@ -11,7 +11,7 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "EmployeeCalendar.findAll", query = "select t from EmployeeCalendar as t"),
         @NamedQuery(name = "EmployeeCalendar.findByDate", query = "select t from EmployeeCalendar as t where t.calendar = :date"),
-        @NamedQuery(name = "EmployeeCalendar.findByEmployee", query = "select t from EmployeeCalendar as t where t.employee = :employeeId")
+        @NamedQuery(name = "EmployeeCalendar.findByEmployee", query = "select t from EmployeeCalendar as t where t.employee = :employee")
 })
 @Table(name = "EMPLOYEE_CALENDAR", schema = "PUBLIC", catalog = "DEVBRIDGE")
 @Getter
