@@ -44,6 +44,17 @@
       <version>1.16.16</version>
       <scope>provided</scope>
     </dependency>
+    <dependency>
+      <groupId>org.apache.johnzon</groupId>
+      <artifactId>jsonb-api</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.johnzon</groupId>
+      <artifactId>johnzon-mapper</artifactId>
+      <version>1.0.0</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>

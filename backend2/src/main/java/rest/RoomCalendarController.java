@@ -1,0 +1,102 @@
+package rest;
+
+import entities.RoomCalendar;
+import lombok.Getter;
+import lombok.Setter;
+import persistence.RoomCalendarsDAO;
+import persistence.RoomsDAO;
+import persistence.CalendarsDAO;
+
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+import javax.transaction.Transactional;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import java.util.List;
+
+@ApplicationScoped
+@Path("/roomCalendar")
+@Produces(MediaType.APPLICATION_JSON)
+public class RoomCalendarController {
+
+    @Inject
+    @Setter
+    @Getter
+    private RoomCalendarsDAO roomCalendarsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private RoomsDAO roomsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private CalendarsDAO calendarsDAO;
+
+    /*@Path("/get/date/{date}")
+    @GET
+    public RoomCalendar findByDate(@PathParam("date") String date){
+        RoomCalendar roomCalendar = roomCalendarsDAO.findByDate(date);
+        System.out.println(roomCalendar.getCalendar());
+        return roomCalendar;//pakeiciam i lista
+    }*/
+
+    @Path("/get/date/{date}")
+    @GET
+    public List <RoomCalendar> findByDate(@PathParam("date") String date){
+        List<RoomCalendar> roomCalendars = roomCalendarsDAO.findByDate(date);
+        return roomCalendars;
+    }
+
+    @Path("/get/room/{roomId}")
+    @GET
+    public List <RoomCalendar> findByDate(@PathParam("roomId") Integer roomId){
+        List<RoomCalendar> roomCalendars = roomCalendarsDAO.findByRoom(roomId);
+        return roomCalendars;
+    }
+
+    @Path("/get/all")
+    @GET
+    public List<RoomCalendar> find(){
+        List<RoomCalendar> roomCalendars = roomCalendarsDAO.loadAll();
+        return roomCalendars;
+    }
+
+    @Path("/post")
+    @POST
+    @Transactional
+    public RoomCalendar create(@QueryParam("date") String date,
+                                   @QueryParam("roomId") Integer roomId) {
+        System.out.println("roomCalendar post");
+        RoomCalendar roomCalendar = new RoomCalendar();
+        /*roomCalendar.setDate(date);
+        roomCalendar.setRoomId(roomId);*/
+        roomCalendar.setCalendar(calendarsDAO.findOne(date));
+        roomCalendar.setRoom(roomsDAO.findOne(roomId));
+        System.out.println("roomCalendar set");
+        roomCalendarsDAO.persist(roomCalendar);
+        return roomCalendar;
+    }
+
+    /*@Path("/put/{id}")
+    @PUT @Transactional
+    public Response update(@PathParam("id") int id,
+                           @QueryParam("first_name") String firstName,
+                           @QueryParam("last_name") String lastName,
+                           @QueryParam("role") String role) {
+
+        RoomCalendar roomCalendar = roomCalendarsDAO.findOne(id);
+        if (roomCalendar == null){
+            throw new IllegalArgumentException("roomCalendar id "
+                    + id + " not found");
+        }
+        roomCalendar.setFirstName(firstName);
+        roomCalendar.setLastName(lastName);
+        roomCalendar.setRole(role);
+        roomCalendarsDAO.update(roomCalendar);
+        return Response.ok(roomCalendar).build();
+    }*/
+
+}
