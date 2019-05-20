@@ -12,6 +12,8 @@
         <class>entities.Office</class>
         <class>entities.Travel</class>
         <class>entities.CarRent</class>
+        <class>entities.Flight</class>
+        <class>entities.EmployeeTravel</class>
         <properties>
             <!--<property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>-->
