@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {ReactModal} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
@@ -13,6 +13,8 @@ import Apartment from './Apartment';
 import axios from 'axios';
 import styles from '../Login/Login.module.scss';
 import SelectInput from '@material-ui/core/Select/SelectInput';
+
+// Modal.setAppElement('#app-base');
 
 const rows = [
   { id: 'name', numeric: false, disablePadding: true, label: 'Name'},
@@ -47,7 +49,7 @@ class ApartmentTableHead extends React.Component {
 
 class ApartmentTable extends React.Component {
   state = {
-    selected: [],
+    selected: {},
     data: [],
     page: 0,
     rowsPerPage: 5,
@@ -75,10 +77,10 @@ class ApartmentTable extends React.Component {
     this.setState({ rowsPerPage: event.target.value });
   };
 
-  isSelected = id => this.state.selected.indexOf(id) !== -1;
+  // isSelected = id => this.state.selected.indexOf(id) !== -1;
   
-  handleOpenModal () {
-    this.setState({ showModal: true });
+  handleOpenModal (ap) {
+    this.setState({ showModal: true, selected: ap });
   }
   
   handleCloseModal () {
@@ -90,6 +92,22 @@ class ApartmentTable extends React.Component {
     const { data, rowsPerPage, page } = this.state;
     const emptyRows = rowsPerPage - Math.min(rowsPerPage, data.length - page * rowsPerPage);
 
+    const rowList = data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map(datum => {
+        return (
+          <TableRow
+            hover
+            onClick={() => this.handleOpenModal(datum)}
+            tabIndex={-1}
+            key={datum.id}
+          >
+            <TableCell align="left">{datum.name}</TableCell>
+            <TableCell align="left">{datum.location}</TableCell>
+            <TableCell align="left">{datum.room_count}</TableCell>
+          </TableRow>
+        );
+      })
+
     return (
       <Paper className={classes.root}>
         <Modal
@@ -97,7 +115,7 @@ class ApartmentTable extends React.Component {
           contentLabel="Details"
         >
           <button onClick={this.handleCloseModal}>Close Modal</button>
-          <Apartment></Apartment>
+          <Apartment apartment={this.state.selected}></Apartment>
         </Modal>
         {/* <ApartmentTableHead></ApartmentTableHead> */}
         <div className={classes.tableWrapper}>
@@ -106,25 +124,7 @@ class ApartmentTable extends React.Component {
               rowCount={data.length}
             />
             <TableBody>
-              {
-                data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map(datum => {
-                  const isSelected = this.isSelected(datum.id);
-                  return (
-                    <TableRow
-                      hover
-                      onClick={this.handleOpenModal}
-                      aria-checked={isSelected}
-                      tabIndex={-1}
-                      key={datum.id}
-                      selected={isSelected}
-                    >
-                      <TableCell align="left">{datum.name}</TableCell>
-                      <TableCell align="left">{datum.location}</TableCell>
-                      <TableCell align="left">{datum.room_count}</TableCell>
-                    </TableRow>
-                  );
-                })}
+              {rowList}
               {emptyRows > 0 && (
                 <TableRow style={{ height: 49 * emptyRows }}>
                   <TableCell colSpan={6} />
@@ -156,5 +156,8 @@ class ApartmentTable extends React.Component {
 ApartmentTable.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+
+// const Apartment2 = (apartmentData) => 
 
 export default withStyles()(ApartmentTable);
