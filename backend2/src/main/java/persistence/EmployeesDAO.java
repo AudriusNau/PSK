@@ -21,16 +21,16 @@ public class EmployeesDAO {
         this.em = em;
     }
 
-    public void persist(Employee bookstore){
-        this.em.persist(bookstore);
+    public void persist(Employee employee){
+        this.em.persist(employee);
     }
 
     public Employee findOne(Integer id) {
         return em.find(Employee.class, id);
     }
 
-    public Employee update(Employee bookstore){
-        return em.merge(bookstore);
+    public Employee update(Employee employee){
+        return em.merge(employee);
     }
 
 }

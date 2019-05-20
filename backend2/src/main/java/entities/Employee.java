@@ -3,8 +3,10 @@ package entities;
 import javax.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import java.io.Serializable;
+import java.util.*;
 
 @Entity
 @NamedQueries({
@@ -13,6 +15,10 @@ import java.io.Serializable;
 @Table(name = "EMPLOYEE")
 @Getter @Setter
 public class Employee implements Serializable {
+
+    public Employee(){
+
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +33,10 @@ public class Employee implements Serializable {
 
     @Column(name = "ROLE", nullable = true, length = 20)
     private String role;
+
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "employee")
+    List<EmployeeCalendar> employeeCalendars;
 
     @Override
     public boolean equals(Object o) {

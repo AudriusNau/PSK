@@ -4,10 +4,25 @@
     <persistence-unit name="DevbridgePersistenceUnit">
         <jta-data-source>DevbridgeDataSource</jta-data-source>
         <class>entities.Employee</class>
+        <class>entities.Calendar</class>
+        <class>entities.EmployeeCalendar</class>
+        <class>entities.Accommodation</class>
+        <class>entities.Room</class>
+        <class>entities.RoomCalendar</class>
+        <class>entities.Office</class>
+        <class>entities.Travel</class>
         <properties>
             <!--<property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.show_sql" value="true"/>-->
             <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="toplink.jdbc.url" value="jdbc:h2:~/Devbridge;AUTO_SERVER=TRUE;"/>
+            <property name="toplink.jdbc.driver" value="org.h2.Driver"/>
+            <property name="hibernate.connection.url" value="jdbc:h2:~/Devbridge;AUTO_SERVER=TRUE;"/>
+            <property name="hibernate.connection.driver_class" value="org.h2.Driver"/>
+            <property name="openjpa.ConnectionURL" value="jdbc:h2:~/Devbridge;AUTO_SERVER=TRUE;"/>
+            <property name="openjpa.ConnectionDriverName" value="org.h2.Driver"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:h2:~/Devbridge;AUTO_SERVER=TRUE;"/>
+            <property name="eclipselink.jdbc.driver" value="org.h2.Driver"/>
         </properties>
     </persistence-unit>
 </persistence>
