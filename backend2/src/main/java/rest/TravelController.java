@@ -37,20 +37,6 @@ public class TravelController {
         return travel;
     }
 
-    /*@Path("/get/getByOfficeId/{officeId}")
-    @GET
-    public List<Travel> findByOfficeId(@PathParam("officeId") int officeId){
-        List<Travel> travels = travelsDAO.findByOfficeId(officeId);
-        return travels;
-    }
-
-    @Path("/get/getOfficeByTravelId/{travelId}")
-    @GET
-    public Office findOfficeByTravelId(@PathParam("travelId") int id){
-        Office office = (travelsDAO.findOne(id)).getOffice();
-        return office;
-    }*/
-
     @Path("/get/getByDepartureOfficeId/{departureOfficeId}")
     @GET
     public List<Travel> findByDepartureOfficeId(@PathParam("departureOfficeId") int departureOfficeId){
@@ -63,6 +49,20 @@ public class TravelController {
     public List<Travel> findByArrivalOfficeId(@PathParam("arrivalOfficeId") int arrivalOfficeId){
         List<Travel> travels = travelsDAO.findByArrivalOfficeId(arrivalOfficeId);
         return travels;
+    }
+
+    @Path("/get/getDepartureOfficeByTravelId/{travelId}")
+    @GET
+    public Office findDepartureOfficeByTravelId(@PathParam("travelId") int id){
+        Office office = (travelsDAO.findOne(id)).getDepartureOffice();
+        return office;
+    }
+
+    @Path("/get/getArrivalOfficeByTravelId/{travelId}")
+    @GET
+    public Office findArrivalOfficeByTravelId(@PathParam("travelId") int id){
+        Office office = (travelsDAO.findOne(id)).getArrivalOffice();
+        return office;
     }
 
     @Path("/get/all")
