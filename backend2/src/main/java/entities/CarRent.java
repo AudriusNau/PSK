@@ -2,8 +2,10 @@ package entities;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NamedQueries({
@@ -28,6 +30,10 @@ public class CarRent {
 
     @Column(name = "INFO", nullable = true, length = 50)
     private String info;
+
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "carRent")
+    List<EmployeeTravel> employeeTravels;
 
     @Override
     public boolean equals(Object o) {

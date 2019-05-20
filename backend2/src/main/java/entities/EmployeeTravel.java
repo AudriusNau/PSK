@@ -33,6 +33,14 @@ public class EmployeeTravel {
     @JoinColumn(name = "travel_id")
     Travel travel;
 
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    Flight flight;
+
+    @ManyToOne
+    @JoinColumn(name = "car_rent_id")
+    CarRent carRent;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
