@@ -5,7 +5,6 @@ import lombok.Setter;
 import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 @Table(name = "CAR_RENT")
 @Getter
 @Setter
-public class CarRent implements Serializable {
+public class CarRent {
 
     public CarRent(){
 

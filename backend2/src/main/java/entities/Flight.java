@@ -5,17 +5,16 @@ import lombok.Setter;
 import org.apache.johnzon.mapper.JohnzonIgnore;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Flight.findAll", query = "select t from Flight as t")
 })
-@Table(name = "FLIGHT")
+@Table(name = "CAR_RENT")
 @Getter
 @Setter
-public class Flight implements Serializable {
+public class Flight {
 
     public Flight(){
 
