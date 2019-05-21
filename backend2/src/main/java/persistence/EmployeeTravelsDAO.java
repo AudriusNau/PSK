@@ -1,6 +1,5 @@
 package persistence;
 
-import entities.Travel;
 import entities.EmployeeTravel;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +25,21 @@ public class EmployeeTravelsDAO {
     @Setter
     @Getter
     private TravelsDAO calendarsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private FlightsDAO flightsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private CarRentsDAO carRentsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private RoomsDAO roomsDAO;
 
 
     public List<EmployeeTravel> loadAll() {
@@ -58,14 +72,23 @@ public class EmployeeTravelsDAO {
         return em.createNamedQuery("EmployeeTravel.findByTravelId", EmployeeTravel.class).setParameter("travel", calendarsDAO.findOne(travelId)).getResultList();
     }
 
-
-
     public List<EmployeeTravel> findByEmployee(Integer employeeId) {
         return em.createNamedQuery("EmployeeTravel.findByEmployee", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
     }
 
+    public List<EmployeeTravel> findByFlight(Integer flightId) {
+        return em.createNamedQuery("EmployeeTravel.findByFlight", EmployeeTravel.class).setParameter("flight", flightsDAO.findOne(flightId)).getResultList();
+    }
+
+    public List<EmployeeTravel> findByCarRent(Integer carRentId) {
+        return em.createNamedQuery("EmployeeTravel.findByCarRent", EmployeeTravel.class).setParameter("carRent", carRentsDAO.findOne(carRentId)).getResultList();
+    }
+
+    public List<EmployeeTravel> findByRoom(Integer roomId) {
+        return em.createNamedQuery("EmployeeTravel.findByRoom", EmployeeTravel.class).setParameter("room", roomsDAO.findOne(roomId)).getResultList();
+    }
+
     public EmployeeTravel update(EmployeeTravel employeeTravel){
-        System.out.println("merge employeetravel");
         return em.merge(employeeTravel);
     }
 

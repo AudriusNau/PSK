@@ -1,6 +1,9 @@
 package rest;
 
+import entities.CarRent;
 import entities.EmployeeTravel;
+import entities.Flight;
+import entities.Room;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.*;
@@ -69,6 +72,48 @@ public class EmployeeTravelController {
         return employeeTravels;
     }
 
+    @Path("/get/flightId/{flightId}")
+    @GET
+    public List <EmployeeTravel> findByFlight(@PathParam("flightId") Integer flightId){
+        List<EmployeeTravel> employeeTravels = employeeTravelsDAO.findByFlight(flightId);
+        return employeeTravels;
+    }
+
+    @Path("/get/carRentId/{carRentId}")
+    @GET
+    public List <EmployeeTravel> findByCarRent(@PathParam("carRentId") Integer carRentId){
+        List<EmployeeTravel> employeeTravels = employeeTravelsDAO.findByCarRent(carRentId);
+        return employeeTravels;
+    }
+
+    @Path("/get/roomId/{roomId}")
+    @GET
+    public List <EmployeeTravel> findByRoom(@PathParam("roomId") Integer roomId){
+        List<EmployeeTravel> employeeTravels = employeeTravelsDAO.findByRoom(roomId);
+        return employeeTravels;
+    }
+
+    @Path("/get/getFlightByEmployeeTravelId/{employeeTravelId}")
+    @GET
+    public Flight findFlightByEmployeeTravelId(@PathParam("employeeTravelId") int id){
+        Flight flight = (employeeTravelsDAO.findOne(id)).getFlight();
+        return flight;
+    }
+
+    @Path("/get/getCarRentByEmployeeTravelId/{employeeTravelId}")
+    @GET
+    public CarRent findCarRentByEmployeeTravelId(@PathParam("employeeTravelId") int id){
+        CarRent carRent = (employeeTravelsDAO.findOne(id)).getCarRent();
+        return carRent;
+    }
+
+    @Path("/get/getRoomByEmployeeTravelId/{employeeTravelId}")
+    @GET
+    public Room findRoomByEmployeeTravelId(@PathParam("employeeTravelId") int id){
+        Room room = (employeeTravelsDAO.findOne(id)).getRoom();
+        return room;
+    }
+
     @Path("/get/all")
     @GET
     public List<EmployeeTravel> find(){
@@ -84,15 +129,12 @@ public class EmployeeTravelController {
                                     @QueryParam("flightId") Integer flightId,
                                  @QueryParam("carRentId") Integer carRentId,
     @QueryParam("roomId") Integer roomId) {
-        System.out.println("employeeTravel post");
         EmployeeTravel employeeTravel = new EmployeeTravel();
-        /*employeeTravel.setTravelId(travelId);
-        employeeTravel.setEmployeeId(employeeId);*/
-        employeeTravel.setTravel(travelsDAO.findOne(travelId));
-        employeeTravel.setEmployee(employeesDAO.findOne(employeeId));
-        employeeTravel.setFlight(flightsDAO.findOne(flightId));
-        employeeTravel.setCarRent(carRentsDAO.findOne(carRentId));
-        employeeTravel.setRoom(roomsDAO.findOne(roomId));
+        if (travelId != null) employeeTravel.setTravel(travelsDAO.findOne(travelId));
+        if (employeeId != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeId));
+        if (flightId != null) employeeTravel.setFlight(flightsDAO.findOne(flightId));
+        if (carRentId != null) employeeTravel.setCarRent(carRentsDAO.findOne(carRentId));
+        if (roomId != null) employeeTravel.setRoom(roomsDAO.findOne(roomId));
         System.out.println("employeeTravel set");
         employeeTravelsDAO.persist(employeeTravel);
         return employeeTravel;
@@ -105,9 +147,7 @@ public class EmployeeTravelController {
                            @QueryParam("employeeId") Integer employeeId,
                            @QueryParam("flightId") Integer flightId,
                            @QueryParam("carRentId") Integer carRentId) {
-        System.out.println(id);
         EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
-        System.out.println(employeeTravel);
         if (employeeTravel == null){
             throw new IllegalArgumentException("employeeTravel id "
                     + id + " not found");
