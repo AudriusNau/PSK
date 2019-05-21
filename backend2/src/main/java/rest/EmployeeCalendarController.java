@@ -50,7 +50,7 @@ public class EmployeeCalendarController {
         return employeeCalendars;
     }
 
-    @Path("/get/employee/{employeeId}")
+    @Path("/get/employeeId/{employeeId}")
     @GET
     public List <EmployeeCalendar> findByDate(@PathParam("employeeId") Integer employeeId){
         List<EmployeeCalendar> employeeCalendars = employeeCalendarsDAO.findByEmployee(employeeId);

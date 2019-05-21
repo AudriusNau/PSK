@@ -49,6 +49,8 @@ public class EmployeeTravelsDAO {
     }*/
 
     public EmployeeTravel findOne(Integer id) {
+        System.out.println("findOne employee travel");
+        System.out.println(id);
         return em.find(EmployeeTravel.class, id);
     }
 
@@ -63,6 +65,7 @@ public class EmployeeTravelsDAO {
     }
 
     public EmployeeTravel update(EmployeeTravel employeeTravel){
+        System.out.println("merge employeetravel");
         return em.merge(employeeTravel);
     }
 

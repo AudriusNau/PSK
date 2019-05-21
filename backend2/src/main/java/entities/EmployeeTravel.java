@@ -42,6 +42,10 @@ public class EmployeeTravel implements Serializable {
     @JoinColumn(name = "car_rent_id")
     CarRent carRent;
 
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    Room room;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
