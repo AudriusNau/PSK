@@ -51,4 +51,9 @@ public class AccommodationsDAO {
         return em.merge(accommodation);
     }
 
+    public void delete(Accommodation accommodation)
+    {
+        if (!em.contains(accommodation)) em.merge(accommodation);
+        em.remove(accommodation);
+    }
 }

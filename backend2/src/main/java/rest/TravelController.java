@@ -1,9 +1,11 @@
 package rest;
 
+import entities.Employee;
 import entities.Travel;
 import entities.Office;
 import lombok.Getter;
 import lombok.Setter;
+import persistence.EmployeesDAO;
 import persistence.TravelsDAO;
 import persistence.OfficesDAO;
 
@@ -30,6 +32,11 @@ public class TravelController {
     @Getter
     private OfficesDAO officesDAO;
 
+    @Inject
+    @Setter
+    @Getter
+    private EmployeesDAO employeesDAO;
+
     @Path("/get/{travelId}")
     @GET
     public Travel find(@PathParam("travelId") int id){
@@ -51,6 +58,13 @@ public class TravelController {
         return travels;
     }
 
+    @Path("/get/getByOrganiserId/{organiserId}")
+    @GET
+    public List<Travel> findByOrganiserId(@PathParam("organiserId") int organiserId){
+        List<Travel> travels = travelsDAO.findByOrganiserId(organiserId);
+        return travels;
+    }
+
     @Path("/get/getDepartureOfficeByTravelId/{travelId}")
     @GET
     public Office findDepartureOfficeByTravelId(@PathParam("travelId") int id){
@@ -63,6 +77,13 @@ public class TravelController {
     public Office findArrivalOfficeByTravelId(@PathParam("travelId") int id){
         Office office = (travelsDAO.findOne(id)).getArrivalOffice();
         return office;
+    }
+
+    @Path("/get/getOrganiserByTravelId/{travelId}")
+    @GET
+    public Employee findOrganiserByTravelId(@PathParam("travelId") int id){
+        Employee employee = (travelsDAO.findOne(id)).getOrganiser();
+        return employee;
     }
 
     @Path("/get/all")
@@ -79,13 +100,14 @@ public class TravelController {
                          @QueryParam("date") String date,
                          @QueryParam("departureOfficeId") Integer departureOfficeId,
                                 @QueryParam("arrivalOfficeId") Integer arrivalOfficeId,
-                         @QueryParam("price") Double price) {
-        System.out.println("travel post");
+                         @QueryParam("price") Double price,
+                         @QueryParam("organiserId") Integer organiserId) {
         Travel travel = new Travel();
         travel.setDate(date);
         travel.setDepartureOffice(officesDAO.findOne(departureOfficeId));
         travel.setArrivalOffice(officesDAO.findOne(arrivalOfficeId));
-        travel.setPrice(price);
+        if(price != null) travel.setPrice(price);
+        if(organiserId != null) travel.setOrganiser(employeesDAO.findOne(organiserId));
         travelsDAO.persist(travel);
         return travel;
     }
@@ -96,7 +118,8 @@ public class TravelController {
                            @QueryParam("date") String date,
                            @QueryParam("departureOffice") Integer departureOfficeId,
                            @QueryParam("arrivalOfficeId") Integer arrivalOfficeId,
-                           @QueryParam("price") Double price) {
+                           @QueryParam("price") Double price,
+                           @QueryParam("organiserId") Integer organiserId) {
 
         Travel travel = travelsDAO.findOne(id);
         if (travel == null){
@@ -106,8 +129,17 @@ public class TravelController {
         if (date != null) travel.setDate(date);
         if (departureOfficeId != null) travel.setDepartureOffice(officesDAO.findOne(departureOfficeId));
         if (arrivalOfficeId != null) travel.setArrivalOffice(officesDAO.findOne(arrivalOfficeId));
+        if (organiserId != null) travel.setOrganiser(employeesDAO.findOne(organiserId));
         travelsDAO.update(travel);
         return Response.ok(travel).build();
+    }
+
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Travel travel = travelsDAO.findOne(id);
+        travelsDAO.delete(travel);
+        return Response.ok().build();
     }
 
 }

@@ -48,23 +48,12 @@ public class CalendarController {
         return calendar;
     }
 
-    /*@Path("/put/{date}")
-    @PUT @Transactional
-    public Response update(@PathParam("date") String date,
-                           @QueryParam("first_name") String firstName,
-                           @QueryParam("last_name") String lastName,
-                           @QueryParam("role") String role) {
-
+    @Path("/delete/{date}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("date") String date) {
         Calendar calendar = calendarsDAO.findOne(date);
-        if (calendar == null){
-            throw new IllegalArgumentException("calendar date "
-                    + date + " not found");
-        }
-        calendar.setFirstName(firstName);
-        calendar.setLastName(lastName);
-        calendar.setRole(role);
-        calendarsDAO.update(calendar);
-        return Response.ok(calendar).build();
-    }*/
+        calendarsDAO.delete(calendar);
+        return Response.ok().build();
+    }
 
 }

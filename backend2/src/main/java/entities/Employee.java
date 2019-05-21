@@ -42,6 +42,10 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee")
     List<EmployeeTravel> employeeTravels;
 
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "organiser")
+    List<Travel> organiserTravels;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -80,23 +80,12 @@ public class RoomCalendarController {
         return roomCalendar;
     }
 
-    /*@Path("/put/{id}")
-    @PUT @Transactional
-    public Response update(@PathParam("id") int id,
-                           @QueryParam("first_name") String firstName,
-                           @QueryParam("last_name") String lastName,
-                           @QueryParam("role") String role) {
-
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
         RoomCalendar roomCalendar = roomCalendarsDAO.findOne(id);
-        if (roomCalendar == null){
-            throw new IllegalArgumentException("roomCalendar id "
-                    + id + " not found");
-        }
-        roomCalendar.setFirstName(firstName);
-        roomCalendar.setLastName(lastName);
-        roomCalendar.setRole(role);
-        roomCalendarsDAO.update(roomCalendar);
-        return Response.ok(roomCalendar).build();
-    }*/
+        roomCalendarsDAO.delete(roomCalendar);
+        return Response.ok().build();
+    }
 
 }

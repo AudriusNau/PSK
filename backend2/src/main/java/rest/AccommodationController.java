@@ -88,4 +88,12 @@ public class AccommodationController {
         return Response.ok(accommodation).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Accommodation accommodation = accommodationsDAO.findOne(id);
+        accommodationsDAO.delete(accommodation);
+        return Response.ok().build();
+    }
+
 }

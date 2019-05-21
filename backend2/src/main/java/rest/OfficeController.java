@@ -64,4 +64,12 @@ public class OfficeController {
         return Response.ok(office).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Office office = officesDAO.findOne(id);
+        officesDAO.delete(office);
+        return Response.ok().build();
+    }
+
 }

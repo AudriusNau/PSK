@@ -69,4 +69,12 @@ public class CarRentController {
         return Response.ok(carRent).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        CarRent carRent = carRentsDAO.findOne(id);
+        carRentsDAO.delete(carRent);
+        return Response.ok().build();
+    }
+
 }

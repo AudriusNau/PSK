@@ -33,4 +33,10 @@ public class CarRentsDAO {
         return em.merge(carRent);
     }
 
+    public void delete(CarRent carRent)
+    {
+        if (!em.contains(carRent)) em.merge(carRent);
+        em.remove(carRent);
+    }
+
 }

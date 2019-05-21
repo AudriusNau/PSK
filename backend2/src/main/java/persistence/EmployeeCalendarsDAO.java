@@ -32,6 +32,10 @@ public class EmployeeCalendarsDAO {
         return em.createNamedQuery("EmployeeCalendar.findAll", EmployeeCalendar.class).getResultList();
     }
 
+    public EmployeeCalendar findOne(Integer id) {
+        return em.find(EmployeeCalendar.class, id);
+    }
+
     public void setEm(EntityManager em) {
         this.em = em;
     }
@@ -60,6 +64,12 @@ public class EmployeeCalendarsDAO {
 
     public EmployeeCalendar update(EmployeeCalendar employeeCalendar){
         return em.merge(employeeCalendar);
+    }
+
+    public void delete(EmployeeCalendar employeeCalendar)
+    {
+        if (!em.contains(employeeCalendar)) em.merge(employeeCalendar);
+        em.remove(employeeCalendar);
     }
 
 }

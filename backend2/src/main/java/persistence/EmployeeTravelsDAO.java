@@ -63,8 +63,6 @@ public class EmployeeTravelsDAO {
     }*/
 
     public EmployeeTravel findOne(Integer id) {
-        System.out.println("findOne employee travel");
-        System.out.println(id);
         return em.find(EmployeeTravel.class, id);
     }
 
@@ -92,4 +90,9 @@ public class EmployeeTravelsDAO {
         return em.merge(employeeTravel);
     }
 
+    public void delete(EmployeeTravel employeeTravels)
+    {
+        if (!em.contains(employeeTravels)) em.merge(employeeTravels);
+        em.remove(employeeTravels);
+    }
 }

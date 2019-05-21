@@ -33,5 +33,10 @@ public class CalendarsDAO {
     public Calendar update(Calendar calendar){
         return em.merge(calendar);
     }
-    
+
+    public void delete(Calendar calendar)
+    {
+        if (!em.contains(calendar)) em.merge(calendar);
+        em.remove(calendar);
+    }
 }

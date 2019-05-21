@@ -32,6 +32,10 @@ public class RoomCalendarsDAO {
         return em.createNamedQuery("RoomCalendar.findAll", RoomCalendar.class).getResultList();
     }
 
+    public RoomCalendar findOne(Integer id) {
+        return em.find(RoomCalendar.class, id);
+    }
+
     public void setEm(EntityManager em) {
         this.em = em;
     }
@@ -60,6 +64,12 @@ public class RoomCalendarsDAO {
 
     public RoomCalendar update(RoomCalendar roomCalendar){
         return em.merge(roomCalendar);
+    }
+
+    public void delete(RoomCalendar roomCalendar)
+    {
+        if (!em.contains(roomCalendar)) em.merge(roomCalendar);
+        em.remove(roomCalendar);
     }
 
 }
