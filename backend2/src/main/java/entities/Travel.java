@@ -12,7 +12,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Travel.findAll", query = "select t from Travel as t"),
         @NamedQuery(name = "Travel.findByDepartureOfficeId", query = "select t from Travel as t where t.departureOffice = :departureOffice"),
-        @NamedQuery(name = "Travel.findByArrivalOfficeId", query = "select t from Travel as t where t.arrivalOffice = :arrivalOffice")
+        @NamedQuery(name = "Travel.findByArrivalOfficeId", query = "select t from Travel as t where t.arrivalOffice = :arrivalOffice"),
+        @NamedQuery(name = "Travel.findByOrganiserId", query = "select t from Travel as t where t.organiser = :organiser")
 })
 @Table(name = "TRAVEL")
 @Getter
@@ -47,6 +48,11 @@ public class Travel implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARRIVAL_OFFICE_ID", nullable = true)
     private Office arrivalOffice;
+
+    @JohnzonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ORGANISER_ID", nullable = true)
+    private Employee organiser;
 
     @Override
     public boolean equals(Object o) {

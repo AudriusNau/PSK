@@ -21,6 +21,11 @@ public class TravelsDAO {
     @Getter
     private OfficesDAO officesDAO;
 
+    @Inject
+    @Setter
+    @Getter
+    private EmployeesDAO employeesDAO;
+
 
     public List<Travel> loadAll() {
         return em.createNamedQuery("Travel.findAll", Travel.class).getResultList();
@@ -33,6 +38,11 @@ public class TravelsDAO {
     public List<Travel> findByArrivalOfficeId(Integer arrivalOfficeId) {
         return em.createNamedQuery("Travel.findByArrivalOfficeId", Travel.class).setParameter("arrivalOffice", officesDAO.findOne(arrivalOfficeId)).getResultList();
     }
+
+    public List<Travel> findByOrganiserId(Integer organiserId) {
+        return em.createNamedQuery("Travel.findByOrganiserId", Travel.class).setParameter("organiser", employeesDAO.findOne(organiserId)).getResultList();
+    }
+
 
     public void setEm(EntityManager em) {
         this.em = em;
