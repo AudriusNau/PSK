@@ -88,4 +88,12 @@ public class RoomController {
         return Response.ok(room).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Room room = roomsDAO.findOne(id);
+        roomsDAO.delete(room);
+        return Response.ok().build();
+    }
+
 }

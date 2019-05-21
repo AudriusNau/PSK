@@ -69,4 +69,12 @@ public class FlightController {
         return Response.ok(flight).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Flight flight = flightsDAO.findOne(id);
+        flightsDAO.delete(flight);
+        return Response.ok().build();
+    }
+
 }

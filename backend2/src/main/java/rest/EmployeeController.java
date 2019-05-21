@@ -71,4 +71,12 @@ public class EmployeeController {
         return Response.ok(employee).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Employee employee = employeesDAO.findOne(id);
+        employeesDAO.delete(employee);
+        return Response.ok().build();
+    }
+
 }

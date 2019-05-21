@@ -160,4 +160,12 @@ public class EmployeeTravelController {
         return Response.ok(employeeTravel).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
+        employeeTravelsDAO.delete(employeeTravel);
+        return Response.ok().build();
+    }
+
 }

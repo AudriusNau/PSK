@@ -33,4 +33,10 @@ public class OfficesDAO {
         return em.merge(office);
     }
 
+    public void delete(Office office)
+    {
+        if (!em.contains(office)) em.merge(office);
+        em.remove(office);
+    }
+
 }

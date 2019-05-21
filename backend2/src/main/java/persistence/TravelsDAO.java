@@ -60,4 +60,10 @@ public class TravelsDAO {
         return em.merge(travel);
     }
 
+    public void delete(Travel travel)
+    {
+        if (!em.contains(travel)) em.merge(travel);
+        em.remove(travel);
+    }
+
 }

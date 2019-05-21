@@ -84,4 +84,12 @@ public class EmployeeCalendarController {
         return employeeCalendar;
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.findOne(id);
+        employeeCalendarsDAO.delete(employeeCalendar);
+        return Response.ok().build();
+    }
+
 }

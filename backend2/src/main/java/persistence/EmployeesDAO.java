@@ -33,4 +33,9 @@ public class EmployeesDAO {
         return em.merge(employee);
     }
 
+    public void delete(Employee employee)
+    {
+        if (!em.contains(employee)) em.merge(employee);
+        em.remove(employee);
+    }
 }

@@ -47,4 +47,10 @@ public class RoomsDAO {
         return em.merge(room);
     }
 
+    public void delete(Room room)
+    {
+        if (!em.contains(room)) em.merge(room);
+        em.remove(room);
+    }
+
 }

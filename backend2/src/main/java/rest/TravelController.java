@@ -134,4 +134,12 @@ public class TravelController {
         return Response.ok(travel).build();
     }
 
+    @Path("/delete/{id}")
+    @DELETE @Transactional
+    public Response delete(@PathParam("id") int id) {
+        Travel travel = travelsDAO.findOne(id);
+        travelsDAO.delete(travel);
+        return Response.ok().build();
+    }
+
 }
