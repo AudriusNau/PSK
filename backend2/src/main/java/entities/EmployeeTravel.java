@@ -16,39 +16,37 @@ import java.io.Serializable;
         @NamedQuery(name = "EmployeeTravel.findByRoom", query = "select t from EmployeeTravel as t where t.room = :room")
 
 })
-@Table(name = "EMPLOYEE_TRAVEL")
+@Table(name = "EMPLOYEE_TRAVEL", schema = "PUBLIC", catalog = "DEVBRIDGE")
 @Getter
 @Setter
 public class EmployeeTravel implements Serializable {
 
-    public EmployeeTravel(){
-
-    }
-
+    @ManyToOne
+    @JoinColumn(name = "employee_id")
+    Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "travel_id")
+    Travel travel;
+    @ManyToOne
+    @JoinColumn(name = "flight_id")
+    Flight flight;
+    @ManyToOne
+    @JoinColumn(name = "car_rent_id")
+    CarRent carRent;
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    Room room;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "employee_id")
-    Employee employee;
+    @Column(name = "STATUS", nullable = false)
+    private boolean status;
 
-    @ManyToOne
-    @JoinColumn(name = "travel_id")
-    Travel travel;
+    public EmployeeTravel(){
 
-    @ManyToOne
-    @JoinColumn(name = "flight_id")
-    Flight flight;
-
-    @ManyToOne
-    @JoinColumn(name = "car_rent_id")
-    CarRent carRent;
-
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    Room room;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -66,4 +64,5 @@ public class EmployeeTravel implements Serializable {
     public int hashCode() {
         return id;
     }
+
 }

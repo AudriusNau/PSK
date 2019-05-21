@@ -160,6 +160,19 @@ public class EmployeeTravelController {
         return Response.ok(employeeTravel).build();
     }
 
+    @Path("/accept/{id}")
+    @PUT @Transactional
+    public Response accept(@PathParam("id") int id) {
+        EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
+        if (employeeTravel == null){
+            throw new IllegalArgumentException("employeeTravel id "
+                    + id + " not found");
+        }
+        employeeTravel.setStatus(true);
+        employeeTravelsDAO.update(employeeTravel);
+        return Response.ok(employeeTravel).build();
+    }
+
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
