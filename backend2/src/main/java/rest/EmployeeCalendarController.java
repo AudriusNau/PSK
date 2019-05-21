@@ -1,6 +1,7 @@
 package rest;
 
 import entities.EmployeeCalendar;
+import entities.Calendar;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeeCalendarsDAO;
@@ -50,7 +51,7 @@ public class EmployeeCalendarController {
         return employeeCalendars;
     }
 
-    @Path("/get/employee/{employeeId}")
+    @Path("/get/employeeId/{employeeId}")
     @GET
     public List <EmployeeCalendar> findByDate(@PathParam("employeeId") Integer employeeId){
         List<EmployeeCalendar> employeeCalendars = employeeCalendarsDAO.findByEmployee(employeeId);
@@ -71,32 +72,16 @@ public class EmployeeCalendarController {
                            @QueryParam("employeeId") Integer employeeId) {
         System.out.println("employeeCalendar post");
         EmployeeCalendar employeeCalendar = new EmployeeCalendar();
-        /*employeeCalendar.setDate(date);
-        employeeCalendar.setEmployeeId(employeeId);*/
         employeeCalendar.setCalendar(calendarsDAO.findOne(date));
+        if (employeeCalendar.getCalendar() == null) {
+            System.out.println("date not found");
+            Calendar calendar = new Calendar();
+            calendar.setDate(date);
+        }
         employeeCalendar.setEmployee(employeesDAO.findOne(employeeId));
         System.out.println("employeeCalendar set");
         employeeCalendarsDAO.persist(employeeCalendar);
         return employeeCalendar;
     }
-
-    /*@Path("/put/{id}")
-    @PUT @Transactional
-    public Response update(@PathParam("id") int id,
-                           @QueryParam("first_name") String firstName,
-                           @QueryParam("last_name") String lastName,
-                           @QueryParam("role") String role) {
-
-        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.findOne(id);
-        if (employeeCalendar == null){
-            throw new IllegalArgumentException("employeeCalendar id "
-                    + id + " not found");
-        }
-        employeeCalendar.setFirstName(firstName);
-        employeeCalendar.setLastName(lastName);
-        employeeCalendar.setRole(role);
-        employeeCalendarsDAO.update(employeeCalendar);
-        return Response.ok(employeeCalendar).build();
-    }*/
 
 }

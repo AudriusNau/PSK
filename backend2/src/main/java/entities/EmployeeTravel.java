@@ -10,7 +10,11 @@ import java.io.Serializable;
 @NamedQueries({
         @NamedQuery(name = "EmployeeTravel.findAll", query = "select t from EmployeeTravel as t"),
         @NamedQuery(name = "EmployeeTravel.findByTravelId", query = "select t from EmployeeTravel as t where t.travel = :travel"),
-        @NamedQuery(name = "EmployeeTravel.findByEmployee", query = "select t from EmployeeTravel as t where t.employee = :employee")
+        @NamedQuery(name = "EmployeeTravel.findByEmployee", query = "select t from EmployeeTravel as t where t.employee = :employee"),
+        @NamedQuery(name = "EmployeeTravel.findByFlight", query = "select t from EmployeeTravel as t where t.flight = :flight"),
+        @NamedQuery(name = "EmployeeTravel.findByCarRent", query = "select t from EmployeeTravel as t where t.carRent = :carRent"),
+        @NamedQuery(name = "EmployeeTravel.findByRoom", query = "select t from EmployeeTravel as t where t.room = :room")
+
 })
 @Table(name = "EMPLOYEE_TRAVEL")
 @Getter
@@ -41,6 +45,10 @@ public class EmployeeTravel implements Serializable {
     @ManyToOne
     @JoinColumn(name = "car_rent_id")
     CarRent carRent;
+
+    @ManyToOne
+    @JoinColumn(name = "room_id")
+    Room room;
 
     @Override
     public boolean equals(Object o) {

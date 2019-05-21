@@ -40,6 +40,10 @@ public class Room implements Serializable {
     @OneToMany(mappedBy = "room")
     List<RoomCalendar> roomCalendars;
 
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "room")
+    List<EmployeeTravel> employeeTravels;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
