@@ -1,6 +1,7 @@
 package rest;
 
 import entities.Calendar;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.CalendarsDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/calendar")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class CalendarController {
 
     @Inject

@@ -4,6 +4,7 @@ import entities.CarRent;
 import entities.EmployeeTravel;
 import entities.Flight;
 import entities.Room;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.*;
@@ -19,6 +20,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/employeeTravel")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class EmployeeTravelController {
 
     @Inject

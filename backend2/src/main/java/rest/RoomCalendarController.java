@@ -1,6 +1,7 @@
 package rest;
 
 import entities.RoomCalendar;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.RoomCalendarsDAO;
@@ -18,6 +19,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/roomCalendar")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class RoomCalendarController {
 
     @Inject

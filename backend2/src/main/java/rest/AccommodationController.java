@@ -2,6 +2,7 @@ package rest;
 
 import entities.Accommodation;
 import entities.Office;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.AccommodationsDAO;
@@ -18,6 +19,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/accommodation")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class AccommodationController {
 
     @Inject

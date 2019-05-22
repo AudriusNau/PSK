@@ -1,6 +1,7 @@
 package rest;
 
 import entities.Employee;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeesDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/employee")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class EmployeeController {
 
     @Inject

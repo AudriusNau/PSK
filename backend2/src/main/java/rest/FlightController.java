@@ -1,6 +1,7 @@
 package rest;
 
 import entities.Flight;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.FlightsDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/flight")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class FlightController {
 
     //NEED - 0 - nereikia, 1 - reikia, 2 - uzsakyta
