@@ -10,15 +10,24 @@ import java.util.*;
 
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "Employee.findAll", query = "select t from Employee as t")
+        @NamedQuery(name = "Employee.findAll", query = "select t from Employee as t"),
+        @NamedQuery(name = "Employee.findByUsernameAndPassword", query = "select t from Employee as t where t.username = :username AND t.password = :password")
 })
 @Table(name = "EMPLOYEE")
 @Getter @Setter
 public class Employee implements Serializable {
 
-    public Employee(){
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "employee")
+    List<EmployeeCalendar> employeeCalendars;
 
-    }
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "employee")
+    List<EmployeeTravel> employeeTravels;
+
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "organiser")
+    List<Travel> organiserTravels;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,17 +43,16 @@ public class Employee implements Serializable {
     @Column(name = "ROLE", nullable = true, length = 20)
     private String role;
 
-    @JohnzonIgnore
-    @OneToMany(mappedBy = "employee")
-    List<EmployeeCalendar> employeeCalendars;
+    @Column(name = "USERNAME", nullable = true, length = 128)
+    private String username;
 
     @JohnzonIgnore
-    @OneToMany(mappedBy = "employee")
-    List<EmployeeTravel> employeeTravels;
+    @Column(name = "PASSWORD", nullable = true, length = 256)
+    private String password;
 
-    @JohnzonIgnore
-    @OneToMany(mappedBy = "organiser")
-    List<Travel> organiserTravels;
+    public Employee(){
+
+    }
 
     @Override
     public boolean equals(Object o) {
