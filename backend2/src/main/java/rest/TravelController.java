@@ -3,6 +3,7 @@ package rest;
 import entities.Employee;
 import entities.Travel;
 import entities.Office;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeesDAO;
@@ -20,6 +21,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/travel")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class TravelController {
 
     @Inject

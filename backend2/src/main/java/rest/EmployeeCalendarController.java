@@ -2,6 +2,7 @@ package rest;
 
 import entities.EmployeeCalendar;
 import entities.Calendar;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeeCalendarsDAO;
@@ -19,6 +20,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/employeeCalendar")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class EmployeeCalendarController {
 
     @Inject

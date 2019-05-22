@@ -1,6 +1,7 @@
 package rest;
 
 import entities.Office;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.OfficesDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/office")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class OfficeController {
 
     @Inject

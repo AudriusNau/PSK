@@ -1,6 +1,7 @@
 package rest;
 
 import entities.CarRent;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.CarRentsDAO;
@@ -16,6 +17,7 @@ import java.util.List;
 @ApplicationScoped
 @Path("/carRent")
 @Produces(MediaType.APPLICATION_JSON)
+@DevbridgeInterceptor
 public class CarRentController {
 
     //NEED - 0 - nereikia, 1 - reikia, 2 - uzsakyta
