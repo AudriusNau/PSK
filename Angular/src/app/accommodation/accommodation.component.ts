@@ -11,6 +11,7 @@ import { Url } from '../http/url';
 export class AccommodationComponent implements OnInit {
 
     items: Array<Accommodation> = []
+    public displayedColumns: string[] = ['name', 'type', 'id'];
 
     constructor(private http: HttpClient) { }
 
