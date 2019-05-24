@@ -1,0 +1,29 @@
+<div class="travel-table mat-elevation-z8">
+    <table mat-table [dataSource]="items">
+
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="departureOffice">
+            <th mat-header-cell *matHeaderCellDef>Departure office </th>
+            <td mat-cell *matCellDef="let element"> {{element.departureOffice}} </td>
+        </ng-container>
+      <ng-container matColumnDef="arrivalOffice">
+        <th mat-header-cell *matHeaderCellDef>Arrival office </th>
+        <td mat-cell *matCellDef="let element"> {{element.arrivalOffice}} </td>
+      </ng-container>
+      <ng-container matColumnDef="organiser">
+        <th mat-header-cell *matHeaderCellDef>Organiser</th>
+        <td mat-cell *matCellDef="let element"> {{element.organiser}} </td>
+      </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>
