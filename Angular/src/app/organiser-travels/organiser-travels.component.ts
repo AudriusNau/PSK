@@ -21,6 +21,10 @@ export class OrganiserTravelsComponent implements OnInit {
     constructor(private http: HttpClient, private dialog: MatDialog) { }
 
     ngOnInit() {
+        this.loadTable();
+    }
+
+    loadTable() {
         this.http.get(Url.get('travel/get/getByOrganiserId/' + 3))
             .subscribe((travels: Array<Travel>) => {
                 this.travels = travels;
@@ -40,8 +44,11 @@ export class OrganiserTravelsComponent implements OnInit {
 
     onCreateClick() {
         const config = new MatDialogConfig();
-        config.width = '80%'
         config.data = 3
-        this.dialog.open(NewTravelDialogComponent, config);
+        this.dialog.open(NewTravelDialogComponent, config)
+            .afterClosed().subscribe((result) => {
+                if (result == true)
+                    this.loadTable();
+            })
     }
 }
