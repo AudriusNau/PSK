@@ -16,7 +16,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { LoginComponent } from './Login/login.component';
 import {TravelComponent} from './travel/travel.component';
-import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeTravelComponent } from './employeeTravel/employeeTravel.component';
 import { AccommodationDialogComponent } from './accommodation/accommodation-dialog/accommodation-dialog.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
 import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
@@ -33,11 +33,12 @@ import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/
         AccommodationComponent,
         LoginComponent,
         TravelComponent,
-        EmployeeComponent,
         TravelComponent,
         AccommodationDialogComponent,
         OrganiserTravelsComponent,
-        NewTravelDialogComponent
+        NewTravelDialogComponent,
+        EmployeeTravelComponent,
+        AccommodationDialogComponent,
     ],
     imports: [
         BrowserModule,
