@@ -1,5 +1,6 @@
 package rest;
 
+import dto.EmployeeDTO;
 import entities.Employee;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -42,14 +43,13 @@ public class EmployeeController {
     @Path("/post")
     @POST
     @Transactional
-    public Employee create(@QueryParam("firstName") String firstName,
-                           @QueryParam("lastName") String lastName,
-                           @QueryParam("role") String role) {
-        System.out.println("employee post");
+    public Employee create(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employee.setRole(role);
+        employee.setFirstName(employeeDTO.getFirstName());
+        employee.setLastName(employeeDTO.getLastName());
+        employee.setRole(employeeDTO.getRole());
+        employee.setUsername(employeeDTO.getUsername());
+        employee.setPassword(employeeDTO.getPassword());
         employeesDAO.persist(employee);
         return employee;
     }
@@ -57,18 +57,18 @@ public class EmployeeController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("firstName") String firstName,
-                           @QueryParam("lastName") String lastName,
-                           @QueryParam("role") String role) {
+                           EmployeeDTO employeeDTO) {
 
         Employee employee = employeesDAO.findOne(id);
         if (employee == null){
             throw new IllegalArgumentException("employee id "
                     + id + " not found");
         }
-        if (firstName != null) employee.setFirstName(firstName);
-        if (lastName != null) employee.setLastName(lastName);
-        if (role != null) employee.setRole(role);
+        if (employeeDTO.getFirstName() != null) employee.setFirstName(employeeDTO.getFirstName());
+        if (employeeDTO.getLastName() != null) employee.setLastName(employeeDTO.getLastName());
+        if (employeeDTO.getRole() != null) employee.setRole(employeeDTO.getRole());
+        if (employeeDTO.getUsername() != null) employee.setRole(employeeDTO.getUsername());
+        if (employeeDTO.getPassword() != null) employee.setRole(employeeDTO.getPassword());
         employeesDAO.update(employee);
         return Response.ok(employee).build();
     }

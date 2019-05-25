@@ -1,5 +1,6 @@
 package rest;
 
+import dto.AccommodationDTO;
 import entities.Accommodation;
 import entities.Office;
 import interceptors.DevbridgeInterceptor;
@@ -63,12 +64,11 @@ public class AccommodationController {
     @Path("/post")
     @POST
     @Transactional
-    public Accommodation create(@QueryParam("name") String name,
-    @QueryParam("officeId") Integer officeId) {
-        System.out.println("accommodation post");
+    public Accommodation create(AccommodationDTO accommodationDTO) {
         Accommodation accommodation = new Accommodation();
-        accommodation.setName(name);
-        accommodation.setOffice(officesDAO.findOne(officeId));
+        accommodation.setName(accommodationDTO.getName());
+        accommodation.setOffice(officesDAO.findOne(accommodationDTO.getOfficeId()));
+        accommodation.setAccommodationType(accommodationDTO.getAccommodationType());
         accommodationsDAO.persist(accommodation);
         return accommodation;
     }
@@ -76,16 +76,16 @@ public class AccommodationController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("name") String name,
-                           @QueryParam("officeId") Integer officeId) {
+                           AccommodationDTO accommodationDTO) {
 
         Accommodation accommodation = accommodationsDAO.findOne(id);
         if (accommodation == null){
             throw new IllegalArgumentException("accommodation id "
                     + id + " not found");
         }
-        if (name != null) accommodation.setName(name);
-        if (officeId != null) accommodation.setOffice(officesDAO.findOne(officeId));
+        if (accommodationDTO.getName() != null) accommodation.setName(accommodationDTO.getName());
+        if (accommodationDTO.getOfficeId() != null) accommodation.setOffice(officesDAO.findOne(accommodationDTO.getOfficeId()));
+        if (accommodationDTO.getAccommodationType() != null) accommodation.setAccommodationType(accommodationDTO.getAccommodationType());
         accommodationsDAO.update(accommodation);
         return Response.ok(accommodation).build();
     }

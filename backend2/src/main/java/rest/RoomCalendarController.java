@@ -1,5 +1,6 @@
 package rest;
 
+import dto.RoomCalendarDTO;
 import entities.RoomCalendar;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -69,14 +70,13 @@ public class RoomCalendarController {
     @Path("/post")
     @POST
     @Transactional
-    public RoomCalendar create(@QueryParam("date") String date,
-                                   @QueryParam("roomId") Integer roomId) {
+    public RoomCalendar create(RoomCalendarDTO roomCalendarDTO) {
         System.out.println("roomCalendar post");
         RoomCalendar roomCalendar = new RoomCalendar();
         /*roomCalendar.setDate(date);
         roomCalendar.setRoomId(roomId);*/
-        roomCalendar.setCalendar(calendarsDAO.findOne(date));
-        roomCalendar.setRoom(roomsDAO.findOne(roomId));
+        roomCalendar.setCalendar(calendarsDAO.findOne(roomCalendarDTO.getDate()));
+        roomCalendar.setRoom(roomsDAO.findOne(roomCalendarDTO.getRoomId()));
         System.out.println("roomCalendar set");
         roomCalendarsDAO.persist(roomCalendar);
         return roomCalendar;
