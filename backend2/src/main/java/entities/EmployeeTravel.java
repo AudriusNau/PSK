@@ -13,7 +13,11 @@ import java.io.Serializable;
         @NamedQuery(name = "EmployeeTravel.findByEmployee", query = "select t from EmployeeTravel as t where t.employee = :employee"),
         @NamedQuery(name = "EmployeeTravel.findByFlight", query = "select t from EmployeeTravel as t where t.flight = :flight"),
         @NamedQuery(name = "EmployeeTravel.findByCarRent", query = "select t from EmployeeTravel as t where t.carRent = :carRent"),
-        @NamedQuery(name = "EmployeeTravel.findByRoom", query = "select t from EmployeeTravel as t where t.room = :room")
+        @NamedQuery(name = "EmployeeTravel.findByRoom", query = "select t from EmployeeTravel as t where t.room = :room"),
+        @NamedQuery(name = "EmployeeTravel.findAllPendingTravels", query = "select t from EmployeeTravel as t where t.status = false"),
+        @NamedQuery(name = "EmployeeTravel.findAllAcceptedTravels", query = "select t from EmployeeTravel as t where t.status = true"),
+        @NamedQuery(name = "EmployeeTravel.findAllPendingTravelsForEmployee", query = "select t from EmployeeTravel as t where t.status = false AND t.employee = :employee"),
+        @NamedQuery(name = "EmployeeTravel.findAllAcceptedTravelsForEmployee", query = "select t from EmployeeTravel as t where t.status = true AND t.employee = :employee")
 
 })
 @Table(name = "EMPLOYEE_TRAVEL", schema = "PUBLIC", catalog = "DEVBRIDGE")

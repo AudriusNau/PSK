@@ -46,6 +46,18 @@ public class EmployeeTravelsDAO {
         return em.createNamedQuery("EmployeeTravel.findAll", EmployeeTravel.class).getResultList();
     }
 
+    public List<EmployeeTravel> loadAllPendingTravels() {
+        return em.createNamedQuery("EmployeeTravel.findAllPendingTravels", EmployeeTravel.class).getResultList();
+    }
+
+    public List<EmployeeTravel> loadAllPendingTravelsForEmployee(Integer employeeId) {
+        return em.createNamedQuery("EmployeeTravel.findAllPendingTravelsForEmployee", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
+    }
+
+    public List<EmployeeTravel> loadAllAcceptedTravelsForEmployee(Integer employeeId) {
+        return em.createNamedQuery("EmployeeTravel.findAllAcceptedTravelsForEmployee", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
+    }
+
     public void setEm(EntityManager em) {
         this.em = em;
     }
