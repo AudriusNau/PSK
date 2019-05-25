@@ -28,7 +28,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
         SidenavListComponent,
         AccommodationComponent,
         TravelComponent,
-        EmployeeComponent
+        EmployeeComponent,
         TravelComponent,
         AccommodationDialogComponent
     ],
