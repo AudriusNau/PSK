@@ -42,10 +42,7 @@ public class CalendarController {
     @Path("/post/{date}")
     @POST
     @Transactional
-    public Calendar create(@PathParam("date") String date) {
-        System.out.println("calendar post");
-        Calendar calendar = new Calendar();
-        calendar.setDate(date);
+    public Calendar create(Calendar calendar) {
         calendarsDAO.persist(calendar);
         return calendar;
     }

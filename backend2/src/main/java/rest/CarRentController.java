@@ -44,12 +44,7 @@ public class CarRentController {
     @Path("/post")
     @POST
     @Transactional
-    public CarRent create(@QueryParam("need") Integer need,
-                           @QueryParam("info") String info) {
-        System.out.println("carRent post");
-        CarRent carRent = new CarRent();
-        carRent.setNeed(need);
-        carRent.setInfo(info);
+    public CarRent create(CarRent carRent) {
         carRentsDAO.persist(carRent);
         return carRent;
     }

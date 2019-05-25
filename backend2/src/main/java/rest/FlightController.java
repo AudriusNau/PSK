@@ -44,12 +44,7 @@ public class FlightController {
     @Path("/post")
     @POST
     @Transactional
-    public Flight create(@QueryParam("need") Integer need,
-                          @QueryParam("info") String info) {
-        System.out.println("flight post");
-        Flight flight = new Flight();
-        flight.setNeed(need);
-        flight.setInfo(info);
+    public Flight create(Flight flight) {
         flightsDAO.persist(flight);
         return flight;
     }

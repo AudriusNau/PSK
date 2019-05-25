@@ -42,14 +42,7 @@ public class EmployeeController {
     @Path("/post")
     @POST
     @Transactional
-    public Employee create(@QueryParam("firstName") String firstName,
-                           @QueryParam("lastName") String lastName,
-                           @QueryParam("role") String role) {
-        System.out.println("employee post");
-        Employee employee = new Employee();
-        employee.setFirstName(firstName);
-        employee.setLastName(lastName);
-        employee.setRole(role);
+    public Employee create(Employee employee) {
         employeesDAO.persist(employee);
         return employee;
     }
