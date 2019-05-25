@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,8 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import {TravelComponent} from './travel/travel.component';
+import { AccommodationDialogComponent } from './accommodation/accommodation-dialog/accommodation-dialog.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
 
 @NgModule({
     declarations: [
@@ -23,7 +26,8 @@ import {TravelComponent} from './travel/travel.component';
         HeaderComponent,
         SidenavListComponent,
         AccommodationComponent,
-        TravelComponent
+        TravelComponent,
+        AccommodationDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -31,9 +35,14 @@ import {TravelComponent} from './travel/travel.component';
         MaterialModule,
         FlexLayoutModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
-    providers: [],
-    bootstrap: [AppComponent]
+    providers: [
+        MatDialogModule,
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    ],
+    bootstrap: [AppComponent],
+    entryComponents: [AccommodationDialogComponent]
 })
 export class AppModule { }
