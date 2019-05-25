@@ -13,6 +13,7 @@ import { MaterialModule } from './material/material.module';
 import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+import { LoginComponent } from './Login/login.component';
 
 @NgModule({
     declarations: [
@@ -21,7 +22,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
         HomeComponent,
         HeaderComponent,
         SidenavListComponent,
-        AccommodationComponent
+        AccommodationComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
