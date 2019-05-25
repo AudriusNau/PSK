@@ -5,6 +5,7 @@ import { Url } from '../http/url';
 import { Office } from '../entities/office';
 import {Organiser} from "../entities/organiser";
 import {MatPaginator, MatTableDataSource} from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-travel',
@@ -16,7 +17,7 @@ export class TravelComponent implements OnInit {
     items: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser' , 'star' ];
     dataSource: MatTableDataSource<Travel>;
-    constructor(private http: HttpClient) { }
+    constructor(private http: HttpClient, private router: Router) { }
     ngOnInit() {
       this.http.get(Url.get('travel/get/all'))
             .subscribe((travels: Array<Travel>) => {
@@ -42,5 +43,8 @@ export class TravelComponent implements OnInit {
             });
     }
 
+    goToDetails(id: number) {
+      this.router.navigate(['/travel', id]);
+    }
 }
 
