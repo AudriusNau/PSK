@@ -74,6 +74,20 @@ public class EmployeeTravelController {
         return employeeTravels;
     }
 
+    @Path("/get/getPendingTravelsForEmployee/{employeeId}")
+    @GET
+    public List <EmployeeTravel> findPendingTravelsForEmployee(@PathParam("employeeId") Integer employeeId){
+        List<EmployeeTravel> employeeTravels = employeeTravelsDAO.loadAllPendingTravelsForEmployee(employeeId);
+        return employeeTravels;
+    }
+
+    @Path("/get/getAcceptedTravelsForEmployee/{employeeId}")
+    @GET
+    public List <EmployeeTravel> findAcceptedTravelsForEmployee(@PathParam("employeeId") Integer employeeId){
+        List<EmployeeTravel> employeeTravels = employeeTravelsDAO.loadAllAcceptedTravelsForEmployee(employeeId);
+        return employeeTravels;
+    }
+
     @Path("/get/flightId/{flightId}")
     @GET
     public List <EmployeeTravel> findByFlight(@PathParam("flightId") Integer flightId){

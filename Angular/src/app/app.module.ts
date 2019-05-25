@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,11 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { LoginComponent } from './Login/login.component';
+import {TravelComponent} from './travel/travel.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { AccommodationDialogComponent } from './accommodation/accommodation-dialog/accommodation-dialog.component';
+import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
+
 
 @NgModule({
     declarations: [
@@ -23,7 +29,12 @@ import { LoginComponent } from './Login/login.component';
         HeaderComponent,
         SidenavListComponent,
         AccommodationComponent,
-        LoginComponent
+        LoginComponent,
+        TravelComponent,
+        EmployeeComponent,
+        TravelComponent,
+        AccommodationDialogComponent
+
     ],
     imports: [
         BrowserModule,
@@ -31,9 +42,14 @@ import { LoginComponent } from './Login/login.component';
         MaterialModule,
         FlexLayoutModule,
         AppRoutingModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
-    providers: [],
-    bootstrap: [AppComponent]
+    providers: [
+        MatDialogModule,
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+    ],
+    bootstrap: [AppComponent],
+    entryComponents: [AccommodationDialogComponent]
 })
 export class AppModule { }
