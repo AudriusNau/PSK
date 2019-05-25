@@ -1,5 +1,6 @@
 package rest;
 
+import dto.EmployeeCalendarDTO;
 import entities.EmployeeCalendar;
 import entities.Calendar;
 import interceptors.DevbridgeInterceptor;
@@ -70,17 +71,16 @@ public class EmployeeCalendarController {
     @Path("/post")
     @POST
     @Transactional
-    public EmployeeCalendar create(@QueryParam("date") String date,
-                           @QueryParam("employeeId") Integer employeeId) {
-        System.out.println("employeeCalendar post");
+    public EmployeeCalendar create(EmployeeCalendarDTO employeeCalendarDTO) {
         EmployeeCalendar employeeCalendar = new EmployeeCalendar();
-        employeeCalendar.setCalendar(calendarsDAO.findOne(date));
-        if (employeeCalendar.getCalendar() == null) {
+        if (calendarsDAO.findOne(employeeCalendarDTO.getDate()) == null) {
             System.out.println("date not found");
             Calendar calendar = new Calendar();
-            calendar.setDate(date);
+            calendar.setDate(employeeCalendarDTO.getDate());
+            calendarsDAO.persist(calendar);
         }
-        employeeCalendar.setEmployee(employeesDAO.findOne(employeeId));
+        employeeCalendar.setCalendar(calendarsDAO.findOne(employeeCalendarDTO.getDate()));
+        employeeCalendar.setEmployee(employeesDAO.findOne(employeeCalendarDTO.getEmployeeId()));
         System.out.println("employeeCalendar set");
         employeeCalendarsDAO.persist(employeeCalendar);
         return employeeCalendar;

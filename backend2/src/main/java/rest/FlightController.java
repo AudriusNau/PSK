@@ -1,5 +1,6 @@
 package rest;
 
+import dto.FlightDTO;
 import entities.Flight;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -44,7 +45,10 @@ public class FlightController {
     @Path("/post")
     @POST
     @Transactional
-    public Flight create(Flight flight) {
+    public Flight create(FlightDTO flightDTO) {
+        Flight flight = new Flight();
+        flight.setNeed(flightDTO.getNeed());
+        flight.setInfo(flightDTO.getInfo());
         flightsDAO.persist(flight);
         return flight;
     }
@@ -52,16 +56,15 @@ public class FlightController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("need") Integer need,
-                           @QueryParam("info") String info) {
+                           FlightDTO flightDTO) {
 
         Flight flight = flightsDAO.findOne(id);
         if (flight == null){
             throw new IllegalArgumentException("flight id "
                     + id + " not found");
         }
-        if (need != null) flight.setNeed(need);
-        if (info != null) flight.setInfo(info);
+        if (flightDTO.getNeed() != null) flight.setNeed(flightDTO.getNeed());
+        if (flightDTO.getInfo() != null) flight.setInfo(flightDTO.getInfo());
         flightsDAO.update(flight);
         return Response.ok(flight).build();
     }

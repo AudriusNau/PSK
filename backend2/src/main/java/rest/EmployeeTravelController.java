@@ -1,5 +1,6 @@
 package rest;
 
+import dto.EmployeeTravelDTO;
 import entities.CarRent;
 import entities.EmployeeTravel;
 import entities.Flight;
@@ -140,17 +141,13 @@ public class EmployeeTravelController {
     @Path("/post")
     @POST
     @Transactional
-    public EmployeeTravel create(@QueryParam("travelId") Integer travelId,
-                                   @QueryParam("employeeId") Integer employeeId,
-                                    @QueryParam("flightId") Integer flightId,
-                                 @QueryParam("carRentId") Integer carRentId,
-    @QueryParam("roomId") Integer roomId) {
+    public EmployeeTravel create(EmployeeTravelDTO employeeTravelDTO) {
         EmployeeTravel employeeTravel = new EmployeeTravel();
-        if (travelId != null) employeeTravel.setTravel(travelsDAO.findOne(travelId));
-        if (employeeId != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeId));
-        if (flightId != null) employeeTravel.setFlight(flightsDAO.findOne(flightId));
-        if (carRentId != null) employeeTravel.setCarRent(carRentsDAO.findOne(carRentId));
-        if (roomId != null) employeeTravel.setRoom(roomsDAO.findOne(roomId));
+        if (employeeTravelDTO.getTravelId() != null) employeeTravel.setTravel(travelsDAO.findOne(employeeTravelDTO.getTravelId()));
+        if (employeeTravelDTO.getEmployeeId() != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeTravelDTO.getEmployeeId()));
+        if (employeeTravelDTO.getFlightId() != null) employeeTravel.setFlight(flightsDAO.findOne(employeeTravelDTO.getFlightId()));
+        if (employeeTravelDTO.getCarRentId() != null) employeeTravel.setCarRent(carRentsDAO.findOne(employeeTravelDTO.getCarRentId()));
+        if (employeeTravelDTO.getRoomId() != null) employeeTravel.setRoom(roomsDAO.findOne(employeeTravelDTO.getRoomId()));
         System.out.println("employeeTravel set");
         employeeTravelsDAO.persist(employeeTravel);
         return employeeTravel;
@@ -159,19 +156,17 @@ public class EmployeeTravelController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("travelId") Integer travelId,
-                           @QueryParam("employeeId") Integer employeeId,
-                           @QueryParam("flightId") Integer flightId,
-                           @QueryParam("carRentId") Integer carRentId) {
+                           EmployeeTravelDTO employeeTravelDTO) {
         EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
         if (employeeTravel == null){
             throw new IllegalArgumentException("employeeTravel id "
                     + id + " not found");
         }
-        if (employeeId != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeId));
-        if (travelId != null) employeeTravel.setTravel(travelsDAO.findOne(travelId));
-        if (flightId != null) employeeTravel.setFlight(flightsDAO.findOne(flightId));
-        if (carRentId != null) employeeTravel.setCarRent(carRentsDAO.findOne(carRentId));
+        if (employeeTravelDTO.getTravelId() != null) employeeTravel.setTravel(travelsDAO.findOne(employeeTravelDTO.getTravelId()));
+        if (employeeTravelDTO.getEmployeeId() != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeTravelDTO.getEmployeeId()));
+        if (employeeTravelDTO.getFlightId() != null) employeeTravel.setFlight(flightsDAO.findOne(employeeTravelDTO.getFlightId()));
+        if (employeeTravelDTO.getCarRentId() != null) employeeTravel.setCarRent(carRentsDAO.findOne(employeeTravelDTO.getCarRentId()));
+        if (employeeTravelDTO.getRoomId() != null) employeeTravel.setRoom(roomsDAO.findOne(employeeTravelDTO.getRoomId()));
         employeeTravelsDAO.update(employeeTravel);
         return Response.ok(employeeTravel).build();
     }

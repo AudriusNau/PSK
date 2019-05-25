@@ -1,5 +1,6 @@
 package rest;
 
+import dto.CalendarDTO;
 import entities.Calendar;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -42,7 +43,9 @@ public class CalendarController {
     @Path("/post/{date}")
     @POST
     @Transactional
-    public Calendar create(Calendar calendar) {
+    public Calendar create(CalendarDTO calendarDTO) {
+        Calendar calendar = new Calendar();
+        calendar.setDate(calendarDTO.getDate());
         calendarsDAO.persist(calendar);
         return calendar;
     }

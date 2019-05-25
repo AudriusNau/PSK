@@ -1,5 +1,6 @@
 package rest;
 
+import dto.RoomDTO;
 import entities.Room;
 import entities.Accommodation;
 import interceptors.DevbridgeInterceptor;
@@ -63,12 +64,11 @@ public class RoomController {
     @Path("/post")
     @POST
     @Transactional
-    public Room create(@QueryParam("roomNumber") Integer roomNumber,
-    @QueryParam("accommodationId") Integer accommodationId) {
+    public Room create(RoomDTO roomDTO) {
         System.out.println("room post");
         Room room = new Room();
-        room.setRoomNumber(roomNumber);
-        room.setAccommodation(accommodationsDAO.findOne(accommodationId));
+        room.setRoomNumber(roomDTO.getRoomNumber());
+        room.setAccommodation(accommodationsDAO.findOne(roomDTO.getAccommodationId()));
         roomsDAO.persist(room);
         return room;
     }
@@ -76,16 +76,15 @@ public class RoomController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("roomNumber") Integer roomNumber,
-                           @QueryParam("accommodationId") Integer accommodationId) {
+                           RoomDTO roomDTO) {
 
         Room room = roomsDAO.findOne(id);
         if (room == null){
             throw new IllegalArgumentException("room id "
                     + id + " not found");
         }
-        if (roomNumber != null) room.setRoomNumber(roomNumber);
-        if (accommodationId != null) room.setAccommodation(accommodationsDAO.findOne(accommodationId));
+        if (roomDTO.getRoomNumber() != null) room.setRoomNumber(roomDTO.getRoomNumber());
+        if (roomDTO.getAccommodationId() != null) room.setAccommodation(accommodationsDAO.findOne(roomDTO.getAccommodationId()));
         roomsDAO.update(room);
         return Response.ok(room).build();
     }

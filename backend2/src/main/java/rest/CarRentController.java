@@ -1,5 +1,6 @@
 package rest;
 
+import dto.CarRentDTO;
 import entities.CarRent;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -44,7 +45,10 @@ public class CarRentController {
     @Path("/post")
     @POST
     @Transactional
-    public CarRent create(CarRent carRent) {
+    public CarRent create(CarRentDTO carRentDTO) {
+        CarRent carRent = new CarRent();
+        carRent.setNeed(carRentDTO.getNeed());
+        carRent.setInfo(carRentDTO.getInfo());
         carRentsDAO.persist(carRent);
         return carRent;
     }
@@ -52,16 +56,15 @@ public class CarRentController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("need") Integer need,
-                           @QueryParam("info") String info) {
+                           CarRentDTO carRentDTO) {
 
         CarRent carRent = carRentsDAO.findOne(id);
         if (carRent == null){
             throw new IllegalArgumentException("carRent id "
                     + id + " not found");
         }
-        if (need != null) carRent.setNeed(need);
-        if (info != null) carRent.setInfo(info);
+        if (carRentDTO.getNeed() != null) carRent.setNeed(carRentDTO.getNeed());
+        if (carRentDTO.getInfo() != null) carRent.setInfo(carRentDTO.getInfo());
         carRentsDAO.update(carRent);
         return Response.ok(carRent).build();
     }
