@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Office } from '../entities/office';
 import { MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { NewTravelDialogComponent } from './new-travel-dialog/new-travel-dialog.component';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'app-organiser-travels',
@@ -18,14 +19,14 @@ export class OrganiserTravelsComponent implements OnInit {
     travels: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice'];
     
-    constructor(private http: HttpClient, private dialog: MatDialog) { }
+    constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService) { }
 
     ngOnInit() {
         this.loadTable();
     }
 
     loadTable() {
-        this.http.get(Url.get('travel/get/getByOrganiserId/' + 3))
+        this.http.get(Url.get('travel/get/getByOrganiserId/' + this.userService.user.id))
             .subscribe((travels: Array<Travel>) => {
                 this.travels = travels;
                 this.travels.forEach(item => {
@@ -44,7 +45,7 @@ export class OrganiserTravelsComponent implements OnInit {
 
     onCreateClick() {
         const config = new MatDialogConfig();
-        config.data = 3
+        config.data = this.userService.user.id;
         this.dialog.open(NewTravelDialogComponent, config)
             .afterClosed().subscribe((result) => {
                 if (result == true)

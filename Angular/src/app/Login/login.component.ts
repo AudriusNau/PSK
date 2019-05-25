@@ -5,6 +5,7 @@ import { AuthenticateComponent } from './authenticate.component';
 import { Url } from '../http/url';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { User } from '../entities/user';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ import { User } from '../entities/user';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router, private http: HttpClient) {  }
+  constructor(private router: Router, private http: HttpClient, private userService: UserService) {  }
 
   headerComponent: HeaderComponent;
   authenticateComponent: AuthenticateComponent;
@@ -38,6 +39,7 @@ export class LoginComponent implements OnInit {
         console.log(user);
         console.log(this.user);
         this.authenticateComponent.login(this.user);
+        this.userService.changeUser(user);
       },
       (error: HttpErrorResponse) => {
         this.showError = true;

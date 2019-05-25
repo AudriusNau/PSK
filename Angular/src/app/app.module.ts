@@ -21,6 +21,7 @@ import { AccommodationDialogComponent } from './accommodation/accommodation-dial
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
 import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
 import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/new-travel-dialog.component';
+import { UserService } from './services/user.service';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/
         FormsModule
     ],
     providers: [
+        UserService,
         MatDialogModule,
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
     ],
