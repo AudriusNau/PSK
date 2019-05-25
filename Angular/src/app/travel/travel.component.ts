@@ -14,10 +14,9 @@ import {MatPaginator, MatTableDataSource} from '@angular/material';
 export class TravelComponent implements OnInit {
 
     items: Array<Travel> = [];
-    public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser' ];
+    public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser' , 'star' ];
     dataSource: MatTableDataSource<Travel>;
     constructor(private http: HttpClient) { }
-    @ViewChild(MatPaginator) paginator: MatPaginator;
     ngOnInit() {
       this.http.get(Url.get('travel/get/all'))
             .subscribe((travels: Array<Travel>) => {

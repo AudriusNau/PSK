@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import {TravelComponent} from './travel/travel.component';
+import { EmployeeComponent } from './employee/employee.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import {TravelComponent} from './travel/travel.component';
         HeaderComponent,
         SidenavListComponent,
         AccommodationComponent,
-        TravelComponent
+        TravelComponent,
+        EmployeeComponent
     ],
     imports: [
         BrowserModule,

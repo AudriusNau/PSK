@@ -23,7 +23,14 @@
         <th mat-header-cell *matHeaderCellDef>Organiser</th>
         <td mat-cell *matCellDef="let element"> {{element.organiser}} </td>
       </ng-container>
+      <ng-container matColumnDef="star" stickyEnd>
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+            <a mat-button routerLink="/employee"><mat-icon aria-label="group icon">information</mat-icon></a>
+        </td>
+      </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
     </table>
 </div>
