@@ -19,10 +19,13 @@ export class OrganiserTravelsComponent implements OnInit {
     travels: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice'];
     
-    constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService) { }
+    constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
     ngOnInit() {
-        this.loadTable();
+        if (this.userService.user)
+            this.loadTable();
+        else
+            this.router.navigate(['/login']);
     }
 
     loadTable() {
