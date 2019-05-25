@@ -5,4 +5,5 @@
         <p>Password: <input type="password" id="password"></p>
     </form>
     <button type="button" id="login" (click)="login()">Login</button>
+    <span class="login-error" *ngIf="showError"><br><br>Login failed.</span>
 </div>
