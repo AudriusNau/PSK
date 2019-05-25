@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule, MatTabsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatMenuModule, MatDialogModule, MatInputModule } from '@angular/material';
+import { MatTableModule, MatTabsModule, MatSidenavModule, MatToolbarModule, MatIconModule, MatButtonModule, MatListModule, MatMenuModule, MatDialogModule, MatInputModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -14,7 +14,10 @@ import { MatTableModule, MatTabsModule, MatSidenavModule, MatToolbarModule, MatI
     MatTabsModule,
     MatSidenavModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
   ],
   exports: [
     MatMenuModule,
@@ -26,7 +29,10 @@ import { MatTableModule, MatTabsModule, MatSidenavModule, MatToolbarModule, MatI
     MatTabsModule,
     MatSidenavModule,
     MatDialogModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSelectModule,
   ],
   declarations: []
 })

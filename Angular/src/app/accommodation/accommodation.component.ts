@@ -16,7 +16,7 @@ export class AccommodationComponent implements OnInit {
     items: Array<Accommodation> = []
     public displayedColumns: string[] = ['name', 'type', 'office'];
 
-    constructor(private http: HttpClient, public dialog: MatDialog) { }
+    constructor(private http: HttpClient, private dialog: MatDialog) { }
 
     ngOnInit() {
         this.http.get(Url.get("accommodation/get/all"))

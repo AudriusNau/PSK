@@ -5,12 +5,14 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './Login/login.component';
 import {TravelComponent} from './travel/travel.component';
 import {EmployeeComponent} from './employee/employee.component';
+import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
 
 const routes: Routes = [
     { path: 'login', component: LoginComponent},
     { path: 'accomodation', component: AccommodationComponent},
     { path: 'accommodation', component: AccommodationComponent},
     { path: 'travel', component: TravelComponent},
+    { path: 'organised', component: OrganiserTravelsComponent},
     { path: 'home', component: HomeComponent},
     { path: 'travel/:id', component: EmployeeComponent},
     { path: '', redirectTo: '/home', pathMatch: 'full' }

@@ -19,6 +19,8 @@ import {TravelComponent} from './travel/travel.component';
 import { EmployeeComponent } from './employee/employee.component';
 import { AccommodationDialogComponent } from './accommodation/accommodation-dialog/accommodation-dialog.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
+import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
+import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/new-travel-dialog.component';
 
 
 @NgModule({
@@ -33,8 +35,9 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
         TravelComponent,
         EmployeeComponent,
         TravelComponent,
-        AccommodationDialogComponent
-
+        AccommodationDialogComponent,
+        OrganiserTravelsComponent,
+        NewTravelDialogComponent
     ],
     imports: [
         BrowserModule,
@@ -50,6 +53,9 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
     ],
     bootstrap: [AppComponent],
-    entryComponents: [AccommodationDialogComponent]
+    entryComponents: [
+        AccommodationDialogComponent,
+        NewTravelDialogComponent
+    ]
 })
 export class AppModule { }

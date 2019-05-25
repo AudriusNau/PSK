@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>New Trip</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Departure date" [(ngModel)]="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input matInput type="number" placeholder="Price" min="0" [(ngModel)]="price">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>From</mat-label>
+        <mat-select [(ngModel)]="departureOffice">
+            <mat-option *ngFor="let office of offices" [value]="office.id">{{office.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>To</mat-label>
+        <mat-select [(ngModel)]="arrivalOffice">
+            <mat-option *ngFor="let office of offices" [value]="office.id">{{office.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onCreateClick()">Create</button>
+    <button mat-button (click)="onCloseClick()">Close</button>
+</div>
