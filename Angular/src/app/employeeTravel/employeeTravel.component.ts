@@ -7,10 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-employee',
-  templateUrl: './employee.component.html',
-  styleUrls: ['./employee.component.scss']
+  templateUrl: './employeeTravel.component.html',
+  styleUrls: ['./employeeTravel.component.scss']
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeeTravelComponent implements OnInit {
   id: number;
   private subscription: Subscription;
 

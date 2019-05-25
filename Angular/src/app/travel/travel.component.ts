@@ -16,7 +16,6 @@ export class TravelComponent implements OnInit {
 
     items: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser' , 'star' ];
-    dataSource: MatTableDataSource<Travel>;
     constructor(private http: HttpClient, private router: Router) { }
     ngOnInit() {
       this.http.get(Url.get('travel/get/all'))

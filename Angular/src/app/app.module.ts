@@ -16,7 +16,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { LoginComponent } from './Login/login.component';
 import {TravelComponent} from './travel/travel.component';
-import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeTravelComponent } from './employeeTravel/employeeTravel.component';
 import { AccommodationDialogComponent } from './accommodation/accommodation-dialog/accommodation-dialog.component';
 import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular/material';
 
@@ -31,8 +31,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
         AccommodationComponent,
         LoginComponent,
         TravelComponent,
-        EmployeeComponent,
-        TravelComponent,
+        EmployeeTravelComponent,
         AccommodationDialogComponent
 
     ],
