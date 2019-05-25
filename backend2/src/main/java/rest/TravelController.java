@@ -1,5 +1,6 @@
 package rest;
 
+import dto.TravelDTO;
 import entities.Employee;
 import entities.Travel;
 import entities.Office;
@@ -99,17 +100,13 @@ public class TravelController {
     @POST
     @Transactional
     public Travel create(
-                         @QueryParam("date") String date,
-                         @QueryParam("departureOfficeId") Integer departureOfficeId,
-                                @QueryParam("arrivalOfficeId") Integer arrivalOfficeId,
-                         @QueryParam("price") Double price,
-                         @QueryParam("organiserId") Integer organiserId) {
+            TravelDTO travelDTO) {
         Travel travel = new Travel();
-        travel.setDate(date);
-        travel.setDepartureOffice(officesDAO.findOne(departureOfficeId));
-        travel.setArrivalOffice(officesDAO.findOne(arrivalOfficeId));
-        if(price != null) travel.setPrice(price);
-        if(organiserId != null) travel.setOrganiser(employeesDAO.findOne(organiserId));
+        travel.setDate(travelDTO.getDate());
+        travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
+        travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
+        travel.setPrice(travelDTO.getPrice());
+        travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
         travelsDAO.persist(travel);
         return travel;
     }
@@ -117,21 +114,18 @@ public class TravelController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("date") String date,
-                           @QueryParam("departureOffice") Integer departureOfficeId,
-                           @QueryParam("arrivalOfficeId") Integer arrivalOfficeId,
-                           @QueryParam("price") Double price,
-                           @QueryParam("organiserId") Integer organiserId) {
+                           TravelDTO travelDTO) {
 
         Travel travel = travelsDAO.findOne(id);
         if (travel == null){
             throw new IllegalArgumentException("travel id "
                     + id + " not found");
         }
-        if (date != null) travel.setDate(date);
-        if (departureOfficeId != null) travel.setDepartureOffice(officesDAO.findOne(departureOfficeId));
-        if (arrivalOfficeId != null) travel.setArrivalOffice(officesDAO.findOne(arrivalOfficeId));
-        if (organiserId != null) travel.setOrganiser(employeesDAO.findOne(organiserId));
+        if (travelDTO.getDate() != null) travel.setDate(travelDTO.getDate());
+        if (travelDTO.getDepartureOfficeId() != null) travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
+        if (travelDTO.getArrivalOfficeId() != null) travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
+        if (travelDTO.getOrganiserId() != null) travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
+        if (travelDTO.getPrice() != null) travel.setPrice(travelDTO.getPrice());
         travelsDAO.update(travel);
         return Response.ok(travel).build();
     }

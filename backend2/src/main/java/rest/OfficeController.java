@@ -1,5 +1,6 @@
 package rest;
 
+import dto.OfficeDTO;
 import entities.Office;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
@@ -42,11 +43,10 @@ public class OfficeController {
     @Path("/post")
     @POST
     @Transactional
-    public Office create(@QueryParam("name") String name) {
+    public Office create(OfficeDTO officeDTO) {
         System.out.println("office post");
         Office office = new Office();
-        office.setName(name);
-        //office.setOffice();
+        office.setName(officeDTO.getName());
         officesDAO.persist(office);
         return office;
     }
@@ -54,14 +54,14 @@ public class OfficeController {
     @Path("/put/{id}")
     @PUT @Transactional
     public Response update(@PathParam("id") int id,
-                           @QueryParam("name") String name) {
+                           OfficeDTO officeDTO) {
 
         Office office = officesDAO.findOne(id);
         if (office == null){
             throw new IllegalArgumentException("office id "
                     + id + " not found");
         }
-        if (name != null) office.setName(name);
+        if (officeDTO.getName() != null) office.setName(officeDTO.getName());
         officesDAO.update(office);
         return Response.ok(office).build();
     }
