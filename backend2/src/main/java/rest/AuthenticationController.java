@@ -5,6 +5,8 @@ import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeesDAO;
+import security.boundary.HashGenerator;
+import security.entity.HashServiceType;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,12 +27,17 @@ public class AuthenticationController {
     @Getter
     private EmployeesDAO employeesDAO;
 
+    @Inject
+    @HashServiceType(HashServiceType.HashType.PBKDF)
+    HashGenerator passwordHash;
+
     @Path("/get/getEmployeeByUsernameAndPassword")
     @GET
     public Employee find(@QueryParam("username") String username,
                      @QueryParam("password") String password){
-        Employee employee = employeesDAO.findByUsernameAndPassword(username, password);
-        return employee;
+        Employee employee = employeesDAO.findByUsername(username);
+        if (passwordHash.isHashedTextMatch(password, employee.getPassword())) return employee;
+        else return null;
     }
 
 }

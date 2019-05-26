@@ -6,6 +6,8 @@ import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeesDAO;
+import security.boundary.HashGenerator;
+import security.entity.HashServiceType;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,6 +27,10 @@ public class EmployeeController {
     @Setter
     @Getter
     private EmployeesDAO employeesDAO;
+
+    @Inject
+    @HashServiceType(HashServiceType.HashType.PBKDF)
+    HashGenerator passwordHash;
 
     @Path("/get/{employeeId}")
     @GET
@@ -49,7 +55,7 @@ public class EmployeeController {
         employee.setLastName(employeeDTO.getLastName());
         employee.setRole(employeeDTO.getRole());
         employee.setUsername(employeeDTO.getUsername());
-        employee.setPassword(employeeDTO.getPassword());
+        employee.setPassword(passwordHash.getHashedText(employeeDTO.getPassword()));
         employeesDAO.persist(employee);
         return employee;
     }
@@ -67,8 +73,8 @@ public class EmployeeController {
         if (employeeDTO.getFirstName() != null) employee.setFirstName(employeeDTO.getFirstName());
         if (employeeDTO.getLastName() != null) employee.setLastName(employeeDTO.getLastName());
         if (employeeDTO.getRole() != null) employee.setRole(employeeDTO.getRole());
-        if (employeeDTO.getUsername() != null) employee.setRole(employeeDTO.getUsername());
-        if (employeeDTO.getPassword() != null) employee.setRole(employeeDTO.getPassword());
+        if (employeeDTO.getUsername() != null) employee.setUsername(employeeDTO.getUsername());
+        if (employeeDTO.getPassword() != null) employee.setPassword(passwordHash.getHashedText(employeeDTO.getPassword()));
         employeesDAO.update(employee);
         return Response.ok(employee).build();
     }
