@@ -17,7 +17,7 @@ import { UserService } from '../services/user.service';
 export class OrganiserTravelsComponent implements OnInit {
 
     travels: Array<Travel> = [];
-    public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice'];
+    public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice', 'cancel'];
     
     constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
@@ -54,5 +54,10 @@ export class OrganiserTravelsComponent implements OnInit {
                 if (result == true)
                     this.loadTable();
             })
+    }
+
+    onCancelCLick(id: number) {
+        this.http.delete(Url.get("travel/delete/" + id))
+            .subscribe(() => this.loadTable());
     }
 }
