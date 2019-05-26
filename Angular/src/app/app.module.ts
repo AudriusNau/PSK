@@ -22,7 +22,7 @@ import { MAT_DIALOG_DEFAULT_OPTIONS, MatDialog, MatDialogModule } from '@angular
 import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
 import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/new-travel-dialog.component';
 import { UserService } from './services/user.service';
-
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
     declarations: [
@@ -51,6 +51,7 @@ import { UserService } from './services/user.service';
         FormsModule
     ],
     providers: [
+        CookieService,
         UserService,
         MatDialogModule,
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
