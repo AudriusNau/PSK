@@ -21,6 +21,10 @@ public class EmployeesDAO {
         return em.createNamedQuery("Employee.findByUsernameAndPassword", Employee.class).setParameter("username", username).setParameter("password", password).getSingleResult();
     }
 
+    public Employee findByUsername(String username){
+        return em.createNamedQuery("Employee.findEmployee", Employee.class).setParameter("username", username).getSingleResult();
+    }
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

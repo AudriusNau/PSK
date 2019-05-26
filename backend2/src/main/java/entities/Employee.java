@@ -11,7 +11,8 @@ import java.util.*;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "Employee.findAll", query = "select t from Employee as t"),
-        @NamedQuery(name = "Employee.findByUsernameAndPassword", query = "select t from Employee as t where t.username = :username AND t.password = :password")
+        @NamedQuery(name = "Employee.findByUsernameAndPassword", query = "select t from Employee as t where t.username = :username AND t.password = :password"),
+        @NamedQuery(name = "Employee.findEmployee", query = "select t from Employee as t where t.username = :username")
 })
 @Table(name = "EMPLOYEE")
 @Getter @Setter
