@@ -35,6 +35,11 @@ export class LoginComponent implements OnInit {
 
     this.http.get(Url.get('authentication/get/getEmployeeByUsernameAndPassword?username=' + username + '&password=' + password)).subscribe(
       (user: User) => {
+        if (user == null) {
+          this.showError = true;
+          return;
+        }
+
         this.user = user;
         console.log(user);
         console.log(this.user);
