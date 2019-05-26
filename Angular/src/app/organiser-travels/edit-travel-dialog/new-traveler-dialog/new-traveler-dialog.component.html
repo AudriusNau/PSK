@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>
+    {{data.departureOffice}} 🡆 {{data.arrivalOffice}}
+</h1>
+<div mat-dialog-content>
+    <mat-form-field class="example-full-width">
+        <input type="text" placeholder="Employee" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto" [(ngModel)]="username">
+        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+                {{option}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+    <p><mat-checkbox class="example-margin" [(ngModel)]="ticketsNeeded">Buy plane tickets</mat-checkbox></p>
+    <p><mat-checkbox class="example-margin" [(ngModel)]="carNeeded">Rent car</mat-checkbox></p>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onSaveClick()">Save</button>
+    <button mat-button (click)="onCloseClick()">Cancel</button>
+</div>

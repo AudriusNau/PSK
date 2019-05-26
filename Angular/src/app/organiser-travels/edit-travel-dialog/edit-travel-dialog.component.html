@@ -1,0 +1,43 @@
+<h1 mat-dialog-title>
+    {{data.departureOffice}} 🡆 {{data.arrivalOffice}}
+</h1>
+<div mat-dialog-content style="padding-bottom:2em">
+    <p>Travelers:
+        <button mat-icon-button (click)="onAddCLick()">
+            <mat-icon aria-label="Add traveler">add</mat-icon>
+        </button>
+    </p>
+
+    <div class="organiser-travel-table mat-elevation-z8" style="width: 100%">
+        <table mat-table [dataSource]="travelers">
+
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef> First mane </th>
+                <td mat-cell *matCellDef="let element"> {{element.employee.firstName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef> Last mane </th>
+                <td mat-cell *matCellDef="let element"> {{element.employee.lastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button (click)="onEditClick(element)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button (click)="onRemoveClick(element)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onSaveClick()">Save</button>
+    <button mat-button (click)="onCloseClick()">Close</button>
+</div>

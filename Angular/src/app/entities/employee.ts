@@ -1,7 +1,7 @@
 export interface Employee {
-  firstName: String;
-  lastName: String;
-  role: String;
+  firstName: string;
+  lastName: string;
+  role: string;
   id: number;
-  username: String;
+  username: string;
 }

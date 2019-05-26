@@ -7,6 +7,7 @@ import { Office } from '../entities/office';
 import { MatTableDataSource, MatDialogConfig, MatDialog } from '@angular/material';
 import { NewTravelDialogComponent } from './new-travel-dialog/new-travel-dialog.component';
 import { UserService } from '../services/user.service';
+import { EditTravelDialogComponent } from './edit-travel-dialog/edit-travel-dialog.component';
 
 @Component({
     selector: 'app-organiser-travels',
@@ -17,7 +18,7 @@ import { UserService } from '../services/user.service';
 export class OrganiserTravelsComponent implements OnInit {
 
     travels: Array<Travel> = [];
-    public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice', 'cancel'];
+    public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice', 'actions'];
     
     constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
@@ -54,6 +55,16 @@ export class OrganiserTravelsComponent implements OnInit {
                 if (result == true)
                     this.loadTable();
             })
+    }
+
+    onEditCLick(travel: Travel) {
+        const config = new MatDialogConfig();
+        config.data = travel;
+        this.dialog.open(EditTravelDialogComponent, config)
+            // .afterClosed().subscribe((result) => {
+            //     if (result == true)
+            //         this.loadTable();
+            // })
     }
 
     onCancelCLick(id: number) {

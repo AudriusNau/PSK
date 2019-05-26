@@ -17,10 +17,11 @@
             <td mat-cell *matCellDef="let element"> {{element.arrivalOffice}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="cancel" stickyEnd>
+        <ng-container matColumnDef="actions" stickyEnd>
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">
-                <button mat-raised-button (click)="onCancelCLick(element.id)">Cancel</button>
+                <span><button mat-raised-button (click)="onCancelCLick(element.id)">Cancel</button></span>
+                <button mat-raised-button (click)="onEditCLick(element)">Edit</button>
             </td>
         </ng-container>
 

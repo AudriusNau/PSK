@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +23,8 @@ import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels
 import { NewTravelDialogComponent } from './organiser-travels/new-travel-dialog/new-travel-dialog.component';
 import { UserService } from './services/user.service';
 import { CookieService } from 'ngx-cookie-service';
+import { EditTravelDialogComponent } from './organiser-travels/edit-travel-dialog/edit-travel-dialog.component';
+import { NewTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/new-traveler-dialog/new-traveler-dialog.component';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,8 @@ import { CookieService } from 'ngx-cookie-service';
         NewTravelDialogComponent,
         EmployeeTravelComponent,
         AccommodationDialogComponent,
+        EditTravelDialogComponent,
+        NewTravelerDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -48,7 +52,8 @@ import { CookieService } from 'ngx-cookie-service';
         FlexLayoutModule,
         AppRoutingModule,
         HttpClientModule,
-        FormsModule
+        FormsModule,
+        ReactiveFormsModule,
     ],
     providers: [
         CookieService,
@@ -59,7 +64,9 @@ import { CookieService } from 'ngx-cookie-service';
     bootstrap: [AppComponent],
     entryComponents: [
         AccommodationDialogComponent,
-        NewTravelDialogComponent
+        NewTravelDialogComponent,
+        EditTravelDialogComponent,
+        NewTravelerDialogComponent,
     ]
 })
 export class AppModule { }

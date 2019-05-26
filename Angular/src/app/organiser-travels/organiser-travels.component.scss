@@ -3,8 +3,8 @@
     overflow: auto;
     table {
         width: 100%;
-        td {
-           cursor: pointer;
+        td span {
+            padding-right: 2em;
         }
     }
 }
