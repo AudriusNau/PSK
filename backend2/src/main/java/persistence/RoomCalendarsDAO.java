@@ -1,6 +1,7 @@
 package persistence;
 
 import entities.Calendar;
+import entities.Room;
 import entities.RoomCalendar;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,13 +45,8 @@ public class RoomCalendarsDAO {
         this.em.persist(roomCalendar);
     }
 
-    /*public RoomCalendar findByDate(String date) {
-        return em.createNamedQuery("RoomCalendar.findByDate", RoomCalendar.class).setParameter("date", date).getSingleResult();
+    public RoomCalendar create(){return new RoomCalendar();
     }
-
-    public RoomCalendar findByRoom(Integer roomId) {
-        return em.createNamedQuery("RoomCalendar.findByRoom", RoomCalendar.class).setParameter("roomId", roomId).getSingleResult();
-    }*/
 
     public List<RoomCalendar> findByDate(String date) {
         return em.createNamedQuery("RoomCalendar.findByDate", RoomCalendar.class).setParameter("date", calendarsDAO.findOne(date)).getResultList();

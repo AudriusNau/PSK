@@ -65,7 +65,7 @@ public class AccommodationController {
     @POST
     @Transactional
     public Accommodation create(AccommodationDTO accommodationDTO) {
-        Accommodation accommodation = new Accommodation();
+        Accommodation accommodation = accommodationsDAO.create();
         accommodation.setName(accommodationDTO.getName());
         accommodation.setOffice(officesDAO.findOne(accommodationDTO.getOfficeId()));
         accommodation.setAccommodationType(accommodationDTO.getAccommodationType());

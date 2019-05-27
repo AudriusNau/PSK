@@ -18,6 +18,8 @@ public class CalendarsDAO {
         return em.createNamedQuery("Calendar.findAll", Calendar.class).getResultList();
     }
 
+    public Calendar create(){return new Calendar();}
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

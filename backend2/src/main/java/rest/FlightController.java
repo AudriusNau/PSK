@@ -46,7 +46,7 @@ public class FlightController {
     @POST
     @Transactional
     public Flight create(FlightDTO flightDTO) {
-        Flight flight = new Flight();
+        Flight flight = flightsDAO.create();
         flight.setNeed(flightDTO.getNeed());
         flight.setInfo(flightDTO.getInfo());
         flightsDAO.persist(flight);

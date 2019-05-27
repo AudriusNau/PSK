@@ -58,6 +58,8 @@ public class EmployeeTravelsDAO {
         return em.createNamedQuery("EmployeeTravel.findAllAcceptedTravelsForEmployee", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
     }
 
+    public EmployeeTravel create(){return new EmployeeTravel();}
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

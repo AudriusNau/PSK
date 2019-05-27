@@ -101,7 +101,7 @@ public class TravelController {
     @Transactional
     public Travel create(
             TravelDTO travelDTO) {
-        Travel travel = new Travel();
+        Travel travel = travelsDAO.create();
         travel.setDate(travelDTO.getDate());
         travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
         travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));

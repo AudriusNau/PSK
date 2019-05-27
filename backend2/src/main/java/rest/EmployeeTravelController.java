@@ -142,7 +142,7 @@ public class EmployeeTravelController {
     @POST
     @Transactional
     public EmployeeTravel create(EmployeeTravelDTO employeeTravelDTO) {
-        EmployeeTravel employeeTravel = new EmployeeTravel();
+        EmployeeTravel employeeTravel = employeeTravelsDAO.create();
         if (employeeTravelDTO.getTravelId() != null) employeeTravel.setTravel(travelsDAO.findOne(employeeTravelDTO.getTravelId()));
         if (employeeTravelDTO.getEmployeeId() != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeTravelDTO.getEmployeeId()));
         if (employeeTravelDTO.getFlightId() != null) employeeTravel.setFlight(flightsDAO.findOne(employeeTravelDTO.getFlightId()));

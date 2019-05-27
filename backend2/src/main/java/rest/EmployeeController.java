@@ -50,7 +50,7 @@ public class EmployeeController {
     @POST
     @Transactional
     public Employee create(EmployeeDTO employeeDTO) {
-        Employee employee = new Employee();
+        Employee employee = employeesDAO.create();
         employee.setFirstName(employeeDTO.getFirstName());
         employee.setLastName(employeeDTO.getLastName());
         employee.setRole(employeeDTO.getRole());
