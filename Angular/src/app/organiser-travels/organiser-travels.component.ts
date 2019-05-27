@@ -34,7 +34,7 @@ export class OrganiserTravelsComponent implements OnInit {
             .subscribe((travels: Array<Travel>) => {
                 this.travels = travels;
                 this.travels.forEach(item => {
-                    item.date = item.date.replace(/_/g, " - ");
+                    item.date = item.date;//.replace(/_/g, " - ");
                     this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.id))
                         .subscribe((office: Office) => {
                             item.departureOffice = office.name;

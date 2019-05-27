@@ -10,6 +10,7 @@ import { Employee } from 'src/app/entities/employee';
 import { CarRent } from 'src/app/entities/carRent';
 import { Flight } from 'src/app/entities/flight';
 import { EmployeeTravelDTO } from 'src/app/entities/employeeTravelDTO';
+import { EmployeeCalendar } from 'src/app/entities/employeeCalender';
 
 @Component({
     selector: 'app-new-traveler-dialog',
@@ -32,6 +33,8 @@ export class NewTravelerDialogComponent implements OnInit {
     username: string;
     ticketsNeeded: boolean = false;
     carNeeded: boolean = false;
+    showAvailability = false;
+    isAvailable = false;
 
     ngOnInit() {
         this.http.get(Url.get("employee/get/all"))
@@ -70,6 +73,25 @@ export class NewTravelerDialogComponent implements OnInit {
                         });
                     })
             })
+    }
+
+    checkAvailability() {
+        let id = this.employeeId.get(this.username);
+        if (!id) {
+            this.showAvailability = false;
+            return;
+        }
+
+        this.http.get(Url.get("employeeCalendar/get/employeeId/" + id))
+            .subscribe((dates: Array<any>) => {
+                this.isAvailable = true;
+                dates.forEach(date => {
+                    if (date.calendar.date == this.data.date) {
+                        this.isAvailable = false;
+                    }
+                });
+                this.showAvailability = true;
+            });
     }
 
 }
