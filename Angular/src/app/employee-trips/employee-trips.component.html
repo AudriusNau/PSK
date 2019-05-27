@@ -1,0 +1,89 @@
+<h1>Pending Trips</h1>
+<div class="employee-travel-table mat-elevation-z8">
+  <table mat-table [dataSource]="employeeTravel">
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee.lastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="departureOffice">
+      <th mat-header-cell *matHeaderCellDef>Departure office </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.departureOffice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="arrivalOffice">
+      <th mat-header-cell *matHeaderCellDef>Arrival office </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.arrivalOffice}} </td>
+    </ng-container>
+    <ng-container matColumnDef="decline" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="warn" (click)="onDeclineCLick(element.id)">Decline</button>
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="approve" stickyEnd>
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-raised-button color="primary" (click)="onApproveCLick(element.id)">Approve</button>
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns1;"></tr>
+
+  </table>
+</div>
+<h1>Approved trips</h1>
+<div class="approved-travel-table mat-elevation-z8">
+  <table mat-table [dataSource]="approvedTrips">
+
+    <ng-container matColumnDef="firstName">
+      <th mat-header-cell *matHeaderCellDef> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee.firstName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="lastName">
+      <th mat-header-cell *matHeaderCellDef> Last Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.employee.lastName}} </td>
+    </ng-container>
+    <ng-container matColumnDef="date">
+      <th mat-header-cell *matHeaderCellDef> Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.date}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="departureOffice">
+      <th mat-header-cell *matHeaderCellDef>Departure office </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.departureOffice}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="arrivalOffice">
+      <th mat-header-cell *matHeaderCellDef>Arrival office </th>
+      <td mat-cell *matCellDef="let element"> {{element.travel.arrivalOffice}} </td>
+    </ng-container>
+    <ng-container matColumnDef="room">
+      <th mat-header-cell *matHeaderCellDef>Room</th>
+      <td mat-cell *matCellDef="let element"> {{element.room.roomNumber}} </td>
+    </ng-container>
+    <ng-container matColumnDef="flight">
+      <th mat-header-cell *matHeaderCellDef>Flights</th>
+      <td mat-cell *matCellDef="let element"> {{element.flight.info}} </td>
+    </ng-container>
+    <ng-container matColumnDef="carRent">
+      <th mat-header-cell *matHeaderCellDef>CarRent</th>
+      <td mat-cell *matCellDef="let element"> {{element.carRent.info}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns2; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns2;"></tr>
+
+  </table>
+</div>

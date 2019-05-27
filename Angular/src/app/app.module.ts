@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ import { UserService } from './services/user.service';
 import { CookieService } from 'ngx-cookie-service';
 import { EditTravelDialogComponent } from './organiser-travels/edit-travel-dialog/edit-travel-dialog.component';
 import { NewTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/new-traveler-dialog/new-traveler-dialog.component';
+import { EmployeeTripsComponent } from './employee-trips/employee-trips.component';
 
 @NgModule({
     declarations: [
@@ -44,6 +45,7 @@ import { NewTravelerDialogComponent } from './organiser-travels/edit-travel-dial
         AccommodationDialogComponent,
         EditTravelDialogComponent,
         NewTravelerDialogComponent,
+        EmployeeTripsComponent,
     ],
     imports: [
         BrowserModule,
