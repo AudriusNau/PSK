@@ -1,10 +1,8 @@
 package rest;
 
 import dto.EmployeeTravelDTO;
-import entities.CarRent;
-import entities.EmployeeTravel;
-import entities.Flight;
-import entities.Room;
+import dto.MergeTravelsDTO;
+import entities.*;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
@@ -182,6 +180,25 @@ public class EmployeeTravelController {
         employeeTravel.setStatus(true);
         employeeTravelsDAO.update(employeeTravel);
         return Response.ok(employeeTravel).build();
+    }
+
+    @Path("/merge")
+    @PUT @Transactional
+    public Response mergeTravels(MergeTravelsDTO mergeTravelsDTO){
+        Travel baseTravel = travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId());
+        List<EmployeeTravel> employeeTravels;
+        for (Integer travelId : mergeTravelsDTO.getTravels())
+        {
+            employeeTravels = employeeTravelsDAO.findByTravelId(travelId);
+            for (EmployeeTravel employeeTravel : employeeTravels)
+            {
+                employeeTravel.setTravel(baseTravel);
+                employeeTravel.setStatus(false);
+                employeeTravelsDAO.update(employeeTravel);
+            }
+            travelsDAO.delete(travelsDAO.findOne(travelId));
+        }
+        return Response.ok(baseTravel).build();
     }
 
     @Path("/delete/{id}")
