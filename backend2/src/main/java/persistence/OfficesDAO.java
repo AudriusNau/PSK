@@ -25,6 +25,8 @@ public class OfficesDAO {
         this.em.persist(office);
     }
 
+    public Office create(){return new Office();}
+
     public Office findOne(Integer id) {
         return em.find(Office.class, id);
     }

@@ -25,6 +25,8 @@ public class EmployeesDAO {
         return em.createNamedQuery("Employee.findEmployee", Employee.class).setParameter("username", username).getSingleResult();
     }
 
+    public Employee create(){return new Employee();}
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

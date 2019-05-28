@@ -72,16 +72,15 @@ public class EmployeeCalendarController {
     @POST
     @Transactional
     public EmployeeCalendar create(EmployeeCalendarDTO employeeCalendarDTO) {
-        EmployeeCalendar employeeCalendar = new EmployeeCalendar();
+        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.create();
         if (calendarsDAO.findOne(employeeCalendarDTO.getDate()) == null) {
             System.out.println("date not found");
-            Calendar calendar = new Calendar();
+            Calendar calendar = calendarsDAO.create();
             calendar.setDate(employeeCalendarDTO.getDate());
             calendarsDAO.persist(calendar);
         }
         employeeCalendar.setCalendar(calendarsDAO.findOne(employeeCalendarDTO.getDate()));
         employeeCalendar.setEmployee(employeesDAO.findOne(employeeCalendarDTO.getEmployeeId()));
-        System.out.println("employeeCalendar set");
         employeeCalendarsDAO.persist(employeeCalendar);
         return employeeCalendar;
     }

@@ -44,7 +44,7 @@ public class CalendarController {
     @POST
     @Transactional
     public Calendar create(CalendarDTO calendarDTO) {
-        Calendar calendar = new Calendar();
+        Calendar calendar = calendarsDAO.create();
         calendar.setDate(calendarDTO.getDate());
         calendarsDAO.persist(calendar);
         return calendar;

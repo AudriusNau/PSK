@@ -32,6 +32,8 @@ public class EmployeeCalendarsDAO {
         return em.createNamedQuery("EmployeeCalendar.findAll", EmployeeCalendar.class).getResultList();
     }
 
+    public EmployeeCalendar create(){return new EmployeeCalendar();}
+
     public EmployeeCalendar findOne(Integer id) {
         return em.find(EmployeeCalendar.class, id);
     }

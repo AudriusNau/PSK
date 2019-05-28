@@ -19,6 +19,7 @@ import java.io.Serializable;
         @NamedQuery(name = "EmployeeTravel.findAllPendingTravelsForEmployee", query = "select t from EmployeeTravel as t where t.status = false AND t.employee = :employee"),
         @NamedQuery(name = "EmployeeTravel.findAllAcceptedTravelsForEmployee", query = "select t from EmployeeTravel as t where t.status = true AND t.employee = :employee")
 
+
 })
 @Table(name = "EMPLOYEE_TRAVEL", schema = "PUBLIC", catalog = "DEVBRIDGE")
 @Getter

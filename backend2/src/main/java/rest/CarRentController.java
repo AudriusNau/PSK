@@ -46,7 +46,7 @@ public class CarRentController {
     @POST
     @Transactional
     public CarRent create(CarRentDTO carRentDTO) {
-        CarRent carRent = new CarRent();
+        CarRent carRent = carRentsDAO.create();
         carRent.setNeed(carRentDTO.getNeed());
         carRent.setInfo(carRentDTO.getInfo());
         carRentsDAO.persist(carRent);

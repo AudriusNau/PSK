@@ -12,6 +12,7 @@ public class CarRentsDAO {
     @PersistenceContext//handling a set of entities
     private EntityManager em;
 
+    public CarRent create(){return new CarRent();}
 
     public List<CarRent> loadAll() {
         return em.createNamedQuery("CarRent.findAll", CarRent.class).getResultList();

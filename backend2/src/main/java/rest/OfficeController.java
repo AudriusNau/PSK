@@ -44,8 +44,7 @@ public class OfficeController {
     @POST
     @Transactional
     public Office create(OfficeDTO officeDTO) {
-        System.out.println("office post");
-        Office office = new Office();
+        Office office = officesDAO.create();
         office.setName(officeDTO.getName());
         officesDAO.persist(office);
         return office;

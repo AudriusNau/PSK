@@ -43,6 +43,7 @@ public class TravelsDAO {
         return em.createNamedQuery("Travel.findByOrganiserId", Travel.class).setParameter("organiser", employeesDAO.findOne(organiserId)).getResultList();
     }
 
+    public Travel create(){return new Travel();}
 
     public void setEm(EntityManager em) {
         this.em = em;

@@ -66,7 +66,7 @@ public class RoomController {
     @Transactional
     public Room create(RoomDTO roomDTO) {
         System.out.println("room post");
-        Room room = new Room();
+        Room room = roomsDAO.create();
         room.setRoomNumber(roomDTO.getRoomNumber());
         room.setAccommodation(accommodationsDAO.findOne(roomDTO.getAccommodationId()));
         roomsDAO.persist(room);

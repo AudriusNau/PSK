@@ -35,6 +35,10 @@ public class AccommodationsDAO {
         return em.createNamedQuery("Accommodation.findByOfficeId", Accommodation.class).setParameter("office", officesDAO.findOne(officeId)).getResultList();
     }
 
+    public Accommodation create(){
+        return new Accommodation();
+    }
+
     public void setEm(EntityManager em) {
         this.em = em;
     }

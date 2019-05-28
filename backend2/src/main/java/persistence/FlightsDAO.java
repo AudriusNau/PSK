@@ -33,6 +33,8 @@ public class FlightsDAO {
         return em.merge(flight);
     }
 
+    public Flight create(){return new Flight();}
+
     public void delete(Flight flight)
     {
         if (!em.contains(flight)) em.merge(flight);

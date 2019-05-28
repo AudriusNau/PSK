@@ -39,6 +39,8 @@ public class RoomsDAO {
         this.em.persist(room);
     }
 
+    public Room create(){return new Room();}
+
     public Room findOne(Integer id) {
         return em.find(Room.class, id);
     }
