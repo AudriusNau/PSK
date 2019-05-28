@@ -29,7 +29,6 @@ public class EmployeeController {
     private EmployeesDAO employeesDAO;
 
     @Inject
-    @HashServiceType(HashServiceType.HashType.PBKDF)
     HashGenerator passwordHash;
 
     @Path("/get/{employeeId}")

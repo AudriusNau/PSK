@@ -6,11 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
 
 @Stateless
-@HashServiceType(HashServiceType.HashType.PBKDF)
+@Alternative
 public class PbkdfGenerator implements HashGenerator {
 
     @Inject
