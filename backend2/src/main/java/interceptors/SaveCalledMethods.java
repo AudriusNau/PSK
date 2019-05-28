@@ -15,9 +15,16 @@ import java.util.List;
 public class SaveCalledMethods implements Serializable{
     @AroundInvoke
     public Object logMethodInvocation(InvocationContext context) throws Exception {
-        System.out.println("Called method: " + context.getMethod().getName());
-        System.out.println(context.getMethod().getDeclaringClass());
-        List<String[]> calledMethods = new ArrayList<>();
+        File file = new File("./methods.txt");
+        if (file.createNewFile())
+        {
+            System.out.println("File is created!");
+        } else {
+            System.out.println("File already exists.");
+        }
+        FileWriter writer = new FileWriter(file, true);
+        writer.write("Called method: " + context.getMethod().getName() + " Class: " + context.getMethod().getDeclaringClass() + "\r\n");
+        writer.close();
         return context.proceed();
     }
 }

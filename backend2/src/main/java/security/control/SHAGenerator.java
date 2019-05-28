@@ -7,9 +7,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import javax.ejb.Stateless;
+import javax.enterprise.inject.Alternative;
 
 @Stateless
-@HashServiceType(HashServiceType.HashType.SHA)
 public class SHAGenerator implements HashGenerator {
 
     public String algorithmName;
