@@ -1,9 +1,14 @@
 <h1 mat-dialog-title>New Trip</h1>
 <div mat-dialog-content>
     <mat-form-field>
-        <input matInput [matDatepicker]="picker" placeholder="Departure date" [(ngModel)]="date">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
+        <input matInput [matDatepicker]="startPicker" placeholder="Departure date" [(ngModel)]="startDate">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput [matDatepicker]="endPicker" placeholder="End date" [(ngModel)]="endDate">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
     </mat-form-field>
     <br>
     <mat-form-field>

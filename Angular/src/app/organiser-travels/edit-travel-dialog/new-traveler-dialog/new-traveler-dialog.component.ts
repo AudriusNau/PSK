@@ -86,7 +86,7 @@ export class NewTravelerDialogComponent implements OnInit {
             .subscribe((dates: Array<any>) => {
                 this.isAvailable = true;
                 dates.forEach(date => {
-                    if (date.calendar.date == this.data.date) {
+                    if (date.calendar.date == this.data.startDate) {
                         this.isAvailable = false;
                     }
                 });

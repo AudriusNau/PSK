@@ -36,7 +36,7 @@ export class EmployeeTripsComponent implements OnInit {
       .subscribe((employeeTravel: Array<EmployeeTravel>) => {
         this.employeeTravel = employeeTravel;
         this.employeeTravel.forEach(item => {
-          item.travel.date = item.travel.date.replace(/_/g, " - ");
+          item.travel.startDate = item.travel.startDate.replace(/_/g, " - ");
           this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.travel.id))
             .subscribe((office: Office) => {
               item.travel.departureOffice = office.name;
@@ -52,7 +52,7 @@ export class EmployeeTripsComponent implements OnInit {
       .subscribe((employeeTravel: Array<EmployeeTravel>) => {
         this.approvedTrips = employeeTravel;
         this.approvedTrips.forEach(item => {
-          item.travel.date = item.travel.date.replace(/_/g, " - ");
+          item.travel.startDate = item.travel.startDate.replace(/_/g, " - ");
           this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.travel.id))
             .subscribe((office: Office) => {
               item.travel.departureOffice = office.name;

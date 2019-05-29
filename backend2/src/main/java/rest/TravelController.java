@@ -102,7 +102,8 @@ public class TravelController {
     public Travel create(
             TravelDTO travelDTO) {
         Travel travel = travelsDAO.create();
-        travel.setDate(travelDTO.getDate());
+        travel.setStartDate(travelDTO.getStartDate());
+        travel.setEndDate(travelDTO.getEndDate());
         travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
         travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
         travel.setPrice(travelDTO.getPrice());
@@ -121,7 +122,8 @@ public class TravelController {
             throw new IllegalArgumentException("travel id "
                     + id + " not found");
         }
-        if (travelDTO.getDate() != null) travel.setDate(travelDTO.getDate());
+        if (travelDTO.getStartDate() != null) travel.setStartDate(travelDTO.getStartDate());
+        if (travelDTO.getEndDate() != null) travel.setEndDate(travelDTO.getEndDate());
         if (travelDTO.getDepartureOfficeId() != null) travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
         if (travelDTO.getArrivalOfficeId() != null) travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
         if (travelDTO.getOrganiserId() != null) travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));

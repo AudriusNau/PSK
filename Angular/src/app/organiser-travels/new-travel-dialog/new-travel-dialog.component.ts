@@ -15,7 +15,8 @@ export class NewTravelDialogComponent implements OnInit {
     departureOffice: number;
     arrivalOffice: number;
     price: number;
-    date: Date;
+    startDate: Date;
+    endDate: Date;
 
     constructor(
         private http: HttpClient,
@@ -30,9 +31,8 @@ export class NewTravelDialogComponent implements OnInit {
     onCreateClick() {
         const newTrip: any = {};
 
-        let month = this.date.getMonth() + 1;
-        let day = this.date.getDate();
-        newTrip.date = this.date.getFullYear() + "_" + (month > 9 ? month : "0" + month) + "_" + (day > 9 ? day : "0" + day);
+        newTrip.startDate = this.convertToString(this.startDate);
+        newTrip.endDate = this.convertToString(this.endDate);
         
         newTrip.departureOfficeId = this.departureOffice;
         newTrip.arrivalOfficeId = this.arrivalOffice;
@@ -47,6 +47,12 @@ export class NewTravelDialogComponent implements OnInit {
                     a++;
                 }
             );
+    }
+
+    private convertToString(date: Date) : string {
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        return date.getFullYear() + "_" + (month > 9 ? month : "0" + month) + "_" + (day > 9 ? day : "0" + day);
     }
 
     ngOnInit() {

@@ -1,5 +1,6 @@
 export interface Travel {
-  date: String;
+  startDate: String;
+  endDate: String;
   price: number;
   id: number;
   departureOffice: String;

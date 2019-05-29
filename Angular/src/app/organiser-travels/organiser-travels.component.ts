@@ -18,7 +18,7 @@ import { EditTravelDialogComponent } from './edit-travel-dialog/edit-travel-dial
 export class OrganiserTravelsComponent implements OnInit {
 
     travels: Array<Travel> = [];
-    public displayedColumns: string[] = ['date', 'departureOffice', 'arrivalOffice', 'actions'];
+    public displayedColumns: string[] = ['startDate', 'endDate', 'departureOffice', 'arrivalOffice', 'actions'];
     
     constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
@@ -34,7 +34,7 @@ export class OrganiserTravelsComponent implements OnInit {
             .subscribe((travels: Array<Travel>) => {
                 this.travels = travels;
                 this.travels.forEach(item => {
-                    item.date = item.date;//.replace(/_/g, " - ");
+                    item.startDate = item.startDate;//.replace(/_/g, " - ");
                     this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.id))
                         .subscribe((office: Office) => {
                             item.departureOffice = office.name;
