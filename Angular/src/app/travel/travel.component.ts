@@ -3,9 +3,10 @@ import { HttpClient } from '@angular/common/http';
 import { Travel } from '../entities/travel';
 import { Url } from '../http/url';
 import { Office } from '../entities/office';
-import { Organiser } from "../entities/organiser";
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { Organiser } from '../entities/organiser';
 import { Router } from '@angular/router';
+import {forEach} from "@angular/router/src/utils/collection";
+import {printLine} from "tslint/lib/verify/lines";
 
 @Component({
     selector: 'app-travel',
@@ -14,6 +15,7 @@ import { Router } from '@angular/router';
 })
 export class TravelComponent implements OnInit {
     items: Array<Travel> = [];
+    selectedTravels: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
     constructor(private http: HttpClient, private router: Router) { }
     ngOnInit() {
@@ -40,6 +42,13 @@ export class TravelComponent implements OnInit {
 
     goToDetails(id: number) {
         this.router.navigate(['/travel', id]);
+    }
+    merge() {
+      this.selectedTravels = this.items.filter(item => item.isSelected === true);
+      this.http.put(
+        Url.get('employeeTravel/merge'),
+        {baseTravelId: this.items[0].id, travels: this.items.map(item => item.id)}
+        ).subscribe();
     }
 }
 
