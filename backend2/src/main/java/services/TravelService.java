@@ -6,6 +6,7 @@ import entities.Employee;
 import entities.EmployeeTravel;
 import entities.Office;
 import entities.Travel;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.EmployeeTravelsDAO;
@@ -18,6 +19,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class TravelService {
 
     @Inject

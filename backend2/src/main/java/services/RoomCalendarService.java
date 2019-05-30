@@ -3,6 +3,7 @@ package services;
 import dto.RoomCalendarDTO;
 import entities.Calendar;
 import entities.RoomCalendar;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.CalendarsDAO;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class RoomCalendarService {
 
     @Inject

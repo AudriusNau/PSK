@@ -3,6 +3,7 @@ package services;
 import dto.EmployeeTravelDTO;
 import dto.MergeTravelsDTO;
 import entities.*;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.*;
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class EmployeeTravelService {
 
     @Inject
