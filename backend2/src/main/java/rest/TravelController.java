@@ -1,5 +1,6 @@
 package rest;
 
+import dto.MergeTravelsDTO;
 import dto.TravelDTO;
 import entities.Employee;
 import entities.Travel;
@@ -10,6 +11,7 @@ import lombok.Setter;
 import persistence.EmployeesDAO;
 import persistence.TravelsDAO;
 import persistence.OfficesDAO;
+import services.TravelService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -26,74 +28,54 @@ import java.util.List;
 public class TravelController {
 
     @Inject
-    @Setter
-    @Getter
-    private TravelsDAO travelsDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private OfficesDAO officesDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private EmployeesDAO employeesDAO;
+    private TravelService travelService;
 
     @Path("/get/{travelId}")
     @GET
     public Travel find(@PathParam("travelId") int id){
-        Travel travel = travelsDAO.findOne(id);
-        return travel;
+        return travelService.getById(id);
     }
 
     @Path("/get/getByDepartureOfficeId/{departureOfficeId}")
     @GET
     public List<Travel> findByDepartureOfficeId(@PathParam("departureOfficeId") int departureOfficeId){
-        List<Travel> travels = travelsDAO.findByDepartureOfficeId(departureOfficeId);
-        return travels;
+        return travelService.getByDepartureOffice(departureOfficeId);
     }
 
     @Path("/get/getByArrivalOfficeId/{arrivalOfficeId}")
     @GET
     public List<Travel> findByArrivalOfficeId(@PathParam("arrivalOfficeId") int arrivalOfficeId){
-        List<Travel> travels = travelsDAO.findByArrivalOfficeId(arrivalOfficeId);
-        return travels;
+        return travelService.getByArrivalOffice(arrivalOfficeId);
     }
 
     @Path("/get/getByOrganiserId/{organiserId}")
     @GET
     public List<Travel> findByOrganiserId(@PathParam("organiserId") int organiserId){
-        List<Travel> travels = travelsDAO.findByOrganiserId(organiserId);
-        return travels;
+        return travelService.getByOrganiserId(organiserId);
     }
 
     @Path("/get/getDepartureOfficeByTravelId/{travelId}")
     @GET
     public Office findDepartureOfficeByTravelId(@PathParam("travelId") int id){
-        Office office = (travelsDAO.findOne(id)).getDepartureOffice();
-        return office;
+        return travelService.getDepartureOffice(id);
     }
 
     @Path("/get/getArrivalOfficeByTravelId/{travelId}")
     @GET
     public Office findArrivalOfficeByTravelId(@PathParam("travelId") int id){
-        Office office = (travelsDAO.findOne(id)).getArrivalOffice();
-        return office;
+        return travelService.getArrivalOffice(id);
     }
 
     @Path("/get/getOrganiserByTravelId/{travelId}")
     @GET
     public Employee findOrganiserByTravelId(@PathParam("travelId") int id){
-        Employee employee = (travelsDAO.findOne(id)).getOrganiser();
-        return employee;
+        return travelService.getOrganiser(id);
     }
 
     @Path("/get/all")
     @GET
     public List<Travel> find(){
-        List<Travel> travels = travelsDAO.loadAll();
-        return travels;
+        return travelService.getAll();
     }
 
     @Path("/post")
@@ -101,6 +83,7 @@ public class TravelController {
     @Transactional
     public Travel create(
             TravelDTO travelDTO) {
+<<<<<<< HEAD
         Travel travel = travelsDAO.create();
         travel.setStartDate(travelDTO.getStartDate());
         travel.setEndDate(travelDTO.getEndDate());
@@ -110,6 +93,9 @@ public class TravelController {
         travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
         travelsDAO.persist(travel);
         return travel;
+=======
+        return travelService.create(travelDTO);
+>>>>>>> backend-dto
     }
 
     @Path("/put/{id}")
@@ -117,6 +103,7 @@ public class TravelController {
     public Response update(@PathParam("id") int id,
                            TravelDTO travelDTO) {
 
+<<<<<<< HEAD
         Travel travel = travelsDAO.findOne(id);
         if (travel == null){
             throw new IllegalArgumentException("travel id "
@@ -129,14 +116,23 @@ public class TravelController {
         if (travelDTO.getOrganiserId() != null) travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
         if (travelDTO.getPrice() != null) travel.setPrice(travelDTO.getPrice());
         travelsDAO.update(travel);
+=======
+        Travel travel = travelService.update(id, travelDTO);
+>>>>>>> backend-dto
         return Response.ok(travel).build();
+    }
+
+    @Path("/merge")
+    @PUT @Transactional
+    public Response mergeTravels(MergeTravelsDTO mergeTravelsDTO){
+        Travel baseTravel = travelService.mergeTravels(mergeTravelsDTO);
+        return Response.ok(baseTravel).build();
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        Travel travel = travelsDAO.findOne(id);
-        travelsDAO.delete(travel);
+        travelService.delete(id);
         return Response.ok().build();
     }
 

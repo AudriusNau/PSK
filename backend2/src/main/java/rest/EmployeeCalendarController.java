@@ -9,6 +9,7 @@ import lombok.Setter;
 import persistence.EmployeeCalendarsDAO;
 import persistence.EmployeesDAO;
 import persistence.CalendarsDAO;
+import services.EmployeeCalendarService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,71 +26,38 @@ import java.util.List;
 public class EmployeeCalendarController {
 
     @Inject
-    @Setter
-    @Getter
-    private EmployeeCalendarsDAO employeeCalendarsDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private EmployeesDAO employeesDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private CalendarsDAO calendarsDAO;
-
-    /*@Path("/get/date/{date}")
-    @GET
-    public EmployeeCalendar findByDate(@PathParam("date") String date){
-        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.findByDate(date);
-        System.out.println(employeeCalendar.getCalendar());
-        return employeeCalendar;//pakeiciam i lista
-    }*/
+    private EmployeeCalendarService employeeCalendarService;
 
     @Path("/get/date/{date}")
     @GET
     public List <EmployeeCalendar> findByDate(@PathParam("date") String date){
-        List<EmployeeCalendar> employeeCalendars = employeeCalendarsDAO.findByDate(date);
-        return employeeCalendars;
+        return employeeCalendarService.getByDate(date);
     }
 
     @Path("/get/employeeId/{employeeId}")
     @GET
     public List <EmployeeCalendar> findByDate(@PathParam("employeeId") Integer employeeId){
-        List<EmployeeCalendar> employeeCalendars = employeeCalendarsDAO.findByEmployee(employeeId);
-        return employeeCalendars;
+        return employeeCalendarService.getByEmployeeId(employeeId);
     }
 
     @Path("/get/all")
     @GET
     public List<EmployeeCalendar> find(){
-        List<EmployeeCalendar> employeeCalendars = employeeCalendarsDAO.loadAll();
-        return employeeCalendars;
+        return employeeCalendarService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public EmployeeCalendar create(EmployeeCalendarDTO employeeCalendarDTO) {
-        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.create();
-        if (calendarsDAO.findOne(employeeCalendarDTO.getDate()) == null) {
-            System.out.println("date not found");
-            Calendar calendar = calendarsDAO.create();
-            calendar.setDate(employeeCalendarDTO.getDate());
-            calendarsDAO.persist(calendar);
-        }
-        employeeCalendar.setCalendar(calendarsDAO.findOne(employeeCalendarDTO.getDate()));
-        employeeCalendar.setEmployee(employeesDAO.findOne(employeeCalendarDTO.getEmployeeId()));
-        employeeCalendarsDAO.persist(employeeCalendar);
+        EmployeeCalendar employeeCalendar = employeeCalendarService.create(employeeCalendarDTO);
         return employeeCalendar;
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        EmployeeCalendar employeeCalendar = employeeCalendarsDAO.findOne(id);
-        employeeCalendarsDAO.delete(employeeCalendar);
+        employeeCalendarService.delete(id);
         return Response.ok().build();
     }
 

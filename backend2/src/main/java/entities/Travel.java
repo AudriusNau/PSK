@@ -20,14 +20,38 @@ import java.util.List;
 @Setter
 public class Travel implements Serializable {
 
-    public Travel(){
-
-    }
-
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "travel")
+    List<EmployeeTravel> employeeTravels;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private int id;
+
+<<<<<<< HEAD
+    @Column(name = "START_DATE", nullable = true, length = 20)
+    private String startDate;
+
+    @Column(name = "END_DATE", nullable = true, length = 20)
+    private String endDate;
+
+=======
+>>>>>>> backend-dto
+    @Column(name = "PRICE", nullable = true, precision = 0)
+    private Double price;
+    @JohnzonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "DEPARTURE_OFFICE_ID", nullable = true)
+    private Office departureOffice;
+    @JohnzonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ARRIVAL_OFFICE_ID", nullable = true)
+    private Office arrivalOffice;
+    @JohnzonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "ORGANISER_ID", nullable = true)
+    private Employee organiser;
+
 
     @Column(name = "START_DATE", nullable = true, length = 20)
     private String startDate;
@@ -35,27 +59,9 @@ public class Travel implements Serializable {
     @Column(name = "END_DATE", nullable = true, length = 20)
     private String endDate;
 
-    @Column(name = "PRICE", nullable = true, precision = 0)
-    private Double price;
+    public Travel(){
 
-    @JohnzonIgnore
-    @OneToMany(mappedBy = "travel")
-    List<EmployeeTravel> employeeTravels;
-
-    @JohnzonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "DEPARTURE_OFFICE_ID", nullable = true)
-    private Office departureOffice;
-
-    @JohnzonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ARRIVAL_OFFICE_ID", nullable = true)
-    private Office arrivalOffice;
-
-    @JohnzonIgnore
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ORGANISER_ID", nullable = true)
-    private Employee organiser;
+    }
 
     @Override
     public boolean equals(Object o) {

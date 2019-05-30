@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 import persistence.AccommodationsDAO;
 import persistence.RoomsDAO;
+import services.RoomService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,53 +25,37 @@ import java.util.List;
 public class RoomController {
 
     @Inject
-    @Setter
-    @Getter
-    private RoomsDAO roomsDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private AccommodationsDAO accommodationsDAO;
+    private RoomService roomService;
 
     @Path("/get/{roomId}")
     @GET
     public Room find(@PathParam("roomId") int id){
-        Room room = roomsDAO.findOne(id);
-        return room;
+        return roomService.getById(id);
     }
 
     @Path("/get/getAccommodationByRoomId/{roomId}")
     @GET
     public Accommodation findAccommodationByRoomId(@PathParam("roomId") int id){
-        Accommodation accommodation = (roomsDAO.findOne(id)).getAccommodation();
-        return accommodation;
+        return roomService.getAccommodation(id);
     }
 
     @Path("/get/getByAccommodationId/{accommodationId}")
     @GET
     public List<Room> findByAccommodationId(@PathParam("accommodationId") int accommodationId){
-        List<Room> rooms = roomsDAO.findByAccommodationId(accommodationId);
-        return rooms;
+        return roomService.getByAccommodationId(accommodationId);
     }
 
     @Path("/get/all")
     @GET
     public List<Room> find(){
-        List<Room> rooms = roomsDAO.loadAll();
-        return rooms;
+        return roomService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public Room create(RoomDTO roomDTO) {
-        System.out.println("room post");
-        Room room = roomsDAO.create();
-        room.setRoomNumber(roomDTO.getRoomNumber());
-        room.setAccommodation(accommodationsDAO.findOne(roomDTO.getAccommodationId()));
-        roomsDAO.persist(room);
-        return room;
+        return roomService.create(roomDTO);
     }
 
     @Path("/put/{id}")
@@ -78,22 +63,14 @@ public class RoomController {
     public Response update(@PathParam("id") int id,
                            RoomDTO roomDTO) {
 
-        Room room = roomsDAO.findOne(id);
-        if (room == null){
-            throw new IllegalArgumentException("room id "
-                    + id + " not found");
-        }
-        if (roomDTO.getRoomNumber() != null) room.setRoomNumber(roomDTO.getRoomNumber());
-        if (roomDTO.getAccommodationId() != null) room.setAccommodation(accommodationsDAO.findOne(roomDTO.getAccommodationId()));
-        roomsDAO.update(room);
+        Room room = roomService.update(id, roomDTO);
         return Response.ok(room).build();
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        Room room = roomsDAO.findOne(id);
-        roomsDAO.delete(room);
+        roomService.delete(id);
         return Response.ok().build();
     }
 
