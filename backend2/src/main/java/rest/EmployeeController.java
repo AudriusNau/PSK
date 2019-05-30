@@ -3,11 +3,7 @@ package rest;
 import dto.EmployeeDTO;
 import entities.Employee;
 import interceptors.DevbridgeInterceptor;
-import lombok.Getter;
-import lombok.Setter;
-import persistence.EmployeesDAO;
-import security.boundary.HashGenerator;
-import security.entity.HashServiceType;
+import services.EmployeeService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,39 +20,25 @@ import java.util.List;
 public class EmployeeController {
 
     @Inject
-    @Setter
-    @Getter
-    private EmployeesDAO employeesDAO;
-
-    @Inject
-    HashGenerator passwordHash;
+    private EmployeeService employeeService;
 
     @Path("/get/{employeeId}")
     @GET
     public Employee find(@PathParam("employeeId") int id){
-        Employee employee = employeesDAO.findOne(id);
-        return employee;
+        return employeeService.findById(id);
     }
 
     @Path("/get/all")
     @GET
     public List<Employee> find(){
-        List<Employee> employees = employeesDAO.loadAll();
-        return employees;
+        return employeeService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public Employee create(EmployeeDTO employeeDTO) {
-        Employee employee = employeesDAO.create();
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setRole(employeeDTO.getRole());
-        employee.setUsername(employeeDTO.getUsername());
-        employee.setPassword(passwordHash.getHashedText(employeeDTO.getPassword()));
-        employeesDAO.persist(employee);
-        return employee;
+        return employeeService.create(employeeDTO);
     }
 
     @Path("/put/{id}")
@@ -64,25 +46,14 @@ public class EmployeeController {
     public Response update(@PathParam("id") int id,
                            EmployeeDTO employeeDTO) {
 
-        Employee employee = employeesDAO.findOne(id);
-        if (employee == null){
-            throw new IllegalArgumentException("employee id "
-                    + id + " not found");
-        }
-        if (employeeDTO.getFirstName() != null) employee.setFirstName(employeeDTO.getFirstName());
-        if (employeeDTO.getLastName() != null) employee.setLastName(employeeDTO.getLastName());
-        if (employeeDTO.getRole() != null) employee.setRole(employeeDTO.getRole());
-        if (employeeDTO.getUsername() != null) employee.setUsername(employeeDTO.getUsername());
-        if (employeeDTO.getPassword() != null) employee.setPassword(passwordHash.getHashedText(employeeDTO.getPassword()));
-        employeesDAO.update(employee);
+        Employee employee = employeeService.update(id, employeeDTO);
         return Response.ok(employee).build();
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        Employee employee = employeesDAO.findOne(id);
-        employeesDAO.delete(employee);
+        employeeService.delete(id);
         return Response.ok().build();
     }
 

@@ -6,6 +6,7 @@ import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.CalendarsDAO;
+import services.CalendarService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -22,39 +23,31 @@ import java.util.List;
 public class CalendarController {
 
     @Inject
-    @Setter
-    @Getter
-    private CalendarsDAO calendarsDAO;
+    private CalendarService calendarService;
 
     @Path("/get/{date}")
     @GET
     public Calendar find(@PathParam("date") String date){
-        Calendar calendar = calendarsDAO.findOne(date);
-        return calendar;
+        return calendarService.getByDate(date);
     }
 
     @Path("/get/all")
     @GET
     public List<Calendar> find(){
-        List<Calendar> calendars = calendarsDAO.loadAll();
-        return calendars;
+        return calendarService.getAll();
     }
 
     @Path("/post/{date}")
     @POST
     @Transactional
     public Calendar create(CalendarDTO calendarDTO) {
-        Calendar calendar = calendarsDAO.create();
-        calendar.setDate(calendarDTO.getDate());
-        calendarsDAO.persist(calendar);
-        return calendar;
+        return calendarService.create(calendarDTO);
     }
 
     @Path("/delete/{date}")
     @DELETE @Transactional
     public Response delete(@PathParam("date") String date) {
-        Calendar calendar = calendarsDAO.findOne(date);
-        calendarsDAO.delete(calendar);
+        calendarService.delete(date);
         return Response.ok().build();
     }
 

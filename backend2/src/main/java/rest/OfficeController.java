@@ -6,6 +6,7 @@ import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.OfficesDAO;
+import services.OfficeService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -22,32 +23,26 @@ import java.util.List;
 public class OfficeController {
 
     @Inject
-    @Setter
-    @Getter
-    private OfficesDAO officesDAO;
+    private OfficeService officeService;
+
 
     @Path("/get/{officeId}")
     @GET
     public Office find(@PathParam("officeId") int id){
-        Office office = officesDAO.findOne(id);
-        return office;
+        return officeService.getById(id);
     }
 
     @Path("/get/all")
     @GET
     public List<Office> find(){
-        List<Office> offices = officesDAO.loadAll();
-        return offices;
+        return officeService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public Office create(OfficeDTO officeDTO) {
-        Office office = officesDAO.create();
-        office.setName(officeDTO.getName());
-        officesDAO.persist(office);
-        return office;
+        return officeService.create(officeDTO);
     }
 
     @Path("/put/{id}")
@@ -55,21 +50,14 @@ public class OfficeController {
     public Response update(@PathParam("id") int id,
                            OfficeDTO officeDTO) {
 
-        Office office = officesDAO.findOne(id);
-        if (office == null){
-            throw new IllegalArgumentException("office id "
-                    + id + " not found");
-        }
-        if (officeDTO.getName() != null) office.setName(officeDTO.getName());
-        officesDAO.update(office);
+        Office office = officeService.update(id, officeDTO);
         return Response.ok(office).build();
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        Office office = officesDAO.findOne(id);
-        officesDAO.delete(office);
+        officeService.delete(id);
         return Response.ok().build();
     }
 

@@ -3,9 +3,7 @@ package rest;
 import dto.CarRentDTO;
 import entities.CarRent;
 import interceptors.DevbridgeInterceptor;
-import lombok.Getter;
-import lombok.Setter;
-import persistence.CarRentsDAO;
+import services.CarRentService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -24,33 +22,25 @@ public class CarRentController {
     //NEED - 0 - nereikia, 1 - reikia, 2 - uzsakyta
 
     @Inject
-    @Setter
-    @Getter
-    private CarRentsDAO carRentsDAO;
+    private CarRentService carRentService;
 
     @Path("/get/{carRentId}")
     @GET
     public CarRent find(@PathParam("carRentId") int id){
-        CarRent carRent = carRentsDAO.findOne(id);
-        return carRent;
+        return carRentService.getById(id);
     }
 
     @Path("/get/all")
     @GET
     public List<CarRent> find(){
-        List<CarRent> carRents = carRentsDAO.loadAll();
-        return carRents;
+        return carRentService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public CarRent create(CarRentDTO carRentDTO) {
-        CarRent carRent = carRentsDAO.create();
-        carRent.setNeed(carRentDTO.getNeed());
-        carRent.setInfo(carRentDTO.getInfo());
-        carRentsDAO.persist(carRent);
-        return carRent;
+        return carRentService.create(carRentDTO);
     }
 
     @Path("/put/{id}")
@@ -58,22 +48,14 @@ public class CarRentController {
     public Response update(@PathParam("id") int id,
                            CarRentDTO carRentDTO) {
 
-        CarRent carRent = carRentsDAO.findOne(id);
-        if (carRent == null){
-            throw new IllegalArgumentException("carRent id "
-                    + id + " not found");
-        }
-        if (carRentDTO.getNeed() != null) carRent.setNeed(carRentDTO.getNeed());
-        if (carRentDTO.getInfo() != null) carRent.setInfo(carRentDTO.getInfo());
-        carRentsDAO.update(carRent);
+        CarRent carRent = carRentService.update(id, carRentDTO);
         return Response.ok(carRent).build();
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        CarRent carRent = carRentsDAO.findOne(id);
-        carRentsDAO.delete(carRent);
+        carRentService.delete(id);
         return Response.ok().build();
     }
 

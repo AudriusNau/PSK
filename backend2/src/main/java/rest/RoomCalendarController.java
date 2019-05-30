@@ -9,6 +9,7 @@ import lombok.Setter;
 import persistence.RoomCalendarsDAO;
 import persistence.RoomsDAO;
 import persistence.CalendarsDAO;
+import services.RoomCalendarService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,71 +26,37 @@ import java.util.List;
 public class RoomCalendarController {
 
     @Inject
-    @Setter
-    @Getter
-    private RoomCalendarsDAO roomCalendarsDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private RoomsDAO roomsDAO;
-
-    @Inject
-    @Setter
-    @Getter
-    private CalendarsDAO calendarsDAO;
-
-    /*@Path("/get/date/{date}")
-    @GET
-    public RoomCalendar findByDate(@PathParam("date") String date){
-        RoomCalendar roomCalendar = roomCalendarsDAO.findByDate(date);
-        System.out.println(roomCalendar.getCalendar());
-        return roomCalendar;//pakeiciam i lista
-    }*/
+    private RoomCalendarService roomCalendarService;
 
     @Path("/get/date/{date}")
     @GET
     public List <RoomCalendar> findByDate(@PathParam("date") String date){
-        List<RoomCalendar> roomCalendars = roomCalendarsDAO.findByDate(date);
-        return roomCalendars;
+        return roomCalendarService.getByDate(date);
     }
 
     @Path("/get/room/{roomId}")
     @GET
-    public List <RoomCalendar> findByDate(@PathParam("roomId") Integer roomId){
-        List<RoomCalendar> roomCalendars = roomCalendarsDAO.findByRoom(roomId);
-        return roomCalendars;
+    public List <RoomCalendar> findByRoom(@PathParam("roomId") Integer roomId){
+        return roomCalendarService.getByRoom(roomId);
     }
 
     @Path("/get/all")
     @GET
     public List<RoomCalendar> find(){
-        List<RoomCalendar> roomCalendars = roomCalendarsDAO.loadAll();
-        return roomCalendars;
+        return roomCalendarService.getAll();
     }
 
     @Path("/post")
     @POST
     @Transactional
     public RoomCalendar create(RoomCalendarDTO roomCalendarDTO) {
-        RoomCalendar roomCalendar = roomCalendarsDAO.create();
-        if (calendarsDAO.findOne(roomCalendarDTO.getDate()) == null) {
-            System.out.println("date not found");
-            Calendar calendar = calendarsDAO.create();
-            calendar.setDate(roomCalendarDTO.getDate());
-            calendarsDAO.persist(calendar);
-        }
-        roomCalendar.setCalendar(calendarsDAO.findOne(roomCalendarDTO.getDate()));
-        roomCalendar.setRoom(roomsDAO.findOne(roomCalendarDTO.getRoomId()));
-        roomCalendarsDAO.persist(roomCalendar);
-        return roomCalendar;
+        return roomCalendarService.create(roomCalendarDTO);
     }
 
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
-        RoomCalendar roomCalendar = roomCalendarsDAO.findOne(id);
-        roomCalendarsDAO.delete(roomCalendar);
+        roomCalendarService.delete(id);
         return Response.ok().build();
     }
 

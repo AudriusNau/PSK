@@ -20,39 +20,39 @@ import java.util.List;
 @Setter
 public class Travel implements Serializable {
 
-    public Travel(){
-
-    }
-
+    @JohnzonIgnore
+    @OneToMany(mappedBy = "travel")
+    List<EmployeeTravel> employeeTravels;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID", nullable = false)
     private int id;
 
-    @Column(name = "DATE", nullable = true, length = 20)
-    private String date;
-
     @Column(name = "PRICE", nullable = true, precision = 0)
     private Double price;
-
-    @JohnzonIgnore
-    @OneToMany(mappedBy = "travel")
-    List<EmployeeTravel> employeeTravels;
-
     @JohnzonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "DEPARTURE_OFFICE_ID", nullable = true)
     private Office departureOffice;
-
     @JohnzonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ARRIVAL_OFFICE_ID", nullable = true)
     private Office arrivalOffice;
-
     @JohnzonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ORGANISER_ID", nullable = true)
     private Employee organiser;
+
+
+    @Column(name = "START_DATE", nullable = true, length = 20)
+    private String startDate;
+
+    @Column(name = "END_DATE", nullable = true, length = 20)
+    private String endDate;
+
+    public Travel(){
+
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -62,7 +62,8 @@ public class Travel implements Serializable {
         Travel travel = (Travel) o;
 
         if (id != travel.id) return false;
-        if (date != null ? !date.equals(travel.date) : travel.date != null) return false;
+        if (startDate != null ? !startDate.equals(travel.startDate) : travel.startDate != null) return false;
+        if (endDate != null ? !endDate.equals(travel.endDate) : travel.endDate != null) return false;
         if (price != null ? !price.equals(travel.price) : travel.price != null) return false;
 
         return true;
@@ -71,7 +72,8 @@ public class Travel implements Serializable {
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
+        result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         return result;
     }
