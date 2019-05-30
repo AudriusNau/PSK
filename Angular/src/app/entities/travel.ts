@@ -7,4 +7,5 @@ export interface Travel {
   arrivalOffice: String;
   organiser: String;
   employee: String;
+  isSelected: boolean;
 }
