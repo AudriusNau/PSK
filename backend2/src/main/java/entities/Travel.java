@@ -28,15 +28,6 @@ public class Travel implements Serializable {
     @Column(name = "ID", nullable = false)
     private int id;
 
-<<<<<<< HEAD
-    @Column(name = "START_DATE", nullable = true, length = 20)
-    private String startDate;
-
-    @Column(name = "END_DATE", nullable = true, length = 20)
-    private String endDate;
-
-=======
->>>>>>> backend-dto
     @Column(name = "PRICE", nullable = true, precision = 0)
     private Double price;
     @JohnzonIgnore

@@ -83,19 +83,7 @@ public class TravelController {
     @Transactional
     public Travel create(
             TravelDTO travelDTO) {
-<<<<<<< HEAD
-        Travel travel = travelsDAO.create();
-        travel.setStartDate(travelDTO.getStartDate());
-        travel.setEndDate(travelDTO.getEndDate());
-        travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
-        travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
-        travel.setPrice(travelDTO.getPrice());
-        travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
-        travelsDAO.persist(travel);
-        return travel;
-=======
         return travelService.create(travelDTO);
->>>>>>> backend-dto
     }
 
     @Path("/put/{id}")
@@ -103,22 +91,7 @@ public class TravelController {
     public Response update(@PathParam("id") int id,
                            TravelDTO travelDTO) {
 
-<<<<<<< HEAD
-        Travel travel = travelsDAO.findOne(id);
-        if (travel == null){
-            throw new IllegalArgumentException("travel id "
-                    + id + " not found");
-        }
-        if (travelDTO.getStartDate() != null) travel.setStartDate(travelDTO.getStartDate());
-        if (travelDTO.getEndDate() != null) travel.setEndDate(travelDTO.getEndDate());
-        if (travelDTO.getDepartureOfficeId() != null) travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
-        if (travelDTO.getArrivalOfficeId() != null) travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
-        if (travelDTO.getOrganiserId() != null) travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
-        if (travelDTO.getPrice() != null) travel.setPrice(travelDTO.getPrice());
-        travelsDAO.update(travel);
-=======
         Travel travel = travelService.update(id, travelDTO);
->>>>>>> backend-dto
         return Response.ok(travel).build();
     }
 
