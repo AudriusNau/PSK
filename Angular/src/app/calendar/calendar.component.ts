@@ -17,6 +17,7 @@ import { EmployeeCalendar } from '../entities/employeeCalender';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NewTravelDialogComponent } from '../organiser-travels/new-travel-dialog/new-travel-dialog.component';
 import { UserService } from '../services/user.service';
+import { Subject } from 'rxjs';
 
 interface Option {
     display: string,
@@ -79,6 +80,7 @@ export class CalendarComponent implements OnInit {
     showError = false;
     errorMessage = '';
     view = "month";
+    refresh: Subject<any> = new Subject();
 
     startDate: Date;
     endDate: Date;
@@ -123,7 +125,8 @@ export class CalendarComponent implements OnInit {
                             event.color = colors.red;
                             this.events.push(event);
                         }
-                    })
+                    });
+                    this.refresh.next();
                 })
         })
     }
