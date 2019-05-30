@@ -26,6 +26,8 @@ import { CookieService } from 'ngx-cookie-service';
 import { EditTravelDialogComponent } from './organiser-travels/edit-travel-dialog/edit-travel-dialog.component';
 import { NewTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/new-traveler-dialog/new-traveler-dialog.component';
 import { EmployeeTripsComponent } from './employee-trips/employee-trips.component';
+import { AppCalendarModule } from './calendar/calendar.module';
+import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 
 @NgModule({
     declarations: [
@@ -56,12 +58,13 @@ import { EmployeeTripsComponent } from './employee-trips/employee-trips.componen
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
+        AppCalendarModule,
     ],
     providers: [
         CookieService,
         UserService,
         MatDialogModule,
-        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}}
+        {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     ],
     bootstrap: [AppComponent],
     entryComponents: [

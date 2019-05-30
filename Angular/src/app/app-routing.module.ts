@@ -7,8 +7,10 @@ import {TravelComponent} from './travel/travel.component';
 import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels.component';
 import {EmployeeTravelComponent} from './employeeTravel/employeeTravel.component';
 import {EmployeeTripsComponent} from './employee-trips/employee-trips.component';
+import { CalendarComponent } from './calendar/calendar.component';
 
 const routes: Routes = [
+    { path: 'calendar', component: CalendarComponent},
     { path: 'login', component: LoginComponent},
     { path: 'accomodation', component: AccommodationComponent},
     { path: 'accommodation', component: AccommodationComponent},

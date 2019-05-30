@@ -10,7 +10,6 @@ import { Employee } from 'src/app/entities/employee';
 import { CarRent } from 'src/app/entities/carRent';
 import { Flight } from 'src/app/entities/flight';
 import { EmployeeTravelDTO } from 'src/app/entities/employeeTravelDTO';
-import { EmployeeCalendar } from 'src/app/entities/employeeCalender';
 
 @Component({
     selector: 'app-new-traveler-dialog',

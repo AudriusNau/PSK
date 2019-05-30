@@ -1,5 +1,11 @@
+import { Employee } from './employee';
+
 export interface EmployeeCalendar {
-    date: string;
-    employee_id: number;
+    calendar: Calendar
+    employee: Employee;
     id: number;
+}
+
+interface Calendar {
+    date: string;
 }

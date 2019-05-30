@@ -49,7 +49,7 @@ export class OrganiserTravelsComponent implements OnInit {
 
     onCreateClick() {
         const config = new MatDialogConfig();
-        config.data = this.userService.user.id;
+        config.data = {organiserId: this.userService.user.id};
         this.dialog.open(NewTravelDialogComponent, config)
             .afterClosed().subscribe((result) => {
                 if (result == true)

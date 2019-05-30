@@ -21,8 +21,11 @@ export class NewTravelDialogComponent implements OnInit {
     constructor(
         private http: HttpClient,
         public dialogRef: MatDialogRef<NewTravelDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: Number
-    ) { }
+        @Inject(MAT_DIALOG_DATA) public data: any
+    ) { 
+        this.startDate = this.data.startDate;
+        this.endDate = this.data.endDate;
+    }
 
     onCloseClick(): void {
         this.dialogRef.close();
@@ -37,7 +40,7 @@ export class NewTravelDialogComponent implements OnInit {
         newTrip.departureOfficeId = this.departureOffice;
         newTrip.arrivalOfficeId = this.arrivalOffice;
         newTrip.price = this.price;
-        newTrip.organiserId = this.data;
+        newTrip.organiserId = this.data.organiserId;
 
         this.http.post(Url.get("travel/post"), newTrip)
             .subscribe(

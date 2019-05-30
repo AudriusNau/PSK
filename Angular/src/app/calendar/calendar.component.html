@@ -1,0 +1,22 @@
+<div class="container">
+    <mat-select-autocomplete class="grid-7-11" [placeholder]="'Options Selection'" [errorMsg]="errorMessage"
+        [showErrorMsg]="showError" [options]="options" [display]="'display'" [value]="'value'" [multiple]='true'
+        [selectedOptions]="selectedOptions" (selectionChange)="getSelectedOptions($event)">
+    </mat-select-autocomplete>
+    <div class="col-md-4">
+        <div class="btn-group">
+            <button mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view"> Previous </button> 
+            <button mwlCalendarToday [(viewDate)]="viewDate"> Today </button>
+            <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"> Next </button>
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        </div>
+    </div>
+
+    <p>Start date: {{startDateStr}}</p>
+    <p>End date: {{endDateStr}}</p>
+    <button (click)="onCreateClick()">Create</button>
+</div>
+<br><br>
+
+<mwl-calendar-month-view [viewDate]="viewDate" [events]="events" (dayClicked)="dateClicked($event.day)">
+</mwl-calendar-month-view>
