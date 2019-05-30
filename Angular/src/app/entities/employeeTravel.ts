@@ -11,5 +11,5 @@ export interface EmployeeTravel {
   employee: Employee;
   travel: Travel;
   room: Room;
-  status: boolean;
+  status: String;
 }

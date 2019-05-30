@@ -15,7 +15,7 @@ export class EmployeeTravelComponent implements OnInit {
   private subscription: Subscription;
 
   items: Array<EmployeeTravel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'date', 'room', 'flight', 'carRent' ];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'date', 'room', 'flight', 'carRent', 'status' ];
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -38,6 +38,9 @@ export class EmployeeTravelComponent implements OnInit {
           }else if (item.carRent.need === 1){
             item.carRent.info = item.carRent.need.toString().replace('1', 'not reserved ') + ' ' + item.carRent.info;
           }else item.carRent.info = "no car rent needed" + item.carRent.info ;
+
+          item.status = item.status.toString().replace('false', 'Pending');
+          item.status = item.status.toString().replace('true', 'Approved');
         })
       });
     });
