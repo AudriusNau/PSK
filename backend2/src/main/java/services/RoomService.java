@@ -3,6 +3,7 @@ package services;
 import dto.RoomDTO;
 import entities.Accommodation;
 import entities.Room;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.AccommodationsDAO;
@@ -13,6 +14,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class RoomService {
 
     @Inject

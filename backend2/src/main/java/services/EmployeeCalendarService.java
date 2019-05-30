@@ -3,6 +3,7 @@ package services;
 import dto.EmployeeCalendarDTO;
 import entities.Calendar;
 import entities.EmployeeCalendar;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.CalendarsDAO;
@@ -14,6 +15,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class EmployeeCalendarService {
 
     @Inject

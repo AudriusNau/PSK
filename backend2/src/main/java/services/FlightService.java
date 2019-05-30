@@ -2,6 +2,7 @@ package services;
 
 import dto.FlightDTO;
 import entities.Flight;
+import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.FlightsDAO;
@@ -11,6 +12,7 @@ import javax.inject.Inject;
 import java.util.List;
 
 @ApplicationScoped
+@DevbridgeInterceptor
 public class FlightService {
 
     @Inject
