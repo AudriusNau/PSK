@@ -39,6 +39,10 @@ public class AccommodationService {
         return accommodationsDAO.findByOfficeId(id);
     }
 
+    public List<Accommodation> getApartments(Integer id) {
+        return accommodationsDAO.getApartments(id);
+    }
+
     public Office getOfficeByAccommodationId(Integer id) {
         return (accommodationsDAO.findOne(id)).getOffice();
     }

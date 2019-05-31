@@ -28,6 +28,7 @@ public class Travel implements Serializable {
     @Column(name = "ID", nullable = false)
     private int id;
 
+
     @Column(name = "PRICE", nullable = true, precision = 0)
     private Double price;
     @JohnzonIgnore
