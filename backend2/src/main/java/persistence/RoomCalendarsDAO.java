@@ -58,6 +58,10 @@ public class RoomCalendarsDAO {
         return em.createNamedQuery("RoomCalendar.findByRoom", RoomCalendar.class).setParameter("roomId", roomsDAO.findOne(roomId)).getResultList();
     }
 
+    public RoomCalendar findByRoomAndDate(Integer roomId, String date){
+        return em.createNamedQuery("RoomCalendar.findByRoomAndDate", RoomCalendar.class).setParameter("roomId", roomsDAO.findOne(roomId)).setParameter("date", calendarsDAO.findOne(date)).getSingleResult();
+    }
+
     public RoomCalendar update(RoomCalendar roomCalendar){
         return em.merge(roomCalendar);
     }
