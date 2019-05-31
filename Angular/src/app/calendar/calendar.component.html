@@ -1,22 +1,21 @@
-<div class="container">
-    <mat-select-autocomplete class="grid-7-11" [placeholder]="'Options Selection'" [errorMsg]="errorMessage"
-        [showErrorMsg]="showError" [options]="options" [display]="'display'" [value]="'value'" [multiple]='true'
-        [selectedOptions]="selectedOptions" (selectionChange)="getSelectedOptions($event)">
-    </mat-select-autocomplete>
-    <div class="col-md-4">
-        <div class="btn-group">
-            <button mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view"> Previous </button> 
-            <button mwlCalendarToday [(viewDate)]="viewDate"> Today </button>
-            <button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="closeOpenMonthViewDay()"> Next </button>
-            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-        </div>
+<div>
+    <div fxLayout="row">
+        <mat-select-autocomplete [placeholder]="'Options Selection'" [errorMsg]="errorMessage" [showErrorMsg]="showError"
+            [options]="options" [display]="'display'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedOptions"
+            (selectionChange)="getSelectedOptions($event)">
+        </mat-select-autocomplete>
+        <span>
+            <button mat-raised-button (click)="onCreateClick()">Create</button>
+        </span>
     </div>
-
-    <p>Start date: {{startDateStr}}</p>
-    <p>End date: {{endDateStr}}</p>
-    <button (click)="onCreateClick()">Create</button>
+    <div fxLayout="row" fxLayoutAlign="space-between">
+        <button mat-button mwlCalendarPreviousView [(viewDate)]="viewDate" [view]="view"> Previous </button>
+        <button mat-button mwlCalendarToday [(viewDate)]="viewDate"> Today </button>
+        <button mat-button mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"> Next </button>
+        <span class="calendar-date">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</span>
+    </div>
+    <div>
+        <mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dateClicked($event.day)">
+        </mwl-calendar-month-view>
+    </div>
 </div>
-<br><br>
-
-<mwl-calendar-month-view [viewDate]="viewDate" [events]="events" [refresh]="refresh" (dayClicked)="dateClicked($event.day)">
-</mwl-calendar-month-view>

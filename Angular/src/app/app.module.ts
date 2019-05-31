@@ -28,6 +28,7 @@ import { NewTravelerDialogComponent } from './organiser-travels/edit-travel-dial
 import { EmployeeTripsComponent } from './employee-trips/employee-trips.component';
 import { AppCalendarModule } from './calendar/calendar.module';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
+import { SetDateDialogComponent } from './calendar/set-date-dialog/set-date-dialog.component';
 
 @NgModule({
     declarations: [
@@ -72,6 +73,7 @@ import { SelectAutocompleteModule } from 'mat-select-autocomplete';
         NewTravelDialogComponent,
         EditTravelDialogComponent,
         NewTravelerDialogComponent,
+        SetDateDialogComponent,
     ]
 })
 export class AppModule { }

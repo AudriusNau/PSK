@@ -4,6 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Url } from 'src/app/http/url';
 import { Office } from 'src/app/entities/office';
 import { Travel } from 'src/app/entities/travel';
+import { EmployeeTravel } from 'src/app/entities/employeeTravel';
 
 @Component({
     selector: 'app-new-travel-dialog',
@@ -17,6 +18,9 @@ export class NewTravelDialogComponent implements OnInit {
     price: number;
     startDate: Date;
     endDate: Date;
+
+    public displayedColumns: string[] = ['firstName', 'lastName', 'actions'];
+    travelers: Array<EmployeeTravel> = [];
 
     constructor(
         private http: HttpClient,

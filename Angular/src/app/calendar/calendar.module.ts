@@ -11,10 +11,18 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 // import { FlatpickrModule } from 'angularx-flatpickr';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { MaterialModule } from '../material/material.module';
+import { SetDateDialogComponent } from './set-date-dialog/set-date-dialog.component';
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material';
 
 @NgModule({
   declarations: [
-    CalendarComponent
+    CalendarComponent,
+    SetDateDialogComponent
+  ],
+  providers: [
+    MatDialogModule,
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } },
   ],
   imports: [
     CommonModule,
@@ -22,12 +30,12 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     NgbModalModule,
     BrowserModule,
     BrowserAnimationsModule,
-    // FlatpickrModule.forRoot(),
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory
     }),
     SelectAutocompleteModule,
+    MaterialModule,
   ],
   bootstrap: [CalendarComponent]
 })

@@ -9,25 +9,19 @@ import {
     subDays,
     addDays,
     endOfMonth,
-    isSameDay,
-    isSameMonth,
-    addHours
 } from 'date-fns';
 import { EmployeeCalendar } from '../entities/employeeCalender';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { NewTravelDialogComponent } from '../organiser-travels/new-travel-dialog/new-travel-dialog.component';
 import { UserService } from '../services/user.service';
 import { Subject } from 'rxjs';
+import { SetDateDialogComponent } from './set-date-dialog/set-date-dialog.component';
 
 interface Option {
     display: string,
     value: number
 }
 
-// class AppCalendarEvent implements CalendarEvent {
-//     start: Date,
-
-// }
 const colors: any = {
     red: {
         primary: '#ad2121',
@@ -50,27 +44,12 @@ const colors: any = {
 export class CalendarComponent implements OnInit {
 
     viewDate: Date = new Date();
-    events: CalendarEvent[] = [
-        {
-            start: subDays(startOfDay(new Date()), 1),
-            end: addDays(new Date(), 1),
-            title: 'A 3 day event',
-            color: colors.red,
-            allDay: true,
-            resizable: {
-                beforeStart: true,
-                afterEnd: true
-            },
-            draggable: true
-        },
-        {
-            start: subDays(endOfMonth(new Date()), 3),
-            end: addDays(endOfMonth(new Date()), 3),
-            title: 'A long event that spans 2 months',
-            color: colors.blue,
-            allDay: true
-        }
-    ];
+    // events: CalendarEvent[] = [];
+    busyEvents: CalendarEvent[] = [];
+    tripEvents: CalendarEvent[] = [];
+    get events(): CalendarEvent[] {
+        return this.busyEvents.concat(this.tripEvents);
+    }
 
     options: Option[] = [];
     employeeId: Map<number, string> = new Map();
@@ -88,13 +67,6 @@ export class CalendarComponent implements OnInit {
     constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService) { }
 
     ngOnInit() {
-        this.events[0] = { start: new Date, title: "Busy" };
-        this.events[0].allDay = true;
-        this.events[0].color = {
-            primary: '#ad2121',
-            secondary: '#FAE3E3'
-        };
-
         this.http.get(Url.get("employee/get/all"))
             .subscribe((employees: Array<Employee>) => {
                 this.options = employees.map((employee) => {
@@ -108,7 +80,7 @@ export class CalendarComponent implements OnInit {
     getSelectedOptions(selected) {
         this.selected = selected;
         console.log("being called");
-        this.events = [];
+        this.busyEvents = [];
 
         this.selected.forEach((id) => {
             this.http.get(Url.get("employeeCalendar/get/employeeId/" + id))
@@ -123,7 +95,7 @@ export class CalendarComponent implements OnInit {
                             let event: CalendarEvent = {title: this.employeeId.get(id), start: date};
                             event.allDay = true;
                             event.color = colors.red;
-                            this.events.push(event);
+                            this.busyEvents.push(event);
                         }
                     });
                     this.refresh.next();
@@ -132,17 +104,40 @@ export class CalendarComponent implements OnInit {
     }
     
     dateClicked(date: any) {
-        if (!this.startDate) {
-            this.startDate = date.date;
-            return;
-        }
+        let config = new MatDialogConfig();
+        config.data = this.convertToString(date.date);
+        this.dialog.open(SetDateDialogComponent, config)
+            .afterClosed().subscribe((result) => {
+                if (result == null)
+                    return;
 
-        if (this.startDate < date.date) {
-            this.endDate = date.date;
-        }
+                this.tripEvents = [];
+                if (result == true)
+                    this.startDate = date.date;
+                else
+                    this.endDate = date.date;
 
-        this.endDate = this.startDate;
-        this.startDate = date.date;
+                if (!this.endDate) {
+                    let event: CalendarEvent = {title: "Trip", start: this.startDate};
+                    event.allDay = true;
+                    event.color = colors.blue;
+                    this.tripEvents.push(event);
+                }
+
+                if (!this.startDate) {
+                    let event: CalendarEvent = {title: "Trip", start: this.endDate};
+                    event.allDay = true;
+                    event.color = colors.blue;
+                    this.tripEvents.push(event);
+                }
+
+                if (this.startDate && this.endDate) {
+                    let event: CalendarEvent = {title: "Trip", start: this.startDate, end: this.endDate};
+                    event.allDay = true;
+                    event.color = colors.blue;
+                    this.tripEvents.push(event);
+                }
+            })
     }
 
     get startDateStr(): string {
@@ -154,7 +149,7 @@ export class CalendarComponent implements OnInit {
     }
 
     private convertToString(date: any) : string {
-        if (!date) return "";
+        if (!date) return "not selected";
         let month = date.getMonth() + 1;
         let day = date.getDate();
         return date.getFullYear() + "_" + (month > 9 ? month : "0" + month) + "_" + (day > 9 ? day : "0" + day);
