@@ -14,7 +14,8 @@ import java.util.List;
 @NamedQueries({
         @NamedQuery(name = "Accommodation.findAll", query = "select t from Accommodation as t")
         ,
-        @NamedQuery(name = "Accommodation.findByOfficeId", query = "select t from Accommodation as t where t.office = :office")
+        @NamedQuery(name = "Accommodation.findByOfficeId", query = "select t from Accommodation as t where t.office = :office"),
+        @NamedQuery(name = "Accommodation.findApartments", query = "select t from Accommodation as t where t.accommodationType = 'Apartments' AND t.office = :office")
 })
 @Table(name = "ACCOMMODATION")
 @Getter

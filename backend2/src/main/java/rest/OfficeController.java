@@ -1,12 +1,17 @@
 package rest;
 
 import dto.OfficeDTO;
+import dto.RoomAvailabilityDTO;
+import entities.Accommodation;
 import entities.Office;
+import entities.Room;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.OfficesDAO;
+import services.AccommodationService;
 import services.OfficeService;
+import services.RoomService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -14,6 +19,7 @@ import javax.transaction.Transactional;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
@@ -24,6 +30,12 @@ public class OfficeController {
 
     @Inject
     private OfficeService officeService;
+
+    @Inject
+    private AccommodationService accommodationService;
+
+    @Inject
+    private RoomService roomService;
 
 
     @Path("/get/{officeId}")
@@ -36,6 +48,14 @@ public class OfficeController {
     @GET
     public List<Office> find(){
         return officeService.getAll();
+    }
+
+    @Path("/get/getFreeRooms")
+    @GET
+    public ArrayList<Room> findFreeRooms(RoomAvailabilityDTO roomAvailabilityDTO) {
+        List<Accommodation> apartments = accommodationService.getApartments(roomAvailabilityDTO.getOfficeId());
+        ArrayList<Room> availableRooms = roomService.getAvailableRooms(apartments, roomAvailabilityDTO.getStartDate(), roomAvailabilityDTO.getEndDate());
+        return availableRooms;
     }
 
     @Path("/post")
