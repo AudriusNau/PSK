@@ -8,6 +8,7 @@ import {Url} from "../http/url";
 import {Office} from "../entities/office";
 import {NewTravelDialogComponent} from "../organiser-travels/new-travel-dialog/new-travel-dialog.component";
 import {EmployeeTravel} from "../entities/employeeTravel";
+import { Accommodation } from '../entities/accommodation';
 
 @Component({
   selector: 'app-employee-trips',
@@ -44,6 +45,7 @@ export class EmployeeTripsComponent implements OnInit {
           this.http.get(Url.get('travel/get/getArrivalOfficeByTravelId/' + item.travel.id))
             .subscribe((office: Office) => {
               item.travel.arrivalOffice = office.name;
+              item.travel.arrivalOfficeId = office.id;
             });
         });
       });
@@ -68,8 +70,15 @@ export class EmployeeTripsComponent implements OnInit {
     this.http.delete(Url.get("employeeTravel/delete/" + id))
       .subscribe(() => this.loadTable());
   }
-  onApproveCLick(id: number) {
-    this.http.put(Url.get("employeeTravel/accept/" + id), {})
-      .subscribe(() => this.loadTable());
+  onApproveCLick(employeeTravel: EmployeeTravel) {
+    this.http.put(Url.get("employeeTravel/accept/" + employeeTravel.id), {})
+      .subscribe(() => {
+        this.loadTable();
+        // this.http.get(Url.get("accommodation/get/getByOfficeId/" + employeeTravel.travel.arrivalOfficeId))
+        //   .subscribe((accommodations: Array<Accommodation>) => {
+        //     accommodations.forEach()
+        //   });
+        
+      });
   }
 }

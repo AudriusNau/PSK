@@ -5,6 +5,7 @@ import { Travel } from 'src/app/entities/travel';
 import { EmployeeTravel } from 'src/app/entities/employeeTravel';
 import { Url } from 'src/app/http/url';
 import { NewTravelerDialogComponent } from './new-traveler-dialog/new-traveler-dialog.component';
+import { EditTravelerDialogComponent } from './edit-traveler-dialog/edit-traveler-dialog.component';
 
 @Component({
     selector: 'app-edit-travel-dialog',
@@ -29,8 +30,8 @@ export class EditTravelDialogComponent implements OnInit {
 
     loadTravelers() {
         this.http.get(Url.get('employeeTravel/get/travelId/' + this.data.id))
-            .subscribe((employees: Array<EmployeeTravel>) => {
-                this.travelers = employees;
+            .subscribe((travelers: Array<EmployeeTravel>) => {
+                this.travelers = travelers;
             });
     }
 
@@ -42,6 +43,17 @@ export class EditTravelDialogComponent implements OnInit {
                 if (reload)
                     this.loadTravelers();
             })
+    }
+
+    onEditClick(traveler: EmployeeTravel) {
+        const config = new MatDialogConfig();
+        config.data = traveler;
+        this.dialog.open(EditTravelerDialogComponent, config);
+    }
+
+    onRemoveClick(traveler: EmployeeTravel) {
+        this.http.delete(Url.get("employeeTravel/delete/" + traveler.id))
+            .subscribe(() => this.loadTravelers());
     }
 
 }

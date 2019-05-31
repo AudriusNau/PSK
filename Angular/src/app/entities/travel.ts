@@ -5,6 +5,7 @@ export interface Travel {
   id: number;
   departureOffice: String;
   arrivalOffice: String;
+  arrivalOfficeId: number;
   organiser: String;
   employee: String;
   isSelected: boolean;

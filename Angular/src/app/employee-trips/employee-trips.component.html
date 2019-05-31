@@ -34,7 +34,7 @@
     <ng-container matColumnDef="approve" stickyEnd>
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let element">
-        <button mat-raised-button color="primary" (click)="onApproveCLick(element.id)">Approve</button>
+        <button mat-raised-button color="primary" (click)="onApproveCLick(element)">Approve</button>
       </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns1; sticky: true"></tr>
