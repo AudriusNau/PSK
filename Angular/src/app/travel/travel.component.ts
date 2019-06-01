@@ -7,6 +7,7 @@ import { Organiser } from '../entities/organiser';
 import { Router } from '@angular/router';
 import {forEach} from "@angular/router/src/utils/collection";
 import {printLine} from "tslint/lib/verify/lines";
+import {UserService} from "../services/user.service";
 
 @Component({
     selector: 'app-travel',
@@ -17,8 +18,14 @@ export class TravelComponent implements OnInit {
     items: Array<Travel> = [];
     selectedTravels: Array<Travel> = [];
     public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
-    constructor(private http: HttpClient, private router: Router) { }
-    ngOnInit() {
+    constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
+  ngOnInit() {
+    if (this.userService.user)
+      this.loadTable();
+    else
+      this.router.navigate(['/login']);
+  }
+  loadTable() {
         this.http.get(Url.get('travel/get/all'))
             .subscribe((travels: Array<Travel>) => {
                 this.items = travels;
@@ -46,9 +53,9 @@ export class TravelComponent implements OnInit {
     merge() {
       this.selectedTravels = this.items.filter(item => item.isSelected === true);
       this.http.put(
-        Url.get('employeeTravel/merge'),
-        {baseTravelId: this.items[0].id, travels: this.items.map(item => item.id)}
-        ).subscribe();
+        Url.get('travel/merge'),
+        {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (0, 1).map(item => item.id)}
+        ).subscribe(() => this.loadTable());
     }
 }
 
