@@ -74,11 +74,6 @@ export class EmployeeTripsComponent implements OnInit {
     this.http.put(Url.get("employeeTravel/accept/" + employeeTravel.id), {})
       .subscribe(() => {
         this.loadTable();
-        // this.http.get(Url.get("accommodation/get/getByOfficeId/" + employeeTravel.travel.arrivalOfficeId))
-        //   .subscribe((accommodations: Array<Accommodation>) => {
-        //     accommodations.forEach()
-        //   });
-        
       });
   }
 }
