@@ -1,16 +1,20 @@
 package services;
 
 import dto.AccommodationDTO;
-import entities.Accommodation;
-import entities.Office;
+import entities.*;
 import interceptors.DevbridgeInterceptor;
 import lombok.Getter;
 import lombok.Setter;
 import persistence.AccommodationsDAO;
+import persistence.CalendarsDAO;
 import persistence.OfficesDAO;
+import persistence.RoomCalendarsDAO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
@@ -27,6 +31,22 @@ public class AccommodationService {
     @Getter
     private OfficesDAO officesDAO;
 
+    @Inject
+    @Setter
+    @Getter
+    private RoomCalendarsDAO roomCalendarsDAO;
+
+    @Inject
+    @Setter
+    @Getter
+    private CalendarsDAO calendarsDAO;
+
+    @Inject
+    private RoomCalendarService roomCalendarService;
+
+    @Inject
+    private CalendarService calendarService;
+
     public List<Accommodation> getAll() {
         return accommodationsDAO.loadAll();
     }
@@ -39,7 +59,7 @@ public class AccommodationService {
         return accommodationsDAO.findByOfficeId(id);
     }
 
-    public List<Accommodation> getApartments(Integer id) {
+    public Accommodation getApartments(Integer id) {
         return accommodationsDAO.getApartments(id);
     }
 
@@ -72,5 +92,40 @@ public class AccommodationService {
     public void delete(Integer id) {
         Accommodation accommodation = accommodationsDAO.findOne(id);
         accommodationsDAO.delete(accommodation);
+    }
+
+    public void bookAccommodation(EmployeeTravel employeeTravel){
+        Accommodation apartments = accommodationsDAO.getApartments(employeeTravel.getTravel().getArrivalOffice().getId());
+        Accommodation hotel = accommodationsDAO.getHotel(employeeTravel.getTravel().getArrivalOffice().getId());
+        System.out.println(hotel.getName());
+        List<Date> dates = calendarService.getDates(employeeTravel.getTravel().getStartDate(), employeeTravel.getTravel().getEndDate());
+        bookRooms(apartments, dates);
+        if (employeeTravel.getRoom() == null) bookRooms(hotel, dates);
+
+    }
+
+    public void bookRooms(Accommodation accommodation, List<Date> dates){
+        RoomCalendar roomCalendar;
+        DateFormat df = new SimpleDateFormat("yyyy_MM_dd");
+        int days;
+        for (Room room: accommodation.getRooms()) {
+            days = 0;
+            for (Date date: dates) {
+                if(!roomCalendarService.isAvailable(df.format(date), room.getId())) break;
+                else{
+                    days++;
+                }
+            }
+            if (dates.size() == days){
+                for (Date date: dates
+                ) {
+                    roomCalendar = roomCalendarsDAO.create();
+                    roomCalendar.setCalendar(calendarsDAO.getOrCreate(df.format(date)));
+                    roomCalendar.setRoom(room);
+                    roomCalendarsDAO.persist(roomCalendar);
+                }
+                break;
+            }
+        }
     }
 }

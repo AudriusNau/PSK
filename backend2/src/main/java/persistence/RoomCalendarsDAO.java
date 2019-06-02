@@ -49,17 +49,17 @@ public class RoomCalendarsDAO {
     }
 
     public List<RoomCalendar> findByDate(String date) {
-        return em.createNamedQuery("RoomCalendar.findByDate", RoomCalendar.class).setParameter("date", calendarsDAO.findOne(date)).getResultList();
+        return em.createNamedQuery("RoomCalendar.findByDate", RoomCalendar.class).setParameter("calendar", calendarsDAO.findOne(date)).getResultList();
     }
 
 
 
     public List<RoomCalendar> findByRoom(Integer roomId) {
-        return em.createNamedQuery("RoomCalendar.findByRoom", RoomCalendar.class).setParameter("roomId", roomsDAO.findOne(roomId)).getResultList();
+        return em.createNamedQuery("RoomCalendar.findByRoom", RoomCalendar.class).setParameter("room", roomsDAO.findOne(roomId)).getResultList();
     }
 
     public RoomCalendar findByRoomAndDate(Integer roomId, String date){
-        return em.createNamedQuery("RoomCalendar.findByRoomAndDate", RoomCalendar.class).setParameter("roomId", roomsDAO.findOne(roomId)).setParameter("date", calendarsDAO.findOne(date)).getSingleResult();
+        return em.createNamedQuery("RoomCalendar.findByRoomAndDate", RoomCalendar.class).setParameter("room", roomsDAO.findOne(roomId)).setParameter("calendar", calendarsDAO.findOne(date)).getSingleResult();
     }
 
     public RoomCalendar update(RoomCalendar roomCalendar){

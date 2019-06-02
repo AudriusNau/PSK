@@ -45,6 +45,23 @@ public class RoomCalendarService {
         return roomCalendarsDAO.findByRoom(id);
     }
 
+    public boolean isAvailable(String date, Integer id){
+
+        try{
+            if(roomCalendarsDAO.findByRoomAndDate(id, date) != null){
+                System.out.println(id);
+                System.out.println(roomCalendarsDAO.findByRoomAndDate(id, date).getRoom().getId());
+                System.out.println(date);
+                System.out.println(roomCalendarsDAO.findByRoomAndDate(id, date).getCalendar().getDate());
+                return false;
+            }
+            else return true;
+        } catch (Exception e){
+            System.out.println("found exception");
+            return true;
+        }
+    }
+
     public RoomCalendar create(RoomCalendarDTO roomCalendarDTO){
         RoomCalendar roomCalendar = roomCalendarsDAO.create();
         if (calendarsDAO.findOne(roomCalendarDTO.getDate()) == null) {
