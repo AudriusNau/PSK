@@ -113,6 +113,14 @@ public class EmployeeTravelController {
         return Response.ok(employeeTravel).build();
     }
 
+    @Path("/changeAccommodation/{id}")
+    @PUT @Transactional
+    public Response changeAccommodation(@PathParam("id") int id)
+    {
+        employeeTravelService.changeAccommodation(id);
+        return Response.ok(employeeTravelService.getByEmployeeTravelId(id)).build();
+    }
+
     @Path("/accept/{id}")
     @PUT @Transactional
     public Response accept(@PathParam("id") int id) {

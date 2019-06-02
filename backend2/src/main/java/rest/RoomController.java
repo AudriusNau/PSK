@@ -4,10 +4,6 @@ import dto.RoomDTO;
 import entities.Room;
 import entities.Accommodation;
 import interceptors.DevbridgeInterceptor;
-import lombok.Getter;
-import lombok.Setter;
-import persistence.AccommodationsDAO;
-import persistence.RoomsDAO;
 import services.RoomService;
 
 import javax.enterprise.context.ApplicationScoped;
