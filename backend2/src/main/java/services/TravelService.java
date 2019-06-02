@@ -16,7 +16,10 @@ import persistence.TravelsDAO;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @ApplicationScoped
 @DevbridgeInterceptor
@@ -41,6 +44,9 @@ public class TravelService {
     @Setter
     @Getter
     private EmployeeTravelsDAO employeeTravelsDAO;
+
+    @Inject
+    private CalendarService calendarService;
 
     public List<Travel> getAll(){
         return travelsDAO.loadAll();
@@ -103,20 +109,71 @@ public class TravelService {
     }
 
     public Travel mergeTravels(MergeTravelsDTO mergeTravelsDTO){
-        Travel baseTravel = travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId());
-        List<EmployeeTravel> employeeTravels;
-        for (Integer travelId : mergeTravelsDTO.getTravels())
-        {
-            employeeTravels = employeeTravelsDAO.findByTravelId(travelId);
-            for (EmployeeTravel employeeTravel : employeeTravels)
-            {
-                employeeTravel.setTravel(baseTravel);
-                employeeTravel.setStatus(false);
-                employeeTravelsDAO.update(employeeTravel);
+        if (!checkDates(mergeTravelsDTO) || !checkOffices(mergeTravelsDTO)) return null;
+        else {
+            Travel baseTravel = travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId());
+            List<EmployeeTravel> employeeTravels;
+            for (Integer travelId : mergeTravelsDTO.getTravels()) {
+                employeeTravels = employeeTravelsDAO.findByTravelId(travelId);
+                for (EmployeeTravel employeeTravel : employeeTravels) {
+                    employeeTravel.setTravel(baseTravel);
+                    employeeTravel.setStatus(false);
+                    employeeTravelsDAO.update(employeeTravel);
+                }
+                travelsDAO.delete(travelsDAO.findOne(travelId));
             }
-            travelsDAO.delete(travelsDAO.findOne(travelId));
+            return baseTravel;
         }
-        return baseTravel;
+    }
+
+    private boolean checkDates(MergeTravelsDTO mergeTravelsDTO)
+    {
+        try {
+            Date baseTravelStartDate = calendarService.parseDate((travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId())).getStartDate());
+            Date baseTravelEndDate = calendarService.parseDate((travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId())).getEndDate());
+            for (Integer travelId : mergeTravelsDTO.getTravels()){
+                if(!checkDate(baseTravelStartDate, calendarService.parseDate(travelsDAO.findOne(travelId).getStartDate())))
+                {
+                    return false;
+                }
+                if(!checkDate(baseTravelEndDate, calendarService.parseDate(travelsDAO.findOne(travelId).getEndDate())))
+                {
+                    return false;
+                }
+            }
+            return true;
+        } catch (Exception e){
+            System.out.println("wrong date format");
+            return false;
+        }
+    }
+
+    private boolean checkDate(Date baseTravelDate, Date travelDate){
+        long difference = travelDate.getTime() - baseTravelDate.getTime();
+        return (TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS) <= 1) && (TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS) >= -1);
+    }
+
+    private boolean checkOffices(MergeTravelsDTO mergeTravelsDTO)
+    {
+        Office baseDepartureOffice = travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId()).getDepartureOffice();
+        Office baseArrivalOffice = travelsDAO.findOne(mergeTravelsDTO.getBaseTravelId()).getArrivalOffice();
+        for (Integer travelId : mergeTravelsDTO.getTravels()){
+            if(!checkOffice(baseDepartureOffice,travelsDAO.findOne(travelId).getDepartureOffice()))
+            {
+                return false;
+            }
+            if(!checkOffice(baseArrivalOffice, travelsDAO.findOne(travelId).getArrivalOffice()))
+            {
+                return false;
+            }
+        }
+        return true;
+
+    }
+
+    private boolean checkOffice(Office baseOffice, Office travelOffice)
+    {
+        return (baseOffice == travelOffice);
     }
 
     public void delete(Integer id){
