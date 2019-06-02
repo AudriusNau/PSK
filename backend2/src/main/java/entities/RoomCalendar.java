@@ -9,9 +9,9 @@ import java.io.Serializable;
 @Entity
 @NamedQueries({
         @NamedQuery(name = "RoomCalendar.findAll", query = "select t from RoomCalendar as t"),
-        @NamedQuery(name = "RoomCalendar.findByDate", query = "select t from RoomCalendar as t where t.calendar = :date"),
-        @NamedQuery(name = "RoomCalendar.findByRoom", query = "select t from RoomCalendar as t where t.room = :roomId"),
-        @NamedQuery(name = "RoomCalendar.findByRoomAndDate", query = "select t from RoomCalendar as t where t.room = :roomId AND t.calendar = :date")
+        @NamedQuery(name = "RoomCalendar.findByDate", query = "select t from RoomCalendar as t where t.calendar = :calendar"),
+        @NamedQuery(name = "RoomCalendar.findByRoom", query = "select t from RoomCalendar as t where t.room = :room"),
+        @NamedQuery(name = "RoomCalendar.findByRoomAndDate", query = "select t from RoomCalendar as t where t.room = :room AND t.calendar = :calendar")
 })
 @Table(name = "ROOM_CALENDAR", schema = "PUBLIC", catalog = "DEVBRIDGE")
 @Getter

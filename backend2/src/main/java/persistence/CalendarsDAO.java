@@ -36,6 +36,16 @@ public class CalendarsDAO {
         return em.merge(calendar);
     }
 
+    public Calendar getOrCreate(String date){
+        if(findOne(date)== null){
+            Calendar calendar = create();
+            calendar.setDate(date);
+            persist(calendar);
+            return calendar;
+        }
+        else return findOne(date);
+    }
+
     public void delete(Calendar calendar)
     {
         if (!em.contains(calendar)) em.merge(calendar);

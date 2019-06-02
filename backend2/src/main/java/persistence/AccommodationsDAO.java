@@ -31,8 +31,12 @@ public class AccommodationsDAO {
         return em.createNamedQuery("Accommodation.findAll", Accommodation.class).getResultList();
     }
 
-    public List<Accommodation> getApartments(Integer officeId) {
-        return em.createNamedQuery("Accommodation.findApartments", Accommodation.class).setParameter("office", officesDAO.findOne(officeId)).getResultList();
+    public Accommodation getApartments(Integer officeId) {
+        return em.createNamedQuery("Accommodation.findApartments", Accommodation.class).setParameter("office", officesDAO.findOne(officeId)).getSingleResult();
+    }
+
+    public Accommodation getHotel(Integer officeId) {
+        return em.createNamedQuery("Accommodation.findHotel", Accommodation.class).setParameter("office", officesDAO.findOne(officeId)).getSingleResult();
     }
 
     public List<Accommodation> findByOfficeId(Integer officeId) {

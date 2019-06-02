@@ -50,13 +50,13 @@ public class OfficeController {
         return officeService.getAll();
     }
 
-    @Path("/get/getFreeRooms")
+    /*@Path("/get/getFreeRooms")
     @GET
     public ArrayList<Room> findFreeRooms(RoomAvailabilityDTO roomAvailabilityDTO) {
         List<Accommodation> apartments = accommodationService.getApartments(roomAvailabilityDTO.getOfficeId());
         ArrayList<Room> availableRooms = roomService.getAvailableRooms(apartments, roomAvailabilityDTO.getStartDate(), roomAvailabilityDTO.getEndDate());
         return availableRooms;
-    }
+    }*/
 
     @Path("/post")
     @POST

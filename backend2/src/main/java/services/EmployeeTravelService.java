@@ -46,6 +46,9 @@ public class EmployeeTravelService {
     @Getter
     private RoomsDAO roomsDAO;
 
+    @Inject
+    private AccommodationService accommodationService;
+
     public List<EmployeeTravel> getAll(){
         return employeeTravelsDAO.loadAll();
     }
@@ -127,9 +130,11 @@ public class EmployeeTravelService {
                     + id + " not found");
         }
         employeeTravel.setStatus(true);
+        accommodationService.bookAccommodation(employeeTravel);
         employeeTravelsDAO.update(employeeTravel);
         return employeeTravel;
     }
+
 
     public void delete(Integer id){
         EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
