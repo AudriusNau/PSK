@@ -94,17 +94,17 @@ public class AccommodationService {
         accommodationsDAO.delete(accommodation);
     }
 
-    public void bookAccommodation(EmployeeTravel employeeTravel){
+    public Room bookAccommodation(EmployeeTravel employeeTravel){
         Accommodation apartments = accommodationsDAO.getApartments(employeeTravel.getTravel().getArrivalOffice().getId());
         Accommodation hotel = accommodationsDAO.getHotel(employeeTravel.getTravel().getArrivalOffice().getId());
-        System.out.println(hotel.getName());
         List<Date> dates = calendarService.getDates(employeeTravel.getTravel().getStartDate(), employeeTravel.getTravel().getEndDate());
-        bookRooms(apartments, dates);
-        if (employeeTravel.getRoom() == null) bookRooms(hotel, dates);
+        Room room = bookRooms(apartments, dates);
+        if (room == null) room = bookRooms(hotel, dates);
+        return room;
 
     }
 
-    public void bookRooms(Accommodation accommodation, List<Date> dates){
+    public Room bookRooms(Accommodation accommodation, List<Date> dates){
         RoomCalendar roomCalendar;
         DateFormat df = new SimpleDateFormat("yyyy_MM_dd");
         int days;
@@ -124,8 +124,9 @@ public class AccommodationService {
                     roomCalendar.setRoom(room);
                     roomCalendarsDAO.persist(roomCalendar);
                 }
-                break;
+                return room;
             }
         }
+        return null;
     }
 }

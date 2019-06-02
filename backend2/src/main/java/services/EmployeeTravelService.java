@@ -10,6 +10,7 @@ import persistence.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Date;
 import java.util.List;
 
 @ApplicationScoped
@@ -47,7 +48,15 @@ public class EmployeeTravelService {
     private RoomsDAO roomsDAO;
 
     @Inject
+    @Setter
+    @Getter
+    private AccommodationsDAO accommodationsDAO;
+
+    @Inject
     private AccommodationService accommodationService;
+
+    @Inject
+    private CalendarService calendarService;
 
     public List<EmployeeTravel> getAll(){
         return employeeTravelsDAO.loadAll();
@@ -130,9 +139,23 @@ public class EmployeeTravelService {
                     + id + " not found");
         }
         employeeTravel.setStatus(true);
-        accommodationService.bookAccommodation(employeeTravel);
+        employeeTravel.setRoom(accommodationService.bookAccommodation(employeeTravel));
         employeeTravelsDAO.update(employeeTravel);
         return employeeTravel;
+    }
+
+    public void changeAccommodation(Integer id) {
+        EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
+        List<Date> dates = calendarService.getDates(employeeTravel.getTravel().getStartDate(), employeeTravel.getTravel().getEndDate());
+        Room room;
+        if (employeeTravel.getRoom().getAccommodation().getAccommodationType() == "Apartments")
+        {
+            System.out.println("hello 1");
+            room = accommodationService.bookRooms(accommodationsDAO.getHotel(employeeTravel.getRoom().getAccommodation().getOffice().getId()), dates);
+        }
+        else room = accommodationService.bookRooms(accommodationsDAO.getApartments(employeeTravel.getRoom().getAccommodation().getOffice().getId()), dates);
+        employeeTravel.setRoom(room);
+        employeeTravelsDAO.update(employeeTravel);
     }
 
 
@@ -140,5 +163,7 @@ public class EmployeeTravelService {
         EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
         employeeTravelsDAO.delete(employeeTravel);
     }
+
+
 
 }
