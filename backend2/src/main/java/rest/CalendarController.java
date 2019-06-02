@@ -37,7 +37,6 @@ public class CalendarController {
         return calendarService.getAll();
     }
 
-    @Path("/post/{date}")
     @POST
     @Transactional
     public Calendar create(CalendarDTO calendarDTO) {

@@ -1,5 +1,8 @@
 <h1 mat-dialog-title>{{date}}</h1>
-<div mat-dialog-actions>
+<div mat-dialog-content>
+    <h3>My calendar</h3>
+    <button mat-raised-button (click)="onToggleClick()">Toggle availability</button><br>
+    <h3>Trip</h3>
     <button mat-raised-button (click)="onStartClick()">Set as start date</button>
     <button mat-raised-button (click)="onEndClick()">Set as end date</button>
 </div>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { CalendarDateOption } from '../calendar.component';
 
 @Component({
     selector: 'app-set-date-dialog',
@@ -18,10 +19,14 @@ export class SetDateDialogComponent {
     }
 
     onStartClick(): void {
-        this.dialogRef.close(true);
+        this.dialogRef.close(CalendarDateOption.startDate);
     }
 
     onEndClick(): void {
-        this.dialogRef.close(false);
+        this.dialogRef.close(CalendarDateOption.endDate);
+    }
+
+    onToggleClick(): void {
+        this.dialogRef.close(CalendarDateOption.toggleAvailability);
     }
 }
