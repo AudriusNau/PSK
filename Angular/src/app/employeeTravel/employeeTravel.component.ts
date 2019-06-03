@@ -15,7 +15,7 @@ export class EmployeeTravelComponent implements OnInit {
   private subscription: Subscription;
 
   items: Array<EmployeeTravel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'date', 'room', 'flight', 'carRent', 'status' ];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'startDate', 'endDate', 'room', 'flight', 'carRent', 'status' ];
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
