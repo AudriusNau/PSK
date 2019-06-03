@@ -59,7 +59,7 @@ export class TravelComponent implements OnInit {
       config.data = this.selectedTravels;
       this.dialog.open(MergeTravelDialogComponent, config)
         .afterClosed().subscribe(result => {
-          if (result == null) {alert(' Does not match the rules\n' + this.rules); }
+          if (result == false) {alert(' Does not match the rules\n' + this.rules); }
           else this.loadTable();
       });
 

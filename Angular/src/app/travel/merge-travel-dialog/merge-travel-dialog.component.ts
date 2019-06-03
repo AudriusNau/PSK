@@ -29,11 +29,23 @@ export class MergeTravelDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   onMergeClick() {
-    this.http.put(
-      Url.get('travel/merge'),
-      {baseTravelId: this.baseTravel.id,
-        travels: this.selectedTravels.splice (this.baseTravel.id, 1).map(item => item.id)}
-    ).subscribe(() => this.onCloseClick() );
+    let mergedTravel = {
+      baseTravelId: this.baseTravel.id,
+      travels: this.selectedTravels.filter((travel) => travel.id != this.baseTravel.id).map(item => item.id)
+    }
+    this.http.put(Url.get('travel/merge'), mergedTravel)
+      .subscribe(
+        // succes
+        () => {
+          console.log("Merge success");
+          this.dialogRef.close(true)
+        },
+        // error
+        () => {
+          console.log("Merge fail");
+          this.dialogRef.close(false)
+        }
+      );
   }
 
 }
