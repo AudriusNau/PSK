@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { CalendarDateOption } from '../calendar.component';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
     selector: 'app-set-date-dialog',
@@ -13,7 +14,8 @@ export class SetDateDialogComponent {
 
     constructor(
         public dialogRef: MatDialogRef<SetDateDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) public data: any
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private userService: UserService
     ) {
         this.date = data;
     }

@@ -1,4 +1,7 @@
-<div class="accommodation-table mat-elevation-z8">
+<div *ngIf="!userService.isAdmin">
+    You don't have permission to view this page.
+</div>
+<div *ngIf="userService.isAdmin" class="accommodation-table mat-elevation-z8">
     <table mat-table [dataSource]="items">
 
         <ng-container matColumnDef="name">

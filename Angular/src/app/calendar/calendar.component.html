@@ -1,5 +1,5 @@
 <div>
-    <div fxLayout="row">
+    <div *ngIf="userService.isOrganiser" fxLayout="row">
         <mat-select-autocomplete [placeholder]="'Options Selection'" [errorMsg]="errorMessage" [showErrorMsg]="showError"
             [options]="options" [display]="'display'" [value]="'value'" [multiple]='true' [selectedOptions]="selectedOptions"
             (selectionChange)="getSelectedOptions($event)">

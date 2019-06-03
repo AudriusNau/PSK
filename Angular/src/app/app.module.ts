@@ -30,6 +30,7 @@ import { AppCalendarModule } from './calendar/calendar.module';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { SetDateDialogComponent } from './calendar/set-date-dialog/set-date-dialog.component';
 import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/edit-traveler-dialog/edit-traveler-dialog.component';
+import { NavigationService } from './services/navigation.service';
 
 @NgModule({
     declarations: [
@@ -66,6 +67,7 @@ import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dia
     providers: [
         CookieService,
         UserService,
+        NavigationService,
         MatDialogModule,
         {provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: {hasBackdrop: false}},
     ],

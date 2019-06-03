@@ -1,25 +1,13 @@
 <mat-toolbar color="primary">
-    <div fxHide.gt-xs>
-        <button mat-icon-button (click)="onToggleSidenav()">
-            <mat-icon>menu</mat-icon>
-        </button>
+    <button mat-icon-button (click)="onToggleSidenav()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    {{navigationService.currentPageTitle}}
+    <div fxFlex fxLayoutAlign="end center">
+        <!-- <button mat-icon-button> -->
+            <mat-icon>portrait</mat-icon>
+        <!-- </button> -->
+        {{userService.firstName}} {{userService.lastName}}
     </div>
-    <div>
-        <a routerLink="/home">
-            <mat-icon>home</mat-icon>
-        </a>
-    </div>
-    <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-        <ul fxLayout fxLayoutGap="15px" class="navigation-items">
-            <li>
-                <a routerLink="/accommodation">Accommodation</a>
-                <a routerLink="/travel">Travel</a>
-                <a routerLink="/organised">Organised</a>
-              <a routerLink="/myTrips">My Trips</a>
-            </li>
-            <li>
-                <a routerLink="/login">Login</a>
-            </li>
-        </ul>
-    </div>
+
 </mat-toolbar>
