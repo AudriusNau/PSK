@@ -11,15 +11,6 @@
     <div class="organiser-travel-table mat-elevation-z8" style="width: 100%">
         <table mat-table [dataSource]="travelers">
 
-            <ng-container matColumnDef="status" stickyEnd>
-                <th mat-header-cell *matHeaderCellDef></th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-icon *ngIf="element.status==1" style="color:green">check_circle</mat-icon>
-                    <mat-icon *ngIf="element.status==-1" style="color:red">cancel</mat-icon>
-                    <mat-icon *ngIf="element.status==0" style="color: orange">help</mat-icon>
-                </td>
-            </ng-container>
-
             <ng-container matColumnDef="firstName">
                 <th mat-header-cell *matHeaderCellDef> First mane </th>
                 <td mat-cell *matCellDef="let element"> {{element.employee.firstName}} </td>

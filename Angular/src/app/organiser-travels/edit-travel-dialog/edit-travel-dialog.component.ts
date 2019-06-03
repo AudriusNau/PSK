@@ -14,7 +14,7 @@ import { EditTravelerDialogComponent } from './edit-traveler-dialog/edit-travele
 })
 export class EditTravelDialogComponent implements OnInit {
 
-    public displayedColumns: string[] = ['status', 'firstName', 'lastName', 'actions'];
+    public displayedColumns: string[] = ['firstName', 'lastName', 'actions'];
     travelers: Array<EmployeeTravel>;
 
     constructor(

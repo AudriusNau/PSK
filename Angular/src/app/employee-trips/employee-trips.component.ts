@@ -21,7 +21,7 @@ export class EmployeeTripsComponent implements OnInit {
   approvedTrips: Array<EmployeeTravel> = [];
   public displayedColumns1: string[] = ['firstName', 'lastName', 'date',
     'departureOffice', 'arrivalOffice', 'decline' , 'approve'];
-  public displayedColumns2: string[] = ['firstName', 'lastName', 'date', 'flight', 'carRent',
+  public displayedColumns2: string[] = ['firstName', 'lastName', 'date', 'room', 'flight', 'carRent',
     'departureOffice', 'arrivalOffice'];
   constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
@@ -67,12 +67,8 @@ export class EmployeeTripsComponent implements OnInit {
       });
   }
   onDeclineCLick(id: number) {
-    this.http.put(Url.get("employeeTravel/decline/" + id), {})
-      .subscribe(() => {
-        this.loadTable();
-      });
-    // this.http.delete(Url.get("employeeTravel/delete/" + id))
-    //   .subscribe(() => this.loadTable());
+    this.http.delete(Url.get("employeeTravel/delete/" + id))
+      .subscribe(() => this.loadTable());
   }
   onApproveCLick(employeeTravel: EmployeeTravel) {
     this.http.put(Url.get("employeeTravel/accept/" + employeeTravel.id), {})
