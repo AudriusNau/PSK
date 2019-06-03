@@ -128,6 +128,13 @@ public class EmployeeTravelController {
         return Response.ok(employeeTravel).build();
     }
 
+    @Path("/decline/{id}")
+    @PUT @Transactional
+    public Response decline(@PathParam("id") int id) {
+        EmployeeTravel employeeTravel = employeeTravelService.decline(id);
+        return Response.ok(employeeTravel).build();
+    }
+
     @Path("/delete/{id}")
     @DELETE @Transactional
     public Response delete(@PathParam("id") int id) {
