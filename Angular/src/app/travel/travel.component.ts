@@ -54,7 +54,7 @@ export class TravelComponent implements OnInit {
       this.selectedTravels = this.items.filter(item => item.isSelected === true);
       this.http.put(
         Url.get('travel/merge'),
-        {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (0, 1).map(item => item.id)}
+        {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (1, 1).map(item => item.id)}
         ).subscribe(() => this.loadTable(), error1 => alert("Can not merge travels\n " +
         "Rules:\n 1 dates should be similar (+- 1 day)\n 2 destination should be the same"));
     }
