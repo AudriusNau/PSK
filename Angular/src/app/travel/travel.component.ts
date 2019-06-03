@@ -17,7 +17,7 @@ import {UserService} from "../services/user.service";
 export class TravelComponent implements OnInit {
     items: Array<Travel> = [];
     selectedTravels: Array<Travel> = [];
-    public displayedColumns: string[] = ['date', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
+    public displayedColumns: string[] = ['startDate', 'endDate', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
     constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
   ngOnInit() {
     if (this.userService.user)
@@ -55,7 +55,8 @@ export class TravelComponent implements OnInit {
       this.http.put(
         Url.get('travel/merge'),
         {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (1, 1).map(item => item.id)}
-        ).subscribe(() => this.loadTable());
+        ).subscribe(() => this.loadTable(), error1 => alert("Can not merge travels\n " +
+        "Rules:\n 1 dates should be similar (+- 1 day)\n 2 destination should be the same"));
     }
 }
 
