@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @ApplicationScoped
@@ -59,6 +60,15 @@ public class CalendarService {
 
     public Date parseDate(String date) throws Exception{
         return new SimpleDateFormat("yyyy_MM_dd").parse(date);
+    }
+
+    public boolean checkDates(String date1, String date2) {
+        try{
+        long difference = parseDate(date2).getTime() - parseDate(date1).getTime();
+        return (TimeUnit.DAYS.convert(difference, TimeUnit.MILLISECONDS) > 0);}
+        catch (Exception e){
+            return false;
+        }
     }
 
     public Calendar create(CalendarDTO calendarDTO){
