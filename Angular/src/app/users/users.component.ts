@@ -3,6 +3,9 @@ import { UserService } from '../services/user.service';
 import { Employee } from '../entities/employee';
 import { HttpClient } from '@angular/common/http';
 import { Url } from '../http/url';
+import { Travel } from '../entities/travel';
+import { MatDialog, MatDialogConfig } from '@angular/material';
+import { ReasignTravelsDialogComponent } from './reasign-travels-dialog/reasign-travels-dialog.component';
 
 @Component({
     selector: 'app-users',
@@ -14,7 +17,7 @@ export class UsersComponent implements OnInit {
     public displayedColumns: string[] = ['firstName', 'lastName', 'userName', 'role', 'actions'];
     users: Array<Employee> = [];
 
-    constructor(private http: HttpClient, private userService: UserService) { }
+    constructor(private http: HttpClient, private userService: UserService, private dialog: MatDialog) { }
 
     ngOnInit() {
         this.loadUsers()
@@ -27,10 +30,30 @@ export class UsersComponent implements OnInit {
             });
     }
 
-    onRoleChange(role: string, id: number) {
+    onRoleChange(newRole: string, id: number) {
         this.http.get(Url.get('employee/get/' + id))
             .subscribe((user: Employee) => {
-                this.loadUsers();
+                if(newRole == "Admin" || newRole == "Organiser") {
+                    this.http.put(Url.get('employee/put/' + id), {role: newRole})
+                        .subscribe(() => this.loadUsers());
+                }
+                this.http.get(Url.get("travel/get/getByOrganiserId/" + user.id))
+                    .subscribe((travels: Array<Travel>) => {
+                        if(travels.length == 0) {
+                            this.http.put(Url.get('employee/put/' + id), {role: newRole})
+                                .subscribe(() => this.loadUsers());
+                        } else {
+                            const config = new MatDialogConfig();
+                            config.data = travels;
+                            this.dialog.open(ReasignTravelsDialogComponent, config)
+                                // .afterClosed().subscribe((result) => {
+                                //     if (result == true)
+                                //         this.loadTable();
+                                // })
+
+                            this.loadUsers()
+                        }
+                    })
             });
     }
 
