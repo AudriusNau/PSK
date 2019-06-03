@@ -35,6 +35,7 @@ import { UsersComponent } from './users/users.component';
 import { ReasignTravelsDialogComponent } from './users/reasign-travels-dialog/reasign-travels-dialog.component';
 import { MergeTravelDialogComponent } from './travel/merge-travel-dialog/merge-travel-dialog.component';
 import { AddUserDialogComponent } from './users/add-user-dialog/add-user-dialog.component';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
     declarations: [
@@ -60,6 +61,7 @@ import { AddUserDialogComponent } from './users/add-user-dialog/add-user-dialog.
         UsersComponent,
         ReasignTravelsDialogComponent,
         AddUserDialogComponent,
+        AlertComponent,
     ],
     imports: [
         BrowserModule,
@@ -90,6 +92,7 @@ import { AddUserDialogComponent } from './users/add-user-dialog/add-user-dialog.
         ReasignTravelsDialogComponent,
         MergeTravelDialogComponent,
         AddUserDialogComponent,
+        AlertComponent
     ]
 })
 export class AppModule { }

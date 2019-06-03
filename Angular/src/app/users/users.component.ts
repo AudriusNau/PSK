@@ -7,6 +7,7 @@ import { Travel } from '../entities/travel';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ReasignTravelsDialogComponent } from './reasign-travels-dialog/reasign-travels-dialog.component';
 import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
+import { AlertComponent, Alert } from '../alert/alert.component';
 
 @Component({
     selector: 'app-users',
@@ -31,31 +32,37 @@ export class UsersComponent implements OnInit {
             });
     }
 
-    onRoleChange(newRole: string, id: number) {
-        this.http.get(Url.get('employee/get/' + id))
-            .subscribe((user: Employee) => {
-                if(newRole == "Admin" || newRole == "Organiser") {
-                    this.http.put(Url.get('employee/put/' + id), {role: newRole})
+    onRoleChange(newRole: string, user: Employee) {
+        if (user.role == "Admin") {
+            let admins = this.users.filter((user) => user.role == "Admin");
+            if (admins.length == 1) {
+                this.showLastAdminAlert();
+                this.loadUsers();
+                return;
+            }
+        }
+        
+        if (newRole == "Admin" || newRole == "Organiser") {
+            this.http.put(Url.get('employee/put/' + user.id), { role: newRole })
+                .subscribe(() => this.loadUsers());
+        }
+        this.http.get(Url.get("travel/get/getByOrganiserId/" + user.id))
+            .subscribe((travels: Array<Travel>) => {
+                if (travels.length == 0) {
+                    this.http.put(Url.get('employee/put/' + user.id), { role: newRole })
                         .subscribe(() => this.loadUsers());
-                }
-                this.http.get(Url.get("travel/get/getByOrganiserId/" + user.id))
-                    .subscribe((travels: Array<Travel>) => {
-                        if(travels.length == 0) {
-                            this.http.put(Url.get('employee/put/' + id), {role: newRole})
-                                .subscribe(() => this.loadUsers());
-                        } else {
-                            const config = new MatDialogConfig();
-                            config.data = travels;
-                            this.dialog.open(ReasignTravelsDialogComponent, config)
-                                // .afterClosed().subscribe((result) => {
-                                //     if (result == true)
-                                //         this.loadTable();
-                                // })
+                } else {
+                    const config = new MatDialogConfig();
+                    config.data = travels;
+                    this.dialog.open(ReasignTravelsDialogComponent, config)
+                    // .afterClosed().subscribe((result) => {
+                    //     if (result == true)
+                    //         this.loadTable();
+                    // })
 
-                            this.loadUsers()
-                        }
-                    })
-            });
+                    this.loadUsers();
+                }
+            })
     }
 
     onAddCLick() {
@@ -66,8 +73,23 @@ export class UsersComponent implements OnInit {
             })
     }
 
-    onRemoveClick(user: Employee) {
-        this.http.delete(Url.get("employee/delete/" + user.id))
+    onRemoveClick(userToRemove: Employee) {
+        if (userToRemove.role == "Admin") {
+            let admins = this.users.filter((user) => user.role == "Admin");
+            if (admins.length == 1) {
+                this.showLastAdminAlert();
+                return;
+            }
+        }
+        this.http.delete(Url.get("employee/delete/" + userToRemove.id))
             .subscribe(() => this.loadUsers());
+    }
+
+    private showLastAdminAlert() {
+        let alert: Alert = {
+            title: "Last Admin",
+            message: "System must have at least one administrator."
+        }
+        this.dialog.open(AlertComponent, { data: alert });
     }
 }

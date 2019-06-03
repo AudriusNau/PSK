@@ -29,7 +29,7 @@
             <ng-container matColumnDef="role">
                 <th mat-header-cell *matHeaderCellDef> Role </th>
                 <td mat-cell *matCellDef="let user">
-                    <mat-select [ngModel]="user.role" (selectionChange)="onRoleChange($event.value, user.id)">
+                    <mat-select [ngModel]="user.role" (selectionChange)="onRoleChange($event.value, user)">
                         <mat-option value="Admin">Admin</mat-option>
                         <mat-option value="Organiser">Organiser</mat-option>
                         <mat-option value="Employee">Employee</mat-option>
