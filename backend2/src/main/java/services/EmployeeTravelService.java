@@ -144,9 +144,20 @@ public class EmployeeTravelService {
             throw new IllegalArgumentException("employeeTravel id "
                     + id + " not found");
         }
-        employeeTravel.setStatus(true);
+        employeeTravel.setStatus(1);
         employeeTravel.setRoom(accommodationService.bookAccommodation(employeeTravel));
         addToCalendar(employeeTravel);
+        employeeTravelsDAO.update(employeeTravel);
+        return employeeTravel;
+    }
+
+    public EmployeeTravel decline(Integer id){
+        EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
+        if (employeeTravel == null){
+            throw new IllegalArgumentException("employeeTravel id "
+                    + id + " not found");
+        }
+        employeeTravel.setStatus(-1);
         employeeTravelsDAO.update(employeeTravel);
         return employeeTravel;
     }

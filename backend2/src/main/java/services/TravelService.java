@@ -117,7 +117,7 @@ public class TravelService {
                 employeeTravels = employeeTravelsDAO.findByTravelId(travelId);
                 for (EmployeeTravel employeeTravel : employeeTravels) {
                     employeeTravel.setTravel(baseTravel);
-                    employeeTravel.setStatus(false);
+                    employeeTravel.setStatus(0);
                     employeeTravelsDAO.update(employeeTravel);
                 }
                 travelsDAO.delete(travelsDAO.findOne(travelId));
