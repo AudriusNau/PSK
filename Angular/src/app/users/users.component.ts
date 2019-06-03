@@ -6,6 +6,7 @@ import { Url } from '../http/url';
 import { Travel } from '../entities/travel';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { ReasignTravelsDialogComponent } from './reasign-travels-dialog/reasign-travels-dialog.component';
+import { AddUserDialogComponent } from './add-user-dialog/add-user-dialog.component';
 
 @Component({
     selector: 'app-users',
@@ -57,4 +58,16 @@ export class UsersComponent implements OnInit {
             });
     }
 
+    onAddCLick() {
+        this.dialog.open(AddUserDialogComponent)
+            .afterClosed().subscribe((reload: boolean) => {
+                if (reload)
+                    this.loadUsers();
+            })
+    }
+
+    onRemoveClick(user: Employee) {
+        this.http.delete(Url.get("employee/delete/" + user.id))
+            .subscribe(() => this.loadUsers());
+    }
 }

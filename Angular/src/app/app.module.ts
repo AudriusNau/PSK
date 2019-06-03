@@ -89,6 +89,7 @@ import { AddUserDialogComponent } from './users/add-user-dialog/add-user-dialog.
         EditTravelerDialogComponent,
         ReasignTravelsDialogComponent,
         MergeTravelDialogComponent,
+        AddUserDialogComponent,
     ]
 })
 export class AppModule { }
