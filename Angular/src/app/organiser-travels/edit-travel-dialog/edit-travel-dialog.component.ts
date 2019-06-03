@@ -56,4 +56,8 @@ export class EditTravelDialogComponent implements OnInit {
             .subscribe(() => this.loadTravelers());
     }
 
+    onCloseClick() {
+        this.dialogRef.close();
+    }
+
 }

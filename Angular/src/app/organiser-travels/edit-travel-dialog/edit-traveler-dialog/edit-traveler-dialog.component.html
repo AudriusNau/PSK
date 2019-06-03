@@ -1,7 +1,7 @@
 <h1 mat-dialog-title>
   {{data.employee.firstName}} {{data.employee.lastName}}
 </h1>
-<div mat-dialog-content>
+<div mat-dialog-content style="padding-bottom:1em">
   <div *ngIf="data.flight.need != 0">
     <p>
       <mat-checkbox [(ngModel)]="ticketsOrdered">Plane tickets</mat-checkbox>
@@ -14,8 +14,11 @@
     </p>
     <p>{{data.carRent.info}}</p>
   </div>
-</div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onSaveClick()">Save</button>
-  <button mat-button (click)="onCloseClick()">Cancel</button>
+
+  <div *ngIf="data.accomodation">
+    <h3>Accommodation:</h3>
+    {{data.accomodation.name}} <br>
+    Room: {{data.room.roomNumber}} <br>
+  </div>
+  <button mat-raised-button (click)="onChangeClick()">Change Accomodation</button>
 </div>

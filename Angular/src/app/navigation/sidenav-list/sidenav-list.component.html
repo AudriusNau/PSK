@@ -14,6 +14,9 @@
   <a *ngIf="userService.isOrganiser" mat-list-item routerLink="/travel" (click)="onNavigationItemSelected('All trips')">
     <mat-icon>flight</mat-icon> <span class="nav-caption">All trips</span>
   </a>
+  <a mat-list-item routerLink="/myTrips" (click)="onNavigationItemSelected('My trips')">
+    <mat-icon>flight</mat-icon> <span class="nav-caption">My Trips</span>
+  </a>
   <a *ngIf="userService.isAdmin" mat-list-item routerLink="/users" (click)="onNavigationItemSelected('Users')">
     <mat-icon>group</mat-icon> <span class="nav-caption">Users</span>
   </a>

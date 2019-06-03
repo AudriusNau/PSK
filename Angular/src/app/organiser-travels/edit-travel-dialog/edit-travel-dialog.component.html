@@ -33,7 +33,7 @@
             <ng-container matColumnDef="actions" stickyEnd>
                 <th mat-header-cell *matHeaderCellDef></th>
                 <td mat-cell *matCellDef="let element">
-                    <button mat-icon-button (click)="onEditClick(element)">
+                    <button [disabled]="element.status!=1" mat-icon-button (click)="onEditClick(element)">
                         <mat-icon>edit</mat-icon>
                     </button>
                     <button mat-icon-button (click)="onRemoveClick(element)">
@@ -47,6 +47,5 @@
     </div>
 </div>
 <div mat-dialog-actions>
-    <button mat-button (click)="onSaveClick()">Save</button>
     <button mat-button (click)="onCloseClick()">Close</button>
 </div>
