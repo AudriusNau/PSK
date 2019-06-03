@@ -34,6 +34,7 @@ import { NavigationService } from './services/navigation.service';
 import { UsersComponent } from './users/users.component';
 import { ReasignTravelsDialogComponent } from './users/reasign-travels-dialog/reasign-travels-dialog.component';
 import { MergeTravelDialogComponent } from './travel/merge-travel-dialog/merge-travel-dialog.component';
+import { AddUserDialogComponent } from './users/add-user-dialog/add-user-dialog.component';
 
 @NgModule({
     declarations: [
@@ -58,6 +59,7 @@ import { MergeTravelDialogComponent } from './travel/merge-travel-dialog/merge-t
         MergeTravelDialogComponent,
         UsersComponent,
         ReasignTravelsDialogComponent,
+        AddUserDialogComponent,
     ],
     imports: [
         BrowserModule,
