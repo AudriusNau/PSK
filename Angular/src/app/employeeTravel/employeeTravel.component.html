@@ -19,10 +19,10 @@
       <th mat-header-cell *matHeaderCellDef>End Date </th>
       <td mat-cell *matCellDef="let element"> {{element.travel.endDate}} </td>
     </ng-container>
-    <ng-container matColumnDef="room">
+    <!-- <ng-container matColumnDef="room">
       <th mat-header-cell *matHeaderCellDef>Room</th>
       <td mat-cell *matCellDef="let element"> {{element.room.roomNumber}} </td>
-    </ng-container>
+    </ng-container> -->
     <ng-container matColumnDef="flight">
       <th mat-header-cell *matHeaderCellDef>Flights</th>
       <td mat-cell *matCellDef="let element"> {{element.flight.info}} </td>
@@ -33,7 +33,11 @@
     </ng-container>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef>Status</th>
-      <td mat-cell *matCellDef="let element"> {{element.status}} </td>
+      <td mat-cell *matCellDef="let element">
+        <span *ngIf="element.status==0">Pending</span>
+        <span *ngIf="element.status==-1">Declined</span>
+        <span *ngIf="element.status==1">Approved</span>
+      </td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

@@ -1,4 +1,4 @@
-<app-layout>
+<app-layout *ngIf="isLoggedIn">
     <mat-sidenav-container>
         <mat-sidenav #sidenav role="navigation">
             <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
@@ -11,3 +11,4 @@
         </mat-sidenav-content>
     </mat-sidenav-container>
 </app-layout>
+<app-login *ngIf="!isLoggedIn"></app-login>

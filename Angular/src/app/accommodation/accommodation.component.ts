@@ -5,6 +5,7 @@ import { Url } from '../http/url';
 import { Office } from '../entities/office';
 import { MatDialog, MatDialogConfig } from '@angular/material';
 import { AccommodationDialogComponent } from './accommodation-dialog/accommodation-dialog.component';
+import { UserService } from '../services/user.service';
 
 @Component({
     selector: 'app-accommodation',
@@ -16,7 +17,7 @@ export class AccommodationComponent implements OnInit {
     items: Array<Accommodation> = []
     public displayedColumns: string[] = ['name', 'type', 'office'];
 
-    constructor(private http: HttpClient, private dialog: MatDialog) { }
+    constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService) { }
 
     ngOnInit() {
         this.http.get(Url.get("accommodation/get/all"))

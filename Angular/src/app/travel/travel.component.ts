@@ -5,9 +5,11 @@ import { Url } from '../http/url';
 import { Office } from '../entities/office';
 import { Organiser } from '../entities/organiser';
 import { Router } from '@angular/router';
-import {forEach} from "@angular/router/src/utils/collection";
-import {printLine} from "tslint/lib/verify/lines";
 import {UserService} from "../services/user.service";
+import {Accommodation} from "../entities/accommodation";
+import {MatDialog, MatDialogConfig} from "@angular/material";
+import {AccommodationDialogComponent} from "../accommodation/accommodation-dialog/accommodation-dialog.component";
+import {MergeTravelDialogComponent} from "./merge-travel-dialog/merge-travel-dialog.component";
 
 @Component({
     selector: 'app-travel',
@@ -19,7 +21,7 @@ export class TravelComponent implements OnInit {
     selectedTravels: Array<Travel> = [];
     private rules: string = String('Rules:\n 1 dates should be similar (+- 1 day)\n 2 destination should be the same\n');
     public displayedColumns: string[] = ['startDate', 'endDate', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
-    constructor(private http: HttpClient, private userService: UserService, private router: Router) { }
+    constructor(private http: HttpClient, private userService: UserService, private router: Router, private dialog: MatDialog) { }
   ngOnInit() {
     if (this.userService.user)
       this.loadTable();
@@ -52,7 +54,6 @@ export class TravelComponent implements OnInit {
         this.router.navigate(['/travel', id]);
     }
     merge() {
-      this.selectedTravels = this.items.filter(item => item.isSelected === true);
       this.http.put(
         Url.get('travel/merge'),
         {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (1, 1).map(item => item.id)}
@@ -61,5 +62,13 @@ export class TravelComponent implements OnInit {
       else {this.loadTable(), error1 => alert('Dates does not match the rules\n ' + this.rules); }
          });
     }
+    openDialog(): void {
+      this.selectedTravels = this.items.filter(item => item.isSelected === true);
+      const config = new MatDialogConfig();
+      config.data = this.selectedTravels;
+
+
+      this.dialog.open(MergeTravelDialogComponent, config);
+  }
 }
 

@@ -30,6 +30,7 @@ import { AppCalendarModule } from './calendar/calendar.module';
 import { SelectAutocompleteModule } from 'mat-select-autocomplete';
 import { SetDateDialogComponent } from './calendar/set-date-dialog/set-date-dialog.component';
 import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/edit-traveler-dialog/edit-traveler-dialog.component';
+import { MergeTravelDialogComponent } from './travel/merge-travel-dialog/merge-travel-dialog.component';
 
 @NgModule({
     declarations: [
@@ -51,6 +52,7 @@ import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dia
         NewTravelerDialogComponent,
         EmployeeTripsComponent,
         EditTravelerDialogComponent,
+        MergeTravelDialogComponent,
     ],
     imports: [
         BrowserModule,
@@ -77,6 +79,7 @@ import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dia
         NewTravelerDialogComponent,
         SetDateDialogComponent,
         EditTravelerDialogComponent,
+        MergeTravelDialogComponent,
     ]
 })
 export class AppModule { }
