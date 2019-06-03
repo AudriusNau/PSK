@@ -11,6 +11,9 @@
   <a *ngIf="userService.isOrganiser" mat-list-item routerLink="/organised" (click)="onNavigationItemSelected('Organised Trips')">
     <mat-icon>format_list_bulleted</mat-icon> <span class="nav-caption">Organised</span>
   </a>
+  <a *ngIf="userService.isAdmin" mat-list-item routerLink="/users" (click)="onNavigationItemSelected('Users')">
+    <mat-icon>group</mat-icon> <span class="nav-caption">Users</span>
+  </a>
   <a mat-list-item (click)="onLogoutClick()">
     <mat-icon>logout</mat-icon> <span class="nav-caption">Logout</span>
   </a>

@@ -8,6 +8,7 @@ import { OrganiserTravelsComponent } from './organiser-travels/organiser-travels
 import {EmployeeTravelComponent} from './employeeTravel/employeeTravel.component';
 import {EmployeeTripsComponent} from './employee-trips/employee-trips.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { UsersComponent } from './users/users.component';
 
 const routes: Routes = [
     { path: 'calendar', component: CalendarComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
     { path: 'myTrips', component: EmployeeTripsComponent},
     { path: 'home', component: HomeComponent},
     { path: 'travel/:id', component: EmployeeTravelComponent},
+    { path: 'users', component: UsersComponent},
     { path: '', redirectTo: '/home', pathMatch: 'full' }
 
   ];
