@@ -54,7 +54,7 @@ export class TravelComponent implements OnInit {
       this.selectedTravels = this.items.filter(item => item.isSelected === true);
       this.http.put(
         Url.get('travel/merge'),
-        {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (0, 1).map(item => item.id)}
+        {baseTravelId: this.selectedTravels[0].id, travels: this.selectedTravels.splice (1, 1).map(item => item.id)}
         ).subscribe(() => this.loadTable());
     }
 }
