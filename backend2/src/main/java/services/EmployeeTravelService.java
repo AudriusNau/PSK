@@ -1,5 +1,6 @@
 package services;
 
+import dto.EmployeeCalendarDTO;
 import dto.EmployeeTravelDTO;
 import dto.MergeTravelsDTO;
 import entities.*;
@@ -10,6 +11,8 @@ import persistence.*;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -57,6 +60,9 @@ public class EmployeeTravelService {
 
     @Inject
     private CalendarService calendarService;
+
+    @Inject
+    private EmployeeCalendarService employeeCalendarService;
 
     public List<EmployeeTravel> getAll(){
         return employeeTravelsDAO.loadAll();
@@ -140,8 +146,21 @@ public class EmployeeTravelService {
         }
         employeeTravel.setStatus(true);
         employeeTravel.setRoom(accommodationService.bookAccommodation(employeeTravel));
+        addToCalendar(employeeTravel);
         employeeTravelsDAO.update(employeeTravel);
         return employeeTravel;
+    }
+
+    public void addToCalendar(EmployeeTravel employeeTravel){
+        List<Date> dates = calendarService.getDates(employeeTravel.getTravel().getStartDate(), employeeTravel.getTravel().getEndDate());
+        DateFormat df = new SimpleDateFormat("yyyy_MM_dd");
+        EmployeeCalendarDTO employeeCalendarDTO = new EmployeeCalendarDTO();
+        employeeCalendarDTO.setEmployeeId(employeeTravel.getEmployee().getId());
+        for (Date date: dates
+             ) {
+            employeeCalendarDTO.setDate(df.format(date));
+            employeeCalendarService.create(employeeCalendarDTO);
+        }
     }
 
     public void changeAccommodation(Integer id) {
@@ -150,7 +169,6 @@ public class EmployeeTravelService {
         Room room;
         if (employeeTravel.getRoom().getAccommodation().getAccommodationType() == "Apartments")
         {
-            System.out.println("hello 1");
             room = accommodationService.bookRooms(accommodationsDAO.getHotel(employeeTravel.getRoom().getAccommodation().getOffice().getId()), dates);
         }
         else room = accommodationService.bookRooms(accommodationsDAO.getApartments(employeeTravel.getRoom().getAccommodation().getOffice().getId()), dates);

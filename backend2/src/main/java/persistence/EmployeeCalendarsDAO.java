@@ -46,14 +46,6 @@ public class EmployeeCalendarsDAO {
         this.em.persist(employeeCalendar);
     }
 
-    /*public EmployeeCalendar findByDate(String date) {
-        return em.createNamedQuery("EmployeeCalendar.findByDate", EmployeeCalendar.class).setParameter("date", date).getSingleResult();
-    }
-
-    public EmployeeCalendar findByEmployee(Integer employeeId) {
-        return em.createNamedQuery("EmployeeCalendar.findByEmployee", EmployeeCalendar.class).setParameter("employeeId", employeeId).getSingleResult();
-    }*/
-
     public List<EmployeeCalendar> findByDate(String date) {
         return em.createNamedQuery("EmployeeCalendar.findByDate", EmployeeCalendar.class).setParameter("date", calendarsDAO.findOne(date)).getResultList();
     }
