@@ -108,6 +108,8 @@ export class CalendarComponent implements OnInit {
         this.busyEvents = [];
 
         this.selected.forEach((id) => {
+            if (id == this.userService.user.id)
+                return;
             this.http.get(Url.get("employeeCalendar/get/employeeId/" + id))
                 .subscribe((calendars: Array<EmployeeCalendar>) => {
                     calendars.forEach((employeeCalendar) => {
