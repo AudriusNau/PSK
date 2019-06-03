@@ -12,13 +12,15 @@
     <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
         <ul fxLayout fxLayoutGap="15px" class="navigation-items">
             <li>
+                <a routerLink="/calendar">Calendar</a>
                 <a routerLink="/accommodation">Accommodation</a>
                 <a routerLink="/travel">Travel</a>
                 <a routerLink="/organised">Organised</a>
-              <a routerLink="/myTrips">My Trips</a>
+                <a routerLink="/myTrips">My Trips</a>
             </li>
             <li>
                 <a routerLink="/login">Login</a>
+                <a (click)="onLogoutClick()">Logout</a>
             </li>
         </ul>
     </div>

@@ -2,11 +2,17 @@
   <a mat-list-item routerLink="/home" (click)="onSidenavClose()">
     <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
   </a>
+  <a mat-list-item routerLink="/calendar" (click)="onSidenavClose()">
+    <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Calendar</span>
+  </a>
   <a mat-list-item routerLink="/accomodation" (click)="onSidenavClose()">
     <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Accommodation</span>
   </a>
   <a mat-list-item routerLink="/organised" (click)="onSidenavClose()">
     <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Organised</span>
+  </a>
+  <a mat-list-item (click)="onLogoutClick()">
+    <mat-icon>logout</mat-icon> <span class="nav-caption">Logout</span>
   </a>
   <a mat-list-item routerLink="/login" (click)="onSidenavClose()">
     <mat-icon>login</mat-icon> <span class="nav-caption">Login</span>

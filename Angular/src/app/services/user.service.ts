@@ -18,6 +18,10 @@ export class UserService {
         return user;
     }
 
+    get isLoggedIn(): boolean {
+        return this.cookieService.get("user-id") ? true : false;
+    }
+
     // private _userSource = new BehaviorSubject(this._user);
     // userChanged = this._userSource.asObservable();
 
@@ -29,6 +33,14 @@ export class UserService {
         this.cookieService.set("user-username", user.username);
         this.cookieService.set("user-role", user.role);
         // this._userSource.next(user);
+    }
+
+    logout() {
+        this.cookieService.delete("user-id");
+        this.cookieService.delete("user-firstname");
+        this.cookieService.delete("user-lastname");
+        this.cookieService.delete("user-username");
+        this.cookieService.delete("user-role");
     }
 
 }
