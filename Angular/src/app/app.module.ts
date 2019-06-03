@@ -32,6 +32,7 @@ import { SetDateDialogComponent } from './calendar/set-date-dialog/set-date-dial
 import { EditTravelerDialogComponent } from './organiser-travels/edit-travel-dialog/edit-traveler-dialog/edit-traveler-dialog.component';
 import { NavigationService } from './services/navigation.service';
 import { UsersComponent } from './users/users.component';
+import { MergeTravelDialogComponent } from './travel/merge-travel-dialog/merge-travel-dialog.component';
 
 @NgModule({
     declarations: [
@@ -53,6 +54,7 @@ import { UsersComponent } from './users/users.component';
         NewTravelerDialogComponent,
         EmployeeTripsComponent,
         EditTravelerDialogComponent,
+        MergeTravelDialogComponent,
         UsersComponent,
     ],
     imports: [
@@ -81,6 +83,7 @@ import { UsersComponent } from './users/users.component';
         NewTravelerDialogComponent,
         SetDateDialogComponent,
         EditTravelerDialogComponent,
+        MergeTravelDialogComponent,
     ]
 })
 export class AppModule { }

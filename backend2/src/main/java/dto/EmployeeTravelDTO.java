@@ -11,6 +11,6 @@ public class EmployeeTravelDTO {
     private Integer flightId;
     private Integer carRentId;
     private Integer roomId;
-    private Integer status;
+    private boolean status;
 
 }

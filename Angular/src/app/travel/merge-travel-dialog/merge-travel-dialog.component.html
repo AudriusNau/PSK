@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Choose which travel is base travel </h1>
+<div mat-dialog-content>
+  Travels:
+  <mat-radio-group
+    aria-labelledby="example-radio-group-label"
+    class="radio-group"
+    [(ngModel)]="selectedTravels"
+    >
+    <mat-radio-button class="radio-button" *ngFor="let selectedTravel of selectedTravels" [value]="selectedTravels">
+      {{selectedTravel.id}}
+    </mat-radio-button>
+  </mat-radio-group>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCloseClick()">Close</button>
+
+</div>

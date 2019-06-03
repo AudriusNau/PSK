@@ -24,7 +24,7 @@ public class EmployeeTravelsDAO {
     @Inject
     @Setter
     @Getter
-    private TravelsDAO travelsDAO;
+    private TravelsDAO calendarsDAO;
 
     @Inject
     @Setter
@@ -73,19 +73,11 @@ public class EmployeeTravelsDAO {
     }
 
     public List<EmployeeTravel> findByTravelId(Integer travelId) {
-        return em.createNamedQuery("EmployeeTravel.findByTravelId", EmployeeTravel.class).setParameter("travel", travelsDAO.findOne(travelId)).getResultList();
+        return em.createNamedQuery("EmployeeTravel.findByTravelId", EmployeeTravel.class).setParameter("travel", calendarsDAO.findOne(travelId)).getResultList();
     }
 
     public List<EmployeeTravel> findByEmployee(Integer employeeId) {
         return em.createNamedQuery("EmployeeTravel.findByEmployee", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).getResultList();
-    }
-
-    public EmployeeTravel findByEmployeeAndTravel(Integer employeeId, Integer travelId) {
-        try {
-            return em.createNamedQuery("EmployeeTravel.findByEmployeeAndTravel", EmployeeTravel.class).setParameter("employee", employeesDAO.findOne(employeeId)).setParameter("travel", travelsDAO.findOne(travelId)).getSingleResult();
-        }catch (Exception e){
-            return null;
-        }
     }
 
     public List<EmployeeTravel> findByFlight(Integer flightId) {
