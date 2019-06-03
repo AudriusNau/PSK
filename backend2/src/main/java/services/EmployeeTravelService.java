@@ -113,14 +113,22 @@ public class EmployeeTravelService {
     }
 
     public EmployeeTravel create(EmployeeTravelDTO employeeTravelDTO){
-        EmployeeTravel employeeTravel = employeeTravelsDAO.create();
-        if (employeeTravelDTO.getTravelId() != null) employeeTravel.setTravel(travelsDAO.findOne(employeeTravelDTO.getTravelId()));
-        if (employeeTravelDTO.getEmployeeId() != null) employeeTravel.setEmployee(employeesDAO.findOne(employeeTravelDTO.getEmployeeId()));
-        if (employeeTravelDTO.getFlightId() != null) employeeTravel.setFlight(flightsDAO.findOne(employeeTravelDTO.getFlightId()));
-        if (employeeTravelDTO.getCarRentId() != null) employeeTravel.setCarRent(carRentsDAO.findOne(employeeTravelDTO.getCarRentId()));
-        if (employeeTravelDTO.getRoomId() != null) employeeTravel.setRoom(roomsDAO.findOne(employeeTravelDTO.getRoomId()));
-        employeeTravelsDAO.persist(employeeTravel);
-        return employeeTravel;
+        if (employeeTravelsDAO.findByEmployeeAndTravel(employeeTravelDTO.getEmployeeId(), employeeTravelDTO.getTravelId()) == null) {
+            EmployeeTravel employeeTravel = employeeTravelsDAO.create();
+            if (employeeTravelDTO.getTravelId() != null)
+                employeeTravel.setTravel(travelsDAO.findOne(employeeTravelDTO.getTravelId()));
+            if (employeeTravelDTO.getEmployeeId() != null)
+                employeeTravel.setEmployee(employeesDAO.findOne(employeeTravelDTO.getEmployeeId()));
+            if (employeeTravelDTO.getFlightId() != null)
+                employeeTravel.setFlight(flightsDAO.findOne(employeeTravelDTO.getFlightId()));
+            if (employeeTravelDTO.getCarRentId() != null)
+                employeeTravel.setCarRent(carRentsDAO.findOne(employeeTravelDTO.getCarRentId()));
+            if (employeeTravelDTO.getRoomId() != null)
+                employeeTravel.setRoom(roomsDAO.findOne(employeeTravelDTO.getRoomId()));
+            employeeTravelsDAO.persist(employeeTravel);
+            return employeeTravel;
+        }
+        else return null;
     }
 
     public EmployeeTravel update(Integer id, EmployeeTravelDTO employeeTravelDTO){
@@ -144,9 +152,20 @@ public class EmployeeTravelService {
             throw new IllegalArgumentException("employeeTravel id "
                     + id + " not found");
         }
-        employeeTravel.setStatus(true);
+        employeeTravel.setStatus(1);
         employeeTravel.setRoom(accommodationService.bookAccommodation(employeeTravel));
         addToCalendar(employeeTravel);
+        employeeTravelsDAO.update(employeeTravel);
+        return employeeTravel;
+    }
+
+    public EmployeeTravel decline(Integer id){
+        EmployeeTravel employeeTravel = employeeTravelsDAO.findOne(id);
+        if (employeeTravel == null){
+            throw new IllegalArgumentException("employeeTravel id "
+                    + id + " not found");
+        }
+        employeeTravel.setStatus(-1);
         employeeTravelsDAO.update(employeeTravel);
         return employeeTravel;
     }
