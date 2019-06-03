@@ -30,6 +30,14 @@ export class UserService {
         return this.isAdmin || this.cookieService.get("user-role") == "Organiser";
     }
 
+    get firstName(): string {
+        return this.cookieService.get("user-firstname");
+    }
+
+    get lastName(): string {
+        return this.cookieService.get("user-lastname");
+    }
+
     changeUser(user: User) {
         this.cookieService.set("user-id", user.id.toString());
         this.cookieService.set("user-firstname", user.firstName);
