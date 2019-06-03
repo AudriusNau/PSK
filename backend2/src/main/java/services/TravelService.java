@@ -160,10 +160,12 @@ public class TravelService {
         for (Integer travelId : mergeTravelsDTO.getTravels()){
             if(!checkOffice(baseDepartureOffice,travelsDAO.findOne(travelId).getDepartureOffice()))
             {
+                System.out.println("lievas departure");
                 return false;
             }
             if(!checkOffice(baseArrivalOffice, travelsDAO.findOne(travelId).getArrivalOffice()))
             {
+                System.out.println("lievas arrival");
                 return false;
             }
         }

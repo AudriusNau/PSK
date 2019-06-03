@@ -68,14 +68,6 @@ public class EmployeeTravelsDAO {
         this.em.persist(employeeTravel);
     }
 
-    /*public EmployeeTravel findByTravelId(String travelId) {
-        return em.createNamedQuery("EmployeeTravel.findByTravelId", EmployeeTravel.class).setParameter("travelId", travelId).getSingleResult();
-    }
-
-    public EmployeeTravel findByEmployee(Integer employeeId) {
-        return em.createNamedQuery("EmployeeTravel.findByEmployee", EmployeeTravel.class).setParameter("employeeId", employeeId).getSingleResult();
-    }*/
-
     public EmployeeTravel findOne(Integer id) {
         return em.find(EmployeeTravel.class, id);
     }
