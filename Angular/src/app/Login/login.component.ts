@@ -16,14 +16,14 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router, private http: HttpClient, private userService: UserService) {  }
 
-  headerComponent: HeaderComponent;
+  // headerComponent: HeaderComponent;
   authenticateComponent: AuthenticateComponent;
   user: User;
 
   showError = false;
 
   ngOnInit() {
-    this.headerComponent = new HeaderComponent();
+    // this.headerComponent = new HeaderComponent();
     this.authenticateComponent = new AuthenticateComponent(this.router);
     this.user = {} as any;
   }
