@@ -7,7 +7,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
 
     constructor(private cookieService: CookieService) {}
-    // private _user: User;
+
     get user(): User {
         const user: User = {};
         user.id = Number.parseInt(this.cookieService.get("user-id"));
@@ -22,17 +22,20 @@ export class UserService {
         return this.cookieService.get("user-id") ? true : false;
     }
 
-    // private _userSource = new BehaviorSubject(this._user);
-    // userChanged = this._userSource.asObservable();
+    get isAdmin(): boolean {
+        return this.cookieService.get("user-role") == "Admin";
+    }
+
+    get isOrganiser(): boolean {
+        return this.isAdmin || this.cookieService.get("user-role") == "Organiser";
+    }
 
     changeUser(user: User) {
-        // this._user = user;
         this.cookieService.set("user-id", user.id.toString());
         this.cookieService.set("user-firstname", user.firstName);
         this.cookieService.set("user-lastname", user.lastName);
         this.cookieService.set("user-username", user.username);
         this.cookieService.set("user-role", user.role);
-        // this._userSource.next(user);
     }
 
     logout() {
