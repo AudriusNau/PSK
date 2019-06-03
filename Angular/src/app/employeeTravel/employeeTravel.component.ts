@@ -4,6 +4,7 @@ import {Url} from "../http/url";
 import {EmployeeTravel} from "../entities/employeeTravel";
 import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import {Office} from "../entities/office";
 
 @Component({
   selector: 'app-employee',
@@ -15,7 +16,8 @@ export class EmployeeTravelComponent implements OnInit {
   private subscription: Subscription;
 
   items: Array<EmployeeTravel> = [];
-  public displayedColumns: string[] = ['firstName', 'lastName', 'startDate', 'endDate',  'flight', 'carRent', 'status' ];
+  public displayedColumns: string[] = ['firstName', 'lastName', 'startDate', 'endDate', 'departureOffice',
+    'arrivalOffice', 'flight', 'carRent', 'status' ];
   constructor(private http: HttpClient, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -27,6 +29,14 @@ export class EmployeeTravelComponent implements OnInit {
         this.items = employees;
         this.items.forEach(item => {
 
+          this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.id))
+            .subscribe((office: Office) => {
+              item.departureOffice = office.name;
+            });
+          this.http.get(Url.get('travel/get/getArrivalOfficeByTravelId/' + item.id))
+            .subscribe((office: Office) => {
+              item.arrivalOffice = office.name;
+            });
           if (item.flight.need === 2){// if flight needed
             item.flight.info = item.flight.need.toString().replace('2', 'reserved ') + ' ' + item.flight.info;
           }else if (item.flight.need === 1){

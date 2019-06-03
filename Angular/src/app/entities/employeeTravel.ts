@@ -12,4 +12,6 @@ export interface EmployeeTravel {
   travel: Travel;
   room: Room;
   status: number;
+  departureOffice: String;
+  arrivalOffice: String;
 }
