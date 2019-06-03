@@ -82,17 +82,14 @@ public class TravelService {
 
     public Travel create(TravelDTO travelDTO){
         Travel travel = travelsDAO.create();
-        if(calendarService.checkDates(travelDTO.getStartDate(), travelDTO.getEndDate())) {
-            travel.setStartDate(travelDTO.getStartDate());
-            travel.setEndDate(travelDTO.getEndDate());
-            travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
-            travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
-            travel.setPrice(travelDTO.getPrice());
-            travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
-            travelsDAO.persist(travel);
-            return travel;
-        }
-            else return null;
+        travel.setStartDate(travelDTO.getStartDate());
+        travel.setEndDate(travelDTO.getEndDate());
+        travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
+        travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
+        travel.setPrice(travelDTO.getPrice());
+        travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
+        travelsDAO.persist(travel);
+        return travel;
     }
 
     public Travel update(Integer id, TravelDTO travelDTO){
@@ -101,20 +98,14 @@ public class TravelService {
             throw new IllegalArgumentException("travel id "
                     + id + " not found");
         }
-        if(calendarService.checkDates(travelDTO.getStartDate(), travelDTO.getEndDate())) {
-            if (travelDTO.getStartDate() != null) travel.setStartDate(travelDTO.getStartDate());
-            if (travelDTO.getEndDate() != null) travel.setEndDate(travelDTO.getEndDate());
-            if (travelDTO.getDepartureOfficeId() != null)
-                travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
-            if (travelDTO.getArrivalOfficeId() != null)
-                travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
-            if (travelDTO.getOrganiserId() != null)
-                travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
-            if (travelDTO.getPrice() != null) travel.setPrice(travelDTO.getPrice());
-            travelsDAO.update(travel);
-            return travel;
-        }
-        else return null;
+        if (travelDTO.getStartDate() != null) travel.setStartDate(travelDTO.getStartDate());
+        if (travelDTO.getEndDate() != null) travel.setEndDate(travelDTO.getEndDate());
+        if (travelDTO.getDepartureOfficeId() != null) travel.setDepartureOffice(officesDAO.findOne(travelDTO.getDepartureOfficeId()));
+        if (travelDTO.getArrivalOfficeId() != null) travel.setArrivalOffice(officesDAO.findOne(travelDTO.getArrivalOfficeId()));
+        if (travelDTO.getOrganiserId() != null) travel.setOrganiser(employeesDAO.findOne(travelDTO.getOrganiserId()));
+        if (travelDTO.getPrice() != null) travel.setPrice(travelDTO.getPrice());
+        travelsDAO.update(travel);
+        return travel;
     }
 
     public Travel mergeTravels(MergeTravelsDTO mergeTravelsDTO){
@@ -126,7 +117,7 @@ public class TravelService {
                 employeeTravels = employeeTravelsDAO.findByTravelId(travelId);
                 for (EmployeeTravel employeeTravel : employeeTravels) {
                     employeeTravel.setTravel(baseTravel);
-                    employeeTravel.setStatus(0);
+                    employeeTravel.setStatus(false);
                     employeeTravelsDAO.update(employeeTravel);
                 }
                 travelsDAO.delete(travelsDAO.findOne(travelId));
