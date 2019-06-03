@@ -13,8 +13,8 @@ import {Router} from "@angular/router";
 })
 export class MergeTravelDialogComponent implements OnInit {
   selectedTravels: Array<Travel>
-  baseTravel: number
-  private rules: string = String('Rules:\n 1 dates should be similar (+- 1 day)\n 2 destination should be the same\n');
+  baseTravel: Travel
+
   constructor(
     private http: HttpClient,
     public dialogRef: MatDialogRef<MergeTravelDialogComponent>,
@@ -28,16 +28,12 @@ export class MergeTravelDialogComponent implements OnInit {
   onCloseClick(): void {
     this.dialogRef.close();
   }
-
   onMergeClick() {
     this.http.put(
       Url.get('travel/merge'),
-      {baseTravelId: this.baseTravel,
-        travels: this.selectedTravels.splice (this.baseTravel, 1).map(item => item.id)}
-    ).subscribe(response => {
-      if (response == null) {alert(' Does not match the rules\n' + this.rules); }
-      else {this.onCloseClick(); }
-    });
+      {baseTravelId: this.baseTravel.id,
+        travels: this.selectedTravels.splice (this.baseTravel.id, 1).map(item => item.id)}
+    ).subscribe(() => this.onCloseClick() );
   }
 
 }

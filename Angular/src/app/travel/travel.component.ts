@@ -19,6 +19,7 @@ import {MergeTravelDialogComponent} from "./merge-travel-dialog/merge-travel-dia
 export class TravelComponent implements OnInit {
     items: Array<Travel> = [];
     selectedTravels: Array<Travel> = [];
+  private rules: string = String('Rules:\n 1 dates should be similar (+- 1 day)\n 2 destination should be the same\n');
     public displayedColumns: string[] = ['startDate', 'endDate', 'price', 'departureOffice', 'arrivalOffice', 'organiser', 'info'];
     constructor(private http: HttpClient, private userService: UserService, private router: Router, private dialog: MatDialog) { }
   ngOnInit() {
@@ -56,9 +57,12 @@ export class TravelComponent implements OnInit {
       this.selectedTravels = this.items.filter(item => item.isSelected === true);
       const config = new MatDialogConfig();
       config.data = this.selectedTravels;
+      this.dialog.open(MergeTravelDialogComponent, config)
+        .afterClosed().subscribe(result => {
+          if (result == null) {alert(' Does not match the rules\n' + this.rules); }
+          else this.loadTable();
+      });
 
-
-      this.dialog.open(MergeTravelDialogComponent, config);
   }
 }
 
