@@ -36,14 +36,17 @@ export class MergeTravelDialogComponent implements OnInit {
     this.http.put(Url.get('travel/merge'), mergedTravel)
       .subscribe(
         // succes
-        () => {
-          console.log("Merge success");
-          this.dialogRef.close(true)
+        (travel: Travel) => {
+          if (travel === null) this.dialogRef.close(false);
+          else {
+            console.log("Merge success");
+            this.dialogRef.close(true);
+          }
         },
         // error
         () => {
           console.log("Merge fail");
-          this.dialogRef.close(false)
+          this.dialogRef.close(false);
         }
       );
   }
