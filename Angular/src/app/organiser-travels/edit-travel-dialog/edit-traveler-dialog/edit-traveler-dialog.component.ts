@@ -38,13 +38,20 @@ export class EditTravelerDialogComponent {
 
   onChangeClick() {
     this.http.put(Url.get("employeeTravel/changeAccommodation/" + this.employeeTravel.id), {})
-      .subscribe((newEmployeeTravel: EmployeeTravel) => {
-        this.employeeTravel.room = newEmployeeTravel.room;
-        if (this.employeeTravel.room) {
-          this.http.get(Url.get("room/get/getAccommodationByRoomId/" + this.employeeTravel.room.id))
-            .subscribe((accommodation: Accommodation) => this.employeeTravel.accommodation = accommodation)
+      .subscribe(
+        (newEmployeeTravel: EmployeeTravel) => {
+          this.employeeTravel.room = newEmployeeTravel.room;
+          if (this.employeeTravel.room) {
+            this.http.get(Url.get("room/get/getAccommodationByRoomId/" + this.employeeTravel.room.id))
+              .subscribe((accommodation: Accommodation) => this.employeeTravel.accommodation = accommodation)
+          }
+        },
+        () => {
+          this.employeeTravel.room = null;
+          this.employeeTravel.accommodation = null;
+          alert("No more rooms left");
         }
-      })
+      )
   }
 
 }

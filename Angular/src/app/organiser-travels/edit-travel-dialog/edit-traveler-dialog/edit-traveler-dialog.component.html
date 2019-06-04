@@ -1,24 +1,24 @@
 <h1 mat-dialog-title>
-  {{data.employee.firstName}} {{data.employee.lastName}}
+  {{employeeTravel.employee.firstName}} {{employeeTravel.employee.lastName}}
 </h1>
 <div mat-dialog-content style="padding-bottom:1em">
-  <div *ngIf="data.flight.need != 0">
+  <div *ngIf="employeeTravel.flight.need != 0">
     <p>
       <mat-checkbox [(ngModel)]="ticketsOrdered" (change)="togglePlaneTickets($event.checked)" >Plane tickets</mat-checkbox>
     </p>
-    <p>{{data.flight.info}}</p>
+    <p>{{employeeTravel.flight.info}}</p>
   </div>
-  <div *ngIf="data.carRent.need != 0">
+  <div *ngIf="employeeTravel.carRent.need != 0">
     <p>
       <mat-checkbox [(ngModel)]="carRented" (change)="toggleCarRental($event.value.checked)">Car rent</mat-checkbox>
     </p>
-    <p>{{data.carRent.info}}</p>
+    <p>{{employeeTravel.carRent.info}}</p>
   </div>
 
-  <div *ngIf="data.accommodation">
+  <div *ngIf="employeeTravel.accommodation">
     <h3>Accommodation:</h3>
-    {{data.accommodation.name}} <br>
-    Room: {{data.room.roomNumber}} <br>
+    {{employeeTravel.accommodation.name}} <br>
+    Room: {{employeeTravel.room.roomNumber}} <br>
   </div>
   <button mat-raised-button (click)="onChangeClick()">Change Accommodation</button>
 </div>
