@@ -21,7 +21,7 @@ export class EmployeeTripsComponent implements OnInit {
   approvedTrips: Array<EmployeeTravel> = [];
   public displayedColumns1: string[] = ['firstName', 'lastName', 'date',
     'departureOffice', 'arrivalOffice', 'decline' , 'approve'];
-  public displayedColumns2: string[] = ['firstName', 'lastName', 'date', 'flight', 'carRent',
+  public displayedColumns2: string[] = ['firstName', 'lastName', 'date', 'flight', 'carRent', 'accommodation', 'room',
     'departureOffice', 'arrivalOffice'];
   constructor(private http: HttpClient, private dialog: MatDialog, private userService: UserService, private router: Router) { }
 
@@ -62,6 +62,10 @@ export class EmployeeTripsComponent implements OnInit {
           this.http.get(Url.get('travel/get/getArrivalOfficeByTravelId/' + item.travel.id))
             .subscribe((office: Office) => {
               item.travel.arrivalOffice = office.name;
+            });
+          this.http.get(Url.get('room/get/getAccommodationByRoomId/' + item.room.id))
+            .subscribe((accommodation: Accommodation) => {
+              item.room.accommodation = accommodation.name;
             });
         });
       });

@@ -15,10 +15,10 @@
     <p>{{data.carRent.info}}</p>
   </div>
 
-  <div *ngIf="data.accomodation">
+  <div *ngIf="data.accommodation">
     <h3>Accommodation:</h3>
-    {{data.accomodation.name}} <br>
+    {{data.accommodation.name}} <br>
     Room: {{data.room.roomNumber}} <br>
   </div>
-  <button mat-raised-button (click)="onChangeClick()">Change Accomodation</button>
+  <button mat-raised-button (click)="onChangeClick()">Change Accommodation</button>
 </div>

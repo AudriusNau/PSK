@@ -12,7 +12,7 @@ export interface EmployeeTravel {
   employee: Employee;
   travel: Travel;
   room: Room;
-  accomodation?: Accommodation;
+  accommodation: Accommodation;
   status: number;
   departureOffice: String;
   arrivalOffice: String;

@@ -20,7 +20,7 @@ export class EditTravelerDialogComponent {
     this.employeeTravel = data;
     if (this.employeeTravel.room) {
       this.http.get(Url.get("room/get/getAccommodationByRoomId/" + this.employeeTravel.room.id))
-        .subscribe((accommodation: Accommodation) => this.employeeTravel.accomodation = accommodation)
+        .subscribe((accommodation: Accommodation) => this.employeeTravel.accommodation = accommodation)
     }
   }
 
@@ -42,7 +42,7 @@ export class EditTravelerDialogComponent {
         this.employeeTravel.room = newEmployeeTravel.room;
         if (this.employeeTravel.room) {
           this.http.get(Url.get("room/get/getAccommodationByRoomId/" + this.employeeTravel.room.id))
-            .subscribe((accommodation: Accommodation) => this.employeeTravel.accomodation = accommodation)
+            .subscribe((accommodation: Accommodation) => this.employeeTravel.accommodation = accommodation)
         }
       })
   }

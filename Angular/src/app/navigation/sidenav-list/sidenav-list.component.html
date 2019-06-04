@@ -5,7 +5,7 @@
   <a mat-list-item routerLink="/calendar" (click)="onNavigationItemSelected('Calendar')">
     <mat-icon>calendar_today</mat-icon> <span class="nav-caption">Calendar</span>
   </a>
-  <a *ngIf="userService.isAdmin" mat-list-item routerLink="/accomodation" (click)="onNavigationItemSelected('Accomodation')">
+  <a *ngIf="userService.isAdmin" mat-list-item routerLink="/accommodation" (click)="onNavigationItemSelected('Accommodation')">
     <mat-icon>hotel</mat-icon> <span class="nav-caption">Accommodation</span>
   </a>
   <a *ngIf="userService.isOrganiser" mat-list-item routerLink="/organised" (click)="onNavigationItemSelected('Organised Trips')">

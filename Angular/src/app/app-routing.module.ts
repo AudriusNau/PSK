@@ -13,7 +13,7 @@ import { UsersComponent } from './users/users.component';
 const routes: Routes = [
     { path: 'calendar', component: CalendarComponent},
     { path: 'login', component: LoginComponent},
-    { path: 'accomodation', component: AccommodationComponent},
+    { path: 'accommodation', component: AccommodationComponent},
     { path: 'accommodation', component: AccommodationComponent},
     { path: 'travel', component: TravelComponent},
     { path: 'organised', component: OrganiserTravelsComponent},
