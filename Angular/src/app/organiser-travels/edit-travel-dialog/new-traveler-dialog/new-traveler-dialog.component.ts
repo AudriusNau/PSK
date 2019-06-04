@@ -10,6 +10,8 @@ import { Employee } from 'src/app/entities/employee';
 import { CarRent } from 'src/app/entities/carRent';
 import { Flight } from 'src/app/entities/flight';
 import { EmployeeTravelDTO } from 'src/app/entities/employeeTravelDTO';
+import { UserService } from 'src/app/services/user.service';
+import { EmployeeTravel } from 'src/app/entities/employeeTravel';
 
 @Component({
     selector: 'app-new-traveler-dialog',
@@ -21,7 +23,8 @@ export class NewTravelerDialogComponent implements OnInit {
     constructor(
         private http: HttpClient,
         public dialogRef: MatDialogRef<NewTravelerDialogComponent>,
-        @Inject(MAT_DIALOG_DATA) private data: Travel
+        @Inject(MAT_DIALOG_DATA) private data: Travel,
+        private userService: UserService
     ) { }
 
     myControl = new FormControl();
@@ -57,9 +60,9 @@ export class NewTravelerDialogComponent implements OnInit {
     }
 
     onSaveClick() {
-        this.http.post(Url.get("carRent/post"), {need: this.carNeeded ? 1 : 0, info: "Car info"})
+        this.http.post(Url.get("carRent/post"), { need: this.carNeeded ? 1 : 0, info: "Car info" })
             .subscribe((carRent: CarRent) => {
-                this.http.post(Url.get("flight/post"), {need: this.ticketsNeeded ? 1 : 0, info: "Flight info"})
+                this.http.post(Url.get("flight/post"), { need: this.ticketsNeeded ? 1 : 0, info: "Flight info" })
                     .subscribe((flight: Flight) => {
                         let employeeTravel: EmployeeTravelDTO = {
                             carRentId: carRent.id,
@@ -67,8 +70,15 @@ export class NewTravelerDialogComponent implements OnInit {
                             flightId: flight.id,
                             travelId: this.data.id
                         };
-                        this.http.post(Url.get("employeeTravel/post"), employeeTravel).subscribe(() => {
-                            this.dialogRef.close(true);
+                        this.http.post(Url.get("employeeTravel/post"), employeeTravel).subscribe((newEmployeeTravel: EmployeeTravel) => {
+                            if (employeeTravel.employeeId == this.userService.user.id) {
+                                this.http.put(Url.get("employeeTravel/accept/" + newEmployeeTravel.id), {})
+                                    .subscribe(() => {
+                                        this.dialogRef.close(true);
+                                    });
+                            } else {
+                                this.dialogRef.close(true);
+                            }
                         });
                     })
             })

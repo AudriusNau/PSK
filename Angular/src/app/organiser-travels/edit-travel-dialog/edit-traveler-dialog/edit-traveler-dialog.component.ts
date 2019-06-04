@@ -24,11 +24,22 @@ export class EditTravelerDialogComponent {
     }
   }
 
+  togglePlaneTickets(value: boolean) {
+    console.log(value);
+    this.http.put(Url.get("flight/put/" + this.employeeTravel.flight.id), { need: value ? 2 : 1 })
+      .subscribe();
+  }
+
+  toggleCarRental(value: boolean) {
+    console.log(value);
+    this.http.put(Url.get("carRent/put/" + this.employeeTravel.flight.id), { need: value ? 2 : 1 })
+      .subscribe();
+  }
+
   onChangeClick() {
     this.http.put(Url.get("employeeTravel/changeAccommodation/" + this.employeeTravel.id), {})
       .subscribe((newEmployeeTravel: EmployeeTravel) => {
         this.employeeTravel.room = newEmployeeTravel.room;
-        console.log(newEmployeeTravel.room);
         if (this.employeeTravel.room) {
           this.http.get(Url.get("room/get/getAccommodationByRoomId/" + this.employeeTravel.room.id))
             .subscribe((accommodation: Accommodation) => this.employeeTravel.accomodation = accommodation)

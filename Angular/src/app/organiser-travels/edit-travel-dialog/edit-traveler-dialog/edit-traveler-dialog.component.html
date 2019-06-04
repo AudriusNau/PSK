@@ -4,13 +4,13 @@
 <div mat-dialog-content style="padding-bottom:1em">
   <div *ngIf="data.flight.need != 0">
     <p>
-      <mat-checkbox [(ngModel)]="ticketsOrdered">Plane tickets</mat-checkbox>
+      <mat-checkbox [(ngModel)]="ticketsOrdered" (change)="togglePlaneTickets($event.checked)" >Plane tickets</mat-checkbox>
     </p>
     <p>{{data.flight.info}}</p>
   </div>
   <div *ngIf="data.carRent.need != 0">
     <p>
-      <mat-checkbox [(ngModel)]="carRented">Car rent</mat-checkbox>
+      <mat-checkbox [(ngModel)]="carRented" (change)="toggleCarRental($event.value.checked)">Car rent</mat-checkbox>
     </p>
     <p>{{data.carRent.info}}</p>
   </div>
