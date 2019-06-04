@@ -54,7 +54,7 @@ export class EmployeeTripsComponent implements OnInit {
       .subscribe((employeeTravel: Array<EmployeeTravel>) => {
         this.approvedTrips = employeeTravel;
         this.approvedTrips.forEach(item => {
-          item.travel.startDate = item.travel.startDate.replace(/_/g, " - ");
+          item.travel.startDate = item.travel.startDate.replace(/_/g, ' - ');
           this.http.get(Url.get('travel/get/getDepartureOfficeByTravelId/' + item.travel.id))
             .subscribe((office: Office) => {
               item.travel.departureOffice = office.name;
@@ -71,7 +71,7 @@ export class EmployeeTripsComponent implements OnInit {
       });
   }
   onDeclineCLick(id: number) {
-    this.http.put(Url.get("employeeTravel/decline/" + id), {})
+    this.http.put(Url.get('employeeTravel/decline/' + id), {})
       .subscribe(() => {
         this.loadTable();
       });
@@ -79,7 +79,7 @@ export class EmployeeTripsComponent implements OnInit {
     //   .subscribe(() => this.loadTable());
   }
   onApproveCLick(employeeTravel: EmployeeTravel) {
-    this.http.put(Url.get("employeeTravel/accept/" + employeeTravel.id), {})
+    this.http.put(Url.get('employeeTravel/accept/' + employeeTravel.id), {})
       .subscribe(() => {
         this.loadTable();
       });
