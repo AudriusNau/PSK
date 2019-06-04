@@ -4,5 +4,8 @@ export interface Employee {
   role: string;
   id?: number;
   username: string;
+
   password?: string;
+  ticketsNeeded?: boolean;
+  carNeeded?: boolean;
 }

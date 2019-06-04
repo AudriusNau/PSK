@@ -19,7 +19,7 @@ import { SetDateDialogComponent } from './set-date-dialog/set-date-dialog.compon
 
 interface Option {
     display: string,
-    value: number
+    value: Employee
 }
 
 export enum CalendarDateOption {
@@ -61,8 +61,7 @@ export class CalendarComponent implements OnInit {
     options: Option[] = [];
     employeeId: Map<number, string> = new Map();
 
-    selectedOptions: number[] = [];
-    selected = this.selectedOptions;
+    selected: Employee[] = [];
     showError = false;
     errorMessage = '';
     view = "month";
@@ -78,7 +77,7 @@ export class CalendarComponent implements OnInit {
             .subscribe((employees: Array<Employee>) => {
                 this.options = employees.map((employee) => {
                     this.employeeId.set(employee.id, employee.username);
-                    return { display: employee.username, value: employee.id };
+                    return { display: employee.username, value: employee };
                 });
             });
 
@@ -107,17 +106,17 @@ export class CalendarComponent implements OnInit {
         this.selected = selected;
         this.busyEvents = [];
 
-        this.selected.forEach((id) => {
-            if (id == this.userService.user.id)
+        this.selected.forEach((user) => {
+            if (user.id == this.userService.user.id)
                 return;
-            this.http.get(Url.get("employeeCalendar/get/employeeId/" + id))
+            this.http.get(Url.get("employeeCalendar/get/employeeId/" + user.id))
                 .subscribe((calendars: Array<EmployeeCalendar>) => {
                     calendars.forEach((employeeCalendar) => {
                         let calendar = employeeCalendar.calendar;
                         if (calendar) {
                             let date = this.convertToDate(calendar.date);
         
-                            let event: CalendarEvent = {title: this.employeeId.get(id), start: date};
+                            let event: CalendarEvent = {title: this.employeeId.get(user.id), start: date};
                             event.allDay = true;
                             event.color = colors.red;
                             this.busyEvents.push(event);
@@ -131,7 +130,8 @@ export class CalendarComponent implements OnInit {
     dateClicked(date: any) {
         let config = new MatDialogConfig();
         let dateStr = this.convertToString(date.date);
-        config.data = dateStr;
+
+        config.data = {date: dateStr, travelers: this.selected};
 
         this.dialog.open(SetDateDialogComponent, config)
             .afterClosed().subscribe((result) => {
@@ -212,7 +212,8 @@ export class CalendarComponent implements OnInit {
         config.data = {
             organiserId: this.userService.user.id,
             startDate: this.startDate,
-            endDate: this.endDate
+            endDate: this.endDate,
+            travelers: this.selected
         };
         this.dialog.open(NewTravelDialogComponent, config);
     }

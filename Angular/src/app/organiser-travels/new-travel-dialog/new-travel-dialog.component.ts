@@ -5,6 +5,10 @@ import { Url } from 'src/app/http/url';
 import { Office } from 'src/app/entities/office';
 import { Travel } from 'src/app/entities/travel';
 import { EmployeeTravel } from 'src/app/entities/employeeTravel';
+import { Employee } from 'src/app/entities/employee';
+import { EmployeeTravelDTO } from 'src/app/entities/employeeTravelDTO';
+import { Flight } from 'src/app/entities/flight';
+import { CarRent } from 'src/app/entities/carRent';
 
 @Component({
     selector: 'app-new-travel-dialog',
@@ -19,8 +23,8 @@ export class NewTravelDialogComponent implements OnInit {
     startDate: Date;
     endDate: Date;
 
-    public displayedColumns: string[] = ['firstName', 'lastName', 'actions'];
-    travelers: Array<EmployeeTravel> = [];
+    public displayedColumns: string[] = ['firstName', 'lastName', 'flight', 'car'];
+    travelers: Array<Employee> = [];
 
     constructor(
         private http: HttpClient,
@@ -29,6 +33,8 @@ export class NewTravelDialogComponent implements OnInit {
     ) { 
         this.startDate = this.data.startDate;
         this.endDate = this.data.endDate;
+        if (this.data.travelers)
+            this.travelers = this.data.travelers;
     }
 
     onCloseClick(): void {
@@ -47,11 +53,25 @@ export class NewTravelDialogComponent implements OnInit {
         newTrip.organiserId = this.data.organiserId;
 
         this.http.post(Url.get("travel/post"), newTrip)
-            .subscribe(
-                () => { this.dialogRef.close(true); },
-                (error) => {
-                    let a = 0;
-                    a++;
+            .subscribe((newTravel: Travel) => {
+                this.travelers.forEach((traveler) => {
+                    this.http.post(Url.get("carRent/post"), {need: traveler.carNeeded ? 1 : 0, info: "Car info"})
+                        .subscribe((carRent: CarRent) => {
+                            this.http.post(Url.get("flight/post"), {need: traveler.ticketsNeeded ? 1 : 0, info: "Flight info"})
+                                .subscribe((flight: Flight) => {
+                                    let employeeTravel: EmployeeTravelDTO = {
+                                        carRentId: carRent.id,
+                                        employeeId: traveler.id,
+                                        flightId: flight.id,
+                                        travelId: newTravel.id
+                                    };
+                                    this.http.post(Url.get("employeeTravel/post"), employeeTravel).subscribe(() => {
+                                        this.dialogRef.close(true);
+                                    });
+                                });
+                        });
+                });
+                this.dialogRef.close(true);
                 }
             );
     }

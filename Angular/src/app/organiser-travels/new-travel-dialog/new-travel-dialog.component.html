@@ -27,6 +27,38 @@
             <mat-option *ngFor="let office of offices" [value]="office.id">{{office.name}}</mat-option>
         </mat-select>
     </mat-form-field>
+    <div class="organiser-travel-table mat-elevation-z8" *ngIf="travelers.length>0">
+        <table mat-table [dataSource]="travelers" style="width:100%;margin-bottom:1em;">
+
+            <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef> First mane </th>
+                <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef> Last mane </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="flight">
+                <th mat-header-cell *matHeaderCellDef> Flight tickets </th>
+                <td mat-cell *matCellDef="let element"> <mat-checkbox [(ngModel)]="element.ticketsNeeded"></mat-checkbox> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="car">
+                <th mat-header-cell *matHeaderCellDef> Car rent </th>
+                <td mat-cell *matCellDef="let element"> <mat-checkbox [(ngModel)]="element.carNeeded"></mat-checkbox> </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+
+
+
+
+
 </div>
 <div mat-dialog-actions>
     <button mat-button (click)="onCreateClick()">Create</button>
